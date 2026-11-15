@@ -10,7 +10,7 @@
 | Babylon.js / earcut | 배포 vendor 라이선스 파일 보존. 각각 Apache-2.0 / ISC로 로컬 파일 확인 | dist/vendor/BABYLON-LICENSE.md, EARCUT-LICENSE |
 | 서울대 정장·기관 UI | 정문 바닥 및 301 표지 등에 공식 자산 사용 기록이 있음. 자유 재사용 자산으로 간주하지 않음. 현재 목적에 필요한 사용 조건·허가 확보 여부는 미확인 | https://www.snu.ac.kr/about/symbol/ui , https://identity.snu.ac.kr/ui/1 |
 | 3NU 마크·캐릭터 이미지 | 프로젝트 제공/생성 자산으로 보관. 공식 UI·기존 캐릭터와의 관계 및 원본 제작 권한을 별도 확인해야 하며 자동 권리 보장을 하지 않음 | dist/assets, generated_images, 승인 시안 기록 |
-| 외관 참고 사진·위성/지도 화면·PDF | 디자인 참고 원본은 비공개 보관. 업로드 준비본에 별도 시안 폴더·비공개 참고 원본은 포함하지 않음. 다만 기존 dist 안에 공개되어 있던 과거 빌드 갤러리·검증 화면은 실행본 보존을 위해 포함함. 사진 자체를 홍보물에 사용하려면 별도 권한 확인 | design-reviews 및 각 출처 기록 |
+| 외관 참고 사진·위성/지도 화면·PDF | 디자인 참고 원본은 비공개 보관. 업로드 준비본에 별도 시안 폴더·비공개 참고 원본은 포함하지 않음. 기존 dist에 들어 있던 과거 빌드 갤러리·검증 화면도 현재 GitHub 작업 트리에서 제거하고 로컬 원본·백업과 이전 커밋에 보존함. 사진 자체를 홍보물에 사용하려면 별도 권한 확인 | design-reviews 및 각 출처 기록 |
 
 구체적으로 확인이 남은 배포 자산: assets/official-sha-symbol44.png, assets/snu-engineering-ui-original.png 및 3NU·캐릭터 원본의 출처/권한 기록. 기존 사이트 자산을 임의 제거하지 않았으며 허가 완료로 표시하지 않았다.
 

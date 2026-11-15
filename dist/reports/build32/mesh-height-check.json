@@ -1,9 +1,0 @@
-{
-  "samples": 104193,
-  "terrainSamples": 103945,
-  "excludedArchitecturalCuts": 248,
-  "p95": 3.610839868883886e-06,
-  "max": 0.09143976218273053,
-  "above12cm": 0,
-  "worst": []
-}

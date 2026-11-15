@@ -19,3 +19,23 @@ reports/**/screenshots/
 *.tar
 *.tar.gz
 *.zip
+
+# Generated historic reviews stay in local archives, not the current app tree.
+/dist/build27/
+/dist/gallery/
+/dist/reports/
+/dist/build.json
+/dist/data/release35.json
+/dist/region-labels.js
+/scripts/gallery28.py
+/scripts/make-offline-review36.py
+/scripts/report-build14.py
+/scripts/report-build15.py
+/scripts/report-landuse31.py
+/scripts/report-ring33.py
+/scripts/report-roads32.py
+/scripts/report25.py
+/scripts/report26.py
+/scripts/report29.py
+/scripts/review26.cjs
+/scripts/review28.cjs

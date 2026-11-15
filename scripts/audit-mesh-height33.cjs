@@ -1,0 +1,6 @@
+const fs=require('fs'),path=require('path'),R=path.resolve(__dirname,'..'),O=R+'/reports/build33';
+const N=JSON.parse(fs.readFileSync(R+'/dist/data/walk.json')),D=JSON.parse(fs.readFileSync(R+'/dist/data/campus.json'));
+global.Library17=require(R+'/dist/library17');Library17.prepare(D,N);require(R+'/dist/student22').prepare(D,N);require(R+'/dist/landmarks30').prepare(D,N);
+const W=require(R+'/dist/walk-core').create(D,N),samples=JSON.parse(fs.readFileSync(O+'/mesh-height-samples.json')),errors=samples.map(([x,z,y])=>({x,z,mesh:y,floor:W.terrain(x,z),error:y-W.terrain(x,z)})).sort((a,b)=>Math.abs(b.error)-Math.abs(a.error));
+const a=JSON.parse(fs.readFileSync(O+'/mesh-audit.json'));a.maxRenderFloorDifference=Math.abs(errors[0].error);a.worst=errors.slice(0,12);a.paintOffset=.035;a.paintBuriedSamples=errors.filter(e=>e.error>.035).length;a.passed=!a.missing.length&&!a.overlappingCarriagewayTriangles.length&&a.maxRenderFloorDifference<.03;
+fs.writeFileSync(O+'/mesh-audit.json',JSON.stringify(a,null,2));console.log({samples:samples.length,maxError:a.maxRenderFloorDifference,paintBuried:a.paintBuriedSamples,missing:a.missing.length,overlaps:a.overlappingCarriagewayTriangles.length,passed:a.passed});process.exitCode=a.passed?0:1;

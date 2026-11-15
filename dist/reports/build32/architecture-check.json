@@ -1,0 +1,1418 @@
+{
+  "walks": [
+    {
+      "zone": "science",
+      "route": "26·27·28동 중정 접근",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 1.4210854715202004e-14,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 14.194694396146778,
+      "fail": null
+    },
+    {
+      "zone": "science",
+      "route": "26·27·28동 중정 접근",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 1.4210854715202004e-14,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 14.194694396146778,
+      "fail": null
+    },
+    {
+      "zone": "agriculture",
+      "route": "201동 동측 앞마당",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 1.4210854715202004e-14,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 16.93697168917745,
+      "fail": null
+    },
+    {
+      "zone": "agriculture",
+      "route": "201동 동측 앞마당",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 1.4210854715202004e-14,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 16.93697168917745,
+      "fail": null
+    },
+    {
+      "zone": "engineering",
+      "route": "33·34·36·37동 사이 포장",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 1.4210854715202004e-14,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 21.66509397625595,
+      "fail": null
+    },
+    {
+      "zone": "engineering",
+      "route": "33·34·36·37동 사이 포장",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 1.4210854715202004e-14,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 21.665093976255953,
+      "fail": null
+    },
+    {
+      "zone": "library",
+      "route": "약학관 전면 포장",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.020808186670564055,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": -0.00003582166102944484,
+      "distance": 11.24714443758949,
+      "fail": null
+    },
+    {
+      "zone": "library",
+      "route": "약학관 전면 포장",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.020808186670564055,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": -0.00003582166102944484,
+      "routeDatumDifference": 0,
+      "distance": 11.24714443758949,
+      "fail": null
+    },
+    {
+      "zone": "beodeul",
+      "route": "교수회관 앞마당",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.0000015708593821273098,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": -8.236696658059373e-9,
+      "distance": 9.426279700921224,
+      "fail": null
+    },
+    {
+      "zone": "beodeul",
+      "route": "교수회관 앞마당",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.0000015708593821273098,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": -8.236696658059373e-9,
+      "routeDatumDifference": 0,
+      "distance": 9.426279700921224,
+      "fail": null
+    },
+    {
+      "zone": "humanities",
+      "route": "1·2동 사이 중정",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.029941969859507367,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": -0.2921683903804251,
+      "routeDatumDifference": 0.000007574070636451324,
+      "distance": 28.448566150159603,
+      "fail": null
+    },
+    {
+      "zone": "humanities",
+      "route": "1·2동 사이 중정",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.029941969859478945,
+      "endError": 0,
+      "baselineEndError": 0.2921683903804251,
+      "approvedGroundGrade": true,
+      "startAdjustment": 0.000007574070636451324,
+      "routeDatumDifference": -0.2921683903804251,
+      "distance": 28.448566150159614,
+      "fail": null
+    },
+    {
+      "zone": "education",
+      "route": "사범대 내부 중정",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.001416814029937541,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 130.57602996783527,
+      "fail": null
+    },
+    {
+      "zone": "education",
+      "route": "사범대 내부 중정",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.001416814029937541,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 130.57602996783464,
+      "fail": null
+    },
+    {
+      "zone": "social",
+      "route": "사회대 동측 차량 공간",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 1.4210854715202004e-14,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 80.25290396382209,
+      "fail": null
+    },
+    {
+      "zone": "social",
+      "route": "사회대 동측 차량 공간",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 1.4210854715202004e-14,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 80.23632395855714,
+      "fail": null
+    },
+    {
+      "zone": "upper",
+      "route": "303동 서측 차량 공간",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 4.493939940175551e-7,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": -9.72022462519817e-12,
+      "routeDatumDifference": -5.992148999212077e-10,
+      "distance": 65.82914130535242,
+      "fail": null
+    },
+    {
+      "zone": "upper",
+      "route": "303동 서측 차량 공간",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 4.493939940175551e-7,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": -5.992148999212077e-10,
+      "routeDatumDifference": -9.72022462519817e-12,
+      "distance": 65.8291413053524,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "right-approach",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.17812500000000853,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 38.99999999999924,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "right-approach",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.17812500000000853,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0.17777777777777715,
+      "distance": 38.99999999999916,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "right-third",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.18000000000000682,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 62.999999999999964,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "right-third",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.18000000000000682,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 62.99999999999963,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "left-roof",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.17580645161291386,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 61.49999999999868,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "left-roof",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.17580645161291386,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0.17580645161289965,
+      "distance": 61.49999999999895,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "pharmacy-near23",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.18000000000000682,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 31.399999999999558,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "pharmacy-near23",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.18000000000000682,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0.1789473684210492,
+      "distance": 31.399999999999743,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "far-stair25",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.17500000000001137,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 29.7999999999994,
+      "fail": null
+    },
+    {
+      "zone": "표시28",
+      "route": "far-stair25",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.17500000000001137,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0.17499999999999716,
+      "distance": 29.79999999999932,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "roof28-upper-ribbon",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 80.99999999999942,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "roof28-upper-ribbon",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 81.00000000000016,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "bridge28-lower-passage",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 144.99999999999747,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "bridge28-lower-passage",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 144.99999999999903,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "bridge28-upper",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 30.999999999999897,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "bridge28-upper",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 30.999999999999908,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "front28-apron",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.0001759756494834619,
+      "endError": 0,
+      "baselineEndError": 0.007446324960682205,
+      "approvedGroundGrade": true,
+      "startAdjustment": 0,
+      "routeDatumDifference": -0.007446324960682205,
+      "distance": 95.53515267450113,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "front28-apron",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.00017775966742306082,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": -0.007446324960682205,
+      "routeDatumDifference": 0,
+      "distance": 95.53515267450199,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "front28-garden-side",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 37.99999999999911,
+      "fail": null
+    },
+    {
+      "zone": "접속28",
+      "route": "front28-garden-side",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 37.999999999999616,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "301 타워 정면 출입구",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.15000000000000568,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 13,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "301 타워 정면 출입구",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.15000000000000568,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 12.999999999999979,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "303 데크 지상→중간참→301 진입",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.1600000000000108,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 65.95808989207407,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "303 데크 지상→중간참→301 진입",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.1600000000000108,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 65.95634918611454,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "303 데크→중정 입구",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 61.24828759089489,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "303 데크→중정 입구",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 61.24828759089504,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "데크 아래 도로 왕복",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 63.489292894692056,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "데크 아래 도로 왕복",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 63.489292894691985,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "300 접속 계단",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.16551724137931956,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 26.478665613297263,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "300 접속 계단",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.16551724137931956,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 26.478665613297355,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "312 접속 계단",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.16551724137931956,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 62,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "312 접속 계단",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.16551724137931956,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 62,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "301→302 지상 연결",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.1600000000000108,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 148.84032966783045,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "301→302 지상 연결",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.1600000000000108,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 148.84032966777406,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "규장각 출입 계단",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.1666666666666714,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": -2.3603831778018503e-7,
+      "routeDatumDifference": 0,
+      "distance": 18.998071402118676,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "규장각 출입 계단",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.1666666666666714,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": -2.3603831778018503e-7,
+      "distance": 18.99807140211872,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "문화관 하부 광장→테라스",
+      "reverse": false,
+      "passed": true,
+      "maxStep": 0.1647058823529477,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 106.99454286084031,
+      "fail": null
+    },
+    {
+      "zone": "BUILD30",
+      "route": "문화관 하부 광장→테라스",
+      "reverse": true,
+      "passed": true,
+      "maxStep": 0.1647058823529477,
+      "endError": 0,
+      "baselineEndError": 0,
+      "approvedGroundGrade": false,
+      "startAdjustment": 0,
+      "routeDatumDifference": 0,
+      "distance": 106.99454286084024,
+      "fail": null
+    }
+  ],
+  "heightChanges": [
+    {
+      "id": "humanities-1-2-court",
+      "x": 31,
+      "z": 126,
+      "feet": 92.61890444364074,
+      "delta": 0.22715123033952977,
+      "intentionalGrade": true
+    },
+    {
+      "id": "humanities-1-2-court",
+      "x": 31,
+      "z": 126,
+      "feet": 97.41890444364074,
+      "delta": 0.22715123033952977,
+      "intentionalGrade": true
+    },
+    {
+      "id": "humanities-1-2-court",
+      "x": 31,
+      "z": 126,
+      "feet": 107.61890444364074,
+      "delta": 0.22715123033952977,
+      "intentionalGrade": true
+    },
+    {
+      "id": "humanities-1-2-court",
+      "x": 31,
+      "z": 134,
+      "feet": 92.6657078285237,
+      "delta": 0.02206245275712604,
+      "intentionalGrade": true
+    },
+    {
+      "id": "humanities-1-2-court",
+      "x": 31,
+      "z": 134,
+      "feet": 97.46570782852369,
+      "delta": 0.02206245275712604,
+      "intentionalGrade": true
+    },
+    {
+      "id": "humanities-1-2-court",
+      "x": 31,
+      "z": 134,
+      "feet": 107.6657078285237,
+      "delta": 0.02206245275712604,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 107,
+      "feet": 88.65926319928778,
+      "delta": 0.09269708795135045,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 107,
+      "feet": 93.45926319928778,
+      "delta": 0.09269708795135045,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 107,
+      "feet": 103.65926319928778,
+      "delta": 0.09269708795135045,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 115,
+      "feet": 88.65926319928778,
+      "delta": 0.1947812161535154,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 115,
+      "feet": 93.45926319928778,
+      "delta": 0.1947812161535154,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 115,
+      "feet": 103.65926319928778,
+      "delta": 0.1947812161535154,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 123,
+      "feet": 88.65926319928778,
+      "delta": 0.864664693027791,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 123,
+      "feet": 93.45926319928778,
+      "delta": 0.864664693027791,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 20,
+      "z": 123,
+      "feet": 103.65926319928778,
+      "delta": 0.864664693027791,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 107,
+      "feet": 92.1461424661513,
+      "delta": 0.2975221666443417,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 107,
+      "feet": 96.9461424661513,
+      "delta": 0.2975221666443417,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 107,
+      "feet": 107.1461424661513,
+      "delta": 0.2975221666443417,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 115,
+      "feet": 92.1527335906097,
+      "delta": 1.967485360045501,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 115,
+      "feet": 96.9527335906097,
+      "delta": 1.967485360045501,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 115,
+      "feet": 107.1527335906097,
+      "delta": 1.967485360045501,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 123,
+      "feet": 92.52296133789292,
+      "delta": 1.1363658731821857,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 123,
+      "feet": 97.32296133789292,
+      "delta": 1.1363658731821857,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 28,
+      "z": 123,
+      "feet": 107.52296133789292,
+      "delta": 1.1363658731821857,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 107,
+      "feet": 92.76922432443217,
+      "delta": 0.23207792642084257,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 107,
+      "feet": 97.56922432443217,
+      "delta": 0.23207792642084257,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 107,
+      "feet": 107.76922432443217,
+      "delta": 0.23207792642084257,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 115,
+      "feet": 92.68041258606159,
+      "delta": 0.33221940130280814,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 115,
+      "feet": 97.48041258606159,
+      "delta": 0.33221940130280814,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 115,
+      "feet": 107.68041258606159,
+      "delta": 0.33221940130280814,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 123,
+      "feet": 92.6647955828433,
+      "delta": 0.22077987216543704,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 123,
+      "feet": 97.4647955828433,
+      "delta": 0.22077987216543704,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 36,
+      "z": 123,
+      "feet": 107.6647955828433,
+      "delta": 0.22077987216543704,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 99,
+      "feet": 93.10926319928778,
+      "delta": 0.020011017012933507,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 99,
+      "feet": 97.90926319928778,
+      "delta": 0.020011017012933507,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 99,
+      "feet": 108.10926319928778,
+      "delta": 0.020011017012933507,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 107,
+      "feet": 93.10926319928778,
+      "delta": 0.34209434725423193,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 107,
+      "feet": 97.90926319928778,
+      "delta": 0.34209434725423193,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 107,
+      "feet": 108.10926319928778,
+      "delta": 0.34209434725423193,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 115,
+      "feet": 92.74703685533794,
+      "delta": 0.03903359290136166,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 115,
+      "feet": 97.54703685533794,
+      "delta": 0.03903359290136166,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 115,
+      "feet": 107.74703685533794,
+      "delta": 0.03903359290136166,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 123,
+      "feet": 92.6983231437639,
+      "delta": 0.002111111036327884,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 123,
+      "feet": 97.4983231437639,
+      "delta": 0.002111111036327884,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 44,
+      "z": 123,
+      "feet": 107.6983231437639,
+      "delta": 0.002111111036327884,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 99,
+      "feet": 93.10926319928778,
+      "delta": 0.17291329461606608,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 99,
+      "feet": 97.90926319928778,
+      "delta": 0.17291329461606608,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 99,
+      "feet": 108.10926319928778,
+      "delta": 0.17291329461606608,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 107,
+      "feet": 93.10926319928778,
+      "delta": 0.2808252524508248,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 107,
+      "feet": 97.90926319928778,
+      "delta": 0.2808252524508248,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 107,
+      "feet": 108.10926319928778,
+      "delta": 0.2808252524508248,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 115,
+      "feet": 93.10926319928778,
+      "delta": 0.23652198867537777,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 115,
+      "feet": 97.90926319928778,
+      "delta": 0.23652198867537777,
+      "intentionalGrade": true
+    },
+    {
+      "id": "jahayeon-north-approach",
+      "x": 52,
+      "z": 115,
+      "feet": 108.10926319928778,
+      "delta": 0.23652198867537777,
+      "intentionalGrade": true
+    }
+  ],
+  "unexpectedHeightChanges": [],
+  "maxHeightDifference": 1.967485360045501,
+  "jumps": [
+    {
+      "zone": "science",
+      "fps": 30,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "science",
+      "fps": 60,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "science",
+      "fps": 120,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "agriculture",
+      "fps": 30,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "agriculture",
+      "fps": 60,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "agriculture",
+      "fps": 120,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "engineering",
+      "fps": 30,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "engineering",
+      "fps": 60,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "engineering",
+      "fps": 120,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "library",
+      "fps": 30,
+      "landingError": 0.00003582166102655826,
+      "passed": true
+    },
+    {
+      "zone": "library",
+      "fps": 60,
+      "landingError": 0.00003582166102655826,
+      "passed": true
+    },
+    {
+      "zone": "library",
+      "fps": 120,
+      "landingError": 0.00003582166102655826,
+      "passed": true
+    },
+    {
+      "zone": "beodeul",
+      "fps": 30,
+      "landingError": 8.236693771479509e-9,
+      "passed": true
+    },
+    {
+      "zone": "beodeul",
+      "fps": 60,
+      "landingError": 8.236693771479509e-9,
+      "passed": true
+    },
+    {
+      "zone": "beodeul",
+      "fps": 120,
+      "landingError": 8.236693771479509e-9,
+      "passed": true
+    },
+    {
+      "zone": "humanities",
+      "fps": 30,
+      "landingError": 0.000007574070639337904,
+      "passed": true
+    },
+    {
+      "zone": "humanities",
+      "fps": 60,
+      "landingError": 0.000007574070639337904,
+      "passed": true
+    },
+    {
+      "zone": "humanities",
+      "fps": 120,
+      "landingError": 0.000007574070639337904,
+      "passed": true
+    },
+    {
+      "zone": "education",
+      "fps": 30,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "education",
+      "fps": 60,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "education",
+      "fps": 120,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "social",
+      "fps": 30,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "social",
+      "fps": 60,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "social",
+      "fps": 120,
+      "landingError": 2.886579864025407e-15,
+      "passed": true
+    },
+    {
+      "zone": "upper",
+      "fps": 30,
+      "landingError": 5.992120133413437e-10,
+      "passed": true
+    },
+    {
+      "zone": "upper",
+      "fps": 60,
+      "landingError": 5.992120133413437e-10,
+      "passed": true
+    },
+    {
+      "zone": "upper",
+      "fps": 120,
+      "landingError": 5.992120133413437e-10,
+      "passed": true
+    }
+  ],
+  "layerProbes": [
+    {
+      "p": [
+        0,
+        -967
+      ],
+      "low": 95.47306874492949,
+      "high": 100.27306874492949,
+      "separate": true
+    },
+    {
+      "p": [
+        -21,
+        -934
+      ],
+      "low": 95.47306874492949,
+      "high": 100.27306874492949,
+      "separate": true
+    },
+    {
+      "p": [
+        22,
+        -952
+      ],
+      "low": 95.47306874492949,
+      "high": 100.27306874492949,
+      "separate": true
+    }
+  ],
+  "passed": true
+}

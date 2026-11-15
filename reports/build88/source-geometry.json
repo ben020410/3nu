@@ -1,0 +1,582 @@
+{
+  "pathPolygon": [
+    [
+      143.2526700628605,
+      172.55834885932398
+    ],
+    [
+      147.1096700628605,
+      179.293348859324
+    ],
+    [
+      149.19232993713953,
+      178.100651140676
+    ],
+    [
+      145.33532993713953,
+      171.365651140676
+    ]
+  ],
+  "restoredCorridor": [
+    {
+      "name": "terrain-200-240-grass-retained",
+      "triangles": 67
+    },
+    {
+      "name": "terrain-200-240-path-retained",
+      "triangles": 60
+    }
+  ],
+  "polygon": [
+    [
+      109,
+      166
+    ],
+    [
+      128,
+      163
+    ],
+    [
+      143,
+      161
+    ],
+    [
+      157.5,
+      140
+    ],
+    [
+      169,
+      141.5
+    ],
+    [
+      158,
+      124
+    ],
+    [
+      151,
+      115
+    ],
+    [
+      128,
+      129
+    ],
+    [
+      112,
+      139
+    ],
+    [
+      109,
+      149
+    ]
+  ],
+  "holes": [
+    [
+      [
+        140.575,
+        119.474
+      ],
+      [
+        173.534,
+        98.812
+      ],
+      [
+        174.533,
+        95.703
+      ],
+      [
+        189.215,
+        85.272
+      ],
+      [
+        183.222,
+        73.637
+      ],
+      [
+        170.738,
+        70.628
+      ],
+      [
+        160.75,
+        77.047
+      ],
+      [
+        155.956,
+        79.655
+      ],
+      [
+        126.093,
+        64.91
+      ],
+      [
+        121.599,
+        75.342
+      ],
+      [
+        114.008,
+        80.357
+      ],
+      [
+        117.804,
+        83.366
+      ],
+      [
+        136.58,
+        112.955
+      ]
+    ],
+    [
+      [
+        142.273,
+        151.57
+      ],
+      [
+        152.061,
+        167.919
+      ],
+      [
+        167.741,
+        192.894
+      ],
+      [
+        183.022,
+        219.574
+      ],
+      [
+        192.71,
+        213.656
+      ],
+      [
+        200.6,
+        208.842
+      ],
+      [
+        199.302,
+        206.936
+      ],
+      [
+        168.141,
+        155.482
+      ],
+      [
+        159.352,
+        140.838
+      ],
+      [
+        145.669,
+        152.172
+      ]
+    ],
+    [
+      [
+        127.791,
+        157.99
+      ],
+      [
+        110.313,
+        168.421
+      ],
+      [
+        129.389,
+        200.818
+      ],
+      [
+        144.97,
+        226.294
+      ],
+      [
+        153.959,
+        220.778
+      ],
+      [
+        162.548,
+        215.863
+      ],
+      [
+        149.864,
+        194.9
+      ]
+    ],
+    [
+      [
+        48.89,
+        148.16
+      ],
+      [
+        56.68,
+        163.005
+      ],
+      [
+        58.677,
+        173.135
+      ],
+      [
+        59.876,
+        171.63
+      ],
+      [
+        109.214,
+        155.482
+      ],
+      [
+        111.811,
+        154.479
+      ],
+      [
+        114.807,
+        151.269
+      ],
+      [
+        110.812,
+        143.747
+      ],
+      [
+        107.417,
+        132.513
+      ],
+      [
+        65.868,
+        148.662
+      ],
+      [
+        65.369,
+        146.756
+      ],
+      [
+        63.372,
+        142.443
+      ],
+      [
+        52.385,
+        145.853
+      ]
+    ],
+    [
+      [
+        170.937,
+        144.349
+      ],
+      [
+        185.319,
+        135.522
+      ],
+      [
+        192.111,
+        131.31
+      ],
+      [
+        180.126,
+        111.149
+      ],
+      [
+        159.352,
+        125.392
+      ],
+      [
+        168.64,
+        140.437
+      ]
+    ]
+  ],
+  "removed": {
+    "ids": [
+      "vw/187",
+      "vw/221"
+    ],
+    "targets": [
+      {
+        "id": "vw/187",
+        "name": "인문대 연결교",
+        "p": [
+          [
+            154.957,
+            173.636
+          ],
+          [
+            152.061,
+            168.621
+          ],
+          [
+            144.271,
+            172.533
+          ],
+          [
+            139.477,
+            175.843
+          ],
+          [
+            142.473,
+            180.858
+          ],
+          [
+            148.765,
+            177.849
+          ]
+        ],
+        "holes": [],
+        "h": 12.4,
+        "heightSource": "Source height 12.4m retained provisionally; bridge identity explicit in VWorld name; deck level not photo measured",
+        "roof": "#dddfd5",
+        "sourceId": "vw/187",
+        "source": "SMASH SNU campus data (ODbL); OSM / VWorld attribution per upstream",
+        "levels": 1,
+        "siteDatum": 88.65926319928778,
+        "siteBlock": 1,
+        "structure13": "bridge",
+        "supports13": [],
+        "collisionPolygons": [],
+        "connectedBuildings14": [
+          "167983611",
+          "167983609"
+        ],
+        "audit14": {
+          "identityStatus": "source-type-confirmed-number-pending",
+          "geometryStatus": "not-photo-validated",
+          "sourcePhotoViewedThisAudit": false,
+          "sourceSatelliteViewedThisAudit": false
+        },
+        "sourceName15": "인문대 연결교",
+        "renderStyleIndex49": 244,
+        "label49": {
+          "id": "vw/187",
+          "name": "인문대 연결교",
+          "number": "",
+          "displayName": "인문대 연결교",
+          "category": "건물·시설",
+          "zone": "",
+          "aliases": [],
+          "change": "유지",
+          "note": "기존 등록 유지"
+        },
+        "place": {
+          "id": "vw/187",
+          "name": "인문대 연결교",
+          "number": "",
+          "displayName": "인문대 연결교",
+          "category": "건물·시설",
+          "zone": "",
+          "aliases": [],
+          "change": "유지",
+          "note": "기존 등록 유지"
+        },
+        "center": [
+          147.00066666666666,
+          174.89
+        ],
+        "base": 88.65925999999999,
+        "top": 101.05926
+      },
+      {
+        "id": "vw/221",
+        "name": "인문대 연결통로",
+        "p": [
+          [
+            123.297,
+            158.591
+          ],
+          [
+            121.1,
+            155.081
+          ],
+          [
+            117.404,
+            156.886
+          ],
+          [
+            116.605,
+            155.683
+          ],
+          [
+            114.008,
+            156.686
+          ],
+          [
+            119.202,
+            165.412
+          ],
+          [
+            122.198,
+            163.406
+          ],
+          [
+            120.4,
+            160.497
+          ]
+        ],
+        "holes": [],
+        "h": 16,
+        "heightSource": "SMASH dataset: source/estimated height; not independently surveyed",
+        "roof": "#d7d0bf",
+        "sourceId": "vw/221",
+        "source": "SMASH SNU campus data (ODbL); OSM / VWorld attribution per upstream",
+        "levels": 4,
+        "siteDatum": 88.65926319928778,
+        "siteBlock": 1,
+        "semanticType14": "connecting-building",
+        "verticalArrangement14": "unknown",
+        "audit14": {
+          "identityStatus": "source-type-confirmed-number-pending",
+          "geometryStatus": "not-photo-validated",
+          "sourcePhotoViewedThisAudit": false,
+          "sourceSatelliteViewedThisAudit": false
+        },
+        "sourceName15": "인문대 연결통로",
+        "renderStyleIndex49": 250,
+        "label49": {
+          "id": "vw/221",
+          "name": "인문대 연결통로",
+          "number": "",
+          "displayName": "인문대 연결통로",
+          "category": "건물·시설",
+          "zone": "",
+          "aliases": [],
+          "change": "유지",
+          "note": "기존 등록 유지"
+        },
+        "place": {
+          "id": "vw/221",
+          "name": "인문대 연결통로",
+          "number": "",
+          "displayName": "인문대 연결통로",
+          "category": "건물·시설",
+          "zone": "",
+          "aliases": [],
+          "change": "유지",
+          "note": "기존 등록 유지"
+        },
+        "center": [
+          119.27674999999999,
+          159.03025000000002
+        ],
+        "base": 86.65926000000361,
+        "top": 104.65926000046565
+      }
+    ],
+    "removed": [
+      {
+        "name": "building-vw/187-elevated-deck"
+      },
+      {
+        "name": "building-vw/221"
+      },
+      {
+        "name": "roof-vw/221"
+      },
+      {
+        "name": "facade-campus:0:0",
+        "triangles": 16
+      }
+    ]
+  },
+  "changed": [
+    {
+      "name": "terrain-200-240-grass",
+      "triangles": 2263
+    },
+    {
+      "name": "terrain-200-240-grass",
+      "triangles": 269
+    },
+    {
+      "name": "terrain-200-240-steps",
+      "triangles": 1554
+    },
+    {
+      "name": "terrain-200-240-path",
+      "triangles": 313
+    },
+    {
+      "name": "terrain-200-240-path",
+      "triangles": 109
+    },
+    {
+      "name": "terrain-200-240-road",
+      "triangles": 186
+    },
+    {
+      "name": "terrain-200-240-plaza",
+      "triangles": 549
+    }
+  ],
+  "pattern": {
+    "center": [
+      138,
+      141
+    ],
+    "u": [
+      0.857,
+      -0.515
+    ],
+    "v": [
+      0.515,
+      0.857
+    ],
+    "span": [
+      40,
+      22
+    ],
+    "style": "gray paving, muted terracotta perimeter motif"
+  },
+  "preserve": {
+    "mainBuildings": true,
+    "externalRoadHeights": true,
+    "plazaLabel": "place-liberation"
+  },
+  "boundaryHeights": [
+    [
+      109,
+      166,
+      88.6592600000029
+    ],
+    [
+      128,
+      163,
+      88.65926000020086
+    ],
+    [
+      143,
+      161,
+      88.65926000000061
+    ],
+    [
+      157.5,
+      140,
+      88.65926000000009
+    ],
+    [
+      169,
+      141.5,
+      88.65926
+    ],
+    [
+      158,
+      124,
+      88.6592600000001
+    ],
+    [
+      151,
+      115,
+      88.65926000384343
+    ],
+    [
+      128,
+      129,
+      88.65942321457473
+    ],
+    [
+      112,
+      139,
+      88.65935082021201
+    ],
+    [
+      109,
+      149,
+      88.65926191948928
+    ]
+  ],
+  "note": "Concept image10 supplies paving only; its bridge must not be recreated. Boundary fitted to image07 blue region.",
+  "item": "R05",
+  "createdAt": "2026-11-15T03:23:01.506Z",
+  "script": "https://gwanak-walk-first-prototype.ben020410.chatgpt.site/app.js?v=84",
+  "units": "current model worldXZ; boundary fitted to user markup, design estimates, not surveyed",
+  "collisionQA": "visual review only; main must implement and verify walking, collision and navigation"
+}

@@ -1,0 +1,533 @@
+{
+  "unit": "1 world unit = 1 metre",
+  "originLonLat": [
+    126.952,
+    37.459
+  ],
+  "axes": "x east; z north; y up",
+  "formula": "x=(lon-lon0)*111320*cos(lat0); z=(lat-lat0)*111320",
+  "commonImageTransform": {
+    "a": 0.311030855423916,
+    "b": -0.00074414334562606,
+    "c": -523.1888459741493,
+    "d": -93.61396655465386
+  },
+  "imageDimensions": [
+    3152,
+    1636
+  ],
+  "controls": {
+    "science": [
+      {
+        "feature": "28동",
+        "referencePixelApprox": [
+          1190,
+          782
+        ],
+        "modelXZApprox": [
+          -149.6,
+          -149.6
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -152.48,
+          -148.73
+        ],
+        "visualAnchorResidualM": 3.0
+      },
+      {
+        "feature": "56동",
+        "referencePixelApprox": [
+          1495,
+          780
+        ],
+        "modelXZApprox": [
+          -54.6,
+          -142.6
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -57.62,
+          -147.88
+        ],
+        "visualAnchorResidualM": 6.1
+      },
+      {
+        "feature": "31동 인접 기준",
+        "referencePixelApprox": [
+          1110,
+          996
+        ],
+        "modelXZApprox": [
+          -176.4,
+          -217.7
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -177.2,
+          -215.35
+        ],
+        "visualAnchorResidualM": 2.5
+      }
+    ],
+    "agriculture": [
+      {
+        "feature": "200동 남측 덩어리",
+        "referencePixelApprox": [
+          680,
+          871
+        ],
+        "modelXZApprox": [
+          -309.1,
+          -149.9
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -311.04,
+          -176.79
+        ],
+        "visualAnchorResidualM": 27.0
+      },
+      {
+        "feature": "201동",
+        "referencePixelApprox": [
+          685,
+          1090
+        ],
+        "modelXZApprox": [
+          -317,
+          -233.5
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -309.32,
+          -244.9
+        ],
+        "visualAnchorResidualM": 13.7
+      },
+      {
+        "feature": "75-1동",
+        "referencePixelApprox": [
+          675,
+          1240
+        ],
+        "modelXZApprox": [
+          -304,
+          -285.4
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -312.32,
+          -291.56
+        ],
+        "visualAnchorResidualM": 10.4
+      }
+    ],
+    "engineering": [
+      {
+        "feature": "31동",
+        "referencePixelApprox": [
+          1110,
+          996
+        ],
+        "modelXZApprox": [
+          -176.4,
+          -217.7
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -177.2,
+          -215.35
+        ],
+        "visualAnchorResidualM": 2.5
+      },
+      {
+        "feature": "33동",
+        "referencePixelApprox": [
+          1261,
+          1284
+        ],
+        "modelXZApprox": [
+          -133.3,
+          -309.8
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -130.02,
+          -304.81
+        ],
+        "visualAnchorResidualM": 6.0
+      },
+      {
+        "feature": "36동",
+        "referencePixelApprox": [
+          1534,
+          1543
+        ],
+        "modelXZApprox": [
+          -59.8,
+          -387.7
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -44.92,
+          -385.17
+        ],
+        "visualAnchorResidualM": 15.1
+      },
+      {
+        "feature": "37동",
+        "referencePixelApprox": [
+          1292,
+          1467
+        ],
+        "modelXZApprox": [
+          -105.4,
+          -366.8
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          -120.25,
+          -361.71
+        ],
+        "visualAnchorResidualM": 15.7
+      }
+    ],
+    "library": [
+      {
+        "feature": "본관 62동",
+        "referencePixelApprox": [
+          1700,
+          200
+        ],
+        "modelXZApprox": [
+          4.4,
+          28.7
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          5.71,
+          32.67
+        ],
+        "visualAnchorResidualM": 4.2
+      },
+      {
+        "feature": "관정관 62-1동",
+        "referencePixelApprox": [
+          1805,
+          290
+        ],
+        "modelXZApprox": [
+          38.3,
+          -7.6
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          38.44,
+          4.76
+        ],
+        "visualAnchorResidualM": 12.4
+      },
+      {
+        "feature": "약학관 20동",
+        "referencePixelApprox": [
+          1862,
+          415
+        ],
+        "modelXZApprox": [
+          69,
+          -49
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          56.26,
+          -34.08
+        ],
+        "visualAnchorResidualM": 19.6
+      }
+    ],
+    "beodeul": [
+      {
+        "feature": "풍산마당 100동",
+        "referencePixelApprox": [
+          2640,
+          549
+        ],
+        "modelXZApprox": [
+          305.3,
+          -70.9
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          298.34,
+          -75.18
+        ],
+        "visualAnchorResidualM": 8.2
+      },
+      {
+        "feature": "교수회관 65동",
+        "referencePixelApprox": [
+          2220,
+          749
+        ],
+        "modelXZApprox": [
+          150.6,
+          -122.7
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          167.86,
+          -137.7
+        ],
+        "visualAnchorResidualM": 22.9
+      },
+      {
+        "feature": "교수회관 남측 주차 진입",
+        "referencePixelApprox": [
+          2400,
+          931
+        ],
+        "modelXZApprox": null,
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check",
+        "commonTransformXZ": [
+          223.98,
+          -194.17
+        ]
+      }
+    ],
+    "humanities": [
+      {
+        "feature": "1동",
+        "referencePixelApprox": [
+          140,
+          480
+        ],
+        "modelXZApprox": [
+          29.9,
+          141.7
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "3동",
+        "referencePixelApprox": [
+          590,
+          270
+        ],
+        "modelXZApprox": [
+          139.8,
+          197.9
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "5동",
+        "referencePixelApprox": [
+          730,
+          320
+        ],
+        "modelXZApprox": [
+          171.1,
+          181
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "14동 인접 기준",
+        "referencePixelApprox": [
+          1110,
+          190
+        ],
+        "modelXZApprox": [
+          267,
+          210
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      }
+    ],
+    "education": [
+      {
+        "feature": "9동",
+        "referencePixelApprox": [
+          377,
+          180
+        ],
+        "modelXZApprox": [
+          255.2,
+          143.7
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "10동",
+        "referencePixelApprox": [
+          566,
+          135
+        ],
+        "modelXZApprox": [
+          296.4,
+          141.6
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "11동",
+        "referencePixelApprox": [
+          527,
+          355
+        ],
+        "modelXZApprox": [
+          285.7,
+          91.8
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "12동",
+        "referencePixelApprox": [
+          380,
+          450
+        ],
+        "modelXZApprox": [
+          246.8,
+          55.7
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      }
+    ],
+    "social": [
+      {
+        "feature": "16동 북단",
+        "referencePixelApprox": [
+          575,
+          30
+        ],
+        "modelXZApprox": [
+          -75,
+          582
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "16동 안쪽 꺾임",
+        "referencePixelApprox": [
+          525,
+          475
+        ],
+        "modelXZApprox": [
+          -88,
+          475
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "16동 남단",
+        "referencePixelApprox": [
+          665,
+          632
+        ],
+        "modelXZApprox": [
+          -45,
+          442
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "83동",
+        "referencePixelApprox": [
+          730,
+          350
+        ],
+        "modelXZApprox": [
+          -30.1,
+          495.5
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "101동",
+        "referencePixelApprox": [
+          250,
+          450
+        ],
+        "modelXZApprox": [
+          -160.6,
+          471.4
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      }
+    ],
+    "upper": [
+      {
+        "feature": "303동 외곽 범위",
+        "referencePixelApprox": [
+          675,
+          305
+        ],
+        "modelXZApprox": [
+          -41,
+          -965.8
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "301동 타워·저층부 기준",
+        "referencePixelApprox": [
+          845,
+          335
+        ],
+        "modelXZApprox": [
+          31,
+          -1030.8
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      },
+      {
+        "feature": "302동 북단",
+        "referencePixelApprox": [
+          850,
+          590
+        ],
+        "modelXZApprox": [
+          37.9,
+          -1165.5
+        ],
+        "anchorType": "roof/visible feature, not surveyed ground corner",
+        "role": "cross-check"
+      }
+    ]
+  },
+  "camera": "landuse31-reference: north-up orthographic, same crop plus margin; 1280×720; no perspective",
+  "caution": "Manual roof/feature points include roof parallax and existing footprint error. Residuals are alignment diagnostics, NOT measured positional accuracy. No individual building was moved or scaled. Additional captures use independent hand registration within the same metre frame; not cadastral boundaries."
+}

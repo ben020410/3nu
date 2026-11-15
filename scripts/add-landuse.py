@@ -1,0 +1,4 @@
+import json,math,pathlib,collections
+R=pathlib.Path(__file__).resolve().parents[1];S=json.loads((R/'data-sources/smash-campus.json').read_text());N=json.loads((R/'dist/data/walk.json').read_text());D=json.loads((R/'dist/data/campus.json').read_text());ox,oz=D['origin'];phi=math.radians(S['meta']['lat']);mx=111412.84*math.cos(phi)-93.5*math.cos(3*phi);mz=111132.92-559.82*math.cos(2*phi)+1.175*math.cos(4*phi)
+def tr(p):return [round((S['meta']['lon']+p[0]/mx-ox)*111320*math.cos(math.radians(oz)),2),round((S['meta']['lat']-p[1]/mz-oz)*111320,2)]
+N['lands']=[{'kind':a['k'],'rings':[[tr(p)for p in r]for r in a['r']]}for a in S['lands']];N['trees']=[tr(t)+[t[2]]for t in S['trees']];(R/'dist/data/walk.json').write_text(json.dumps(N,ensure_ascii=False,separators=(',',':')));print(collections.Counter(a['kind']for a in N['lands']))

@@ -1,0 +1,50 @@
+/* Evidence and uncertain dimensions: data/architecture.json. Ground footprints unchanged. */
+function prepareEngineering(data,spec){for(const b of data.buildings)if(spec[b.id]){b.engineering=spec[b.id];b.modelNote=spec[b.id].note;if(b.engineering.pilotiHeight){const c=b.p.reduce((a,p)=>[a[0]+p[0]/b.p.length,a[1]+p[1]/b.p.length],[0,0]);b.collisionPolygons=[b.p.map(p=>[c[0]+(p[0]-c[0])*.78,c[1]+(p[1]-c[1])*.78])];for(let e=0;e<b.p.length;e++){const a=b.p[e],d=b.p[(e+1)%b.p.length],count=Math.max(1,Math.round(Math.hypot(d[0]-a[0],d[1]-a[1])/8));for(let j=0;j<count;j++){const t=(j+.12)/count,x=a[0]+(d[0]-a[0])*t,z=a[1]+(d[1]-a[1])*t;b.collisionPolygons.push([[x-.4,z-.4],[x+.4,z-.4],[x+.4,z+.4],[x-.4,z+.4]]);}}}}}
+function buildEngineering(B,scene,b,height){
+ const s=b.engineering,V=(x,y,z)=>new B.Vector3(x,y,z),groups=new Map(),center=b.p.reduce((a,p)=>[a[0]+p[0]/b.p.length,a[1]+p[1]/b.p.length],[0,0]),datum=b.siteDatum??s.datumElevation??height(...(s.datumPoint||center));
+ const mats={};for(const [k,c] of Object.entries({wall:s.wall||'#bec4c5',glass:'#527483',metal:'#818d94',wood:'#856953',roof:'#a2a6a1',red:'#9b6259',brick:'#7c6758',concrete:'#d2d3cc'})){const m=new B.StandardMaterial(b.id+'-'+k,scene);m.diffuseColor=B.Color3.FromHexString(c);m.specularColor=new B.Color3(...(k==='glass'?[.45,.45,.45]:[.03,.03,.03]));m.specularPower=90;mats[k]=m;groups.set(k,[]);}
+ if(s.finish67){for(const m of Object.values(mats))m.metadata={facade53:true};mats.wall.diffuseColor=B.Color3.FromHexString('#d9dad3');mats.glass.diffuseColor=B.Color3.FromHexString('#627d7f');mats.metal.diffuseColor=B.Color3.FromHexString('#7a8585');}
+ if(s.finish68){for(const m of Object.values(mats))m.metadata={facade53:true};mats.wall.diffuseColor=B.Color3.FromHexString('#dadbd4');mats.glass.diffuseColor=B.Color3.FromHexString(b.id==='93549089'?'#527e91':'#60777c');mats.metal.diffuseColor=B.Color3.FromHexString(b.id==='93549089'?'#c2cecc':'#727f80');mats.wood.diffuseColor=B.Color3.FromHexString('#b9a887');}
+ const add=(m,k)=>{m.material=mats[k];groups.get(k).push(m);return m};
+ function clip(p,z,above){const out=[];for(let i=0;i<p.length;i++){const a=p[i],d=p[(i+1)%p.length],ia=above?a[1]>=z:a[1]<=z,id=above?d[1]>=z:d[1]<=z;if(ia)out.push(a);if(ia!==id){const t=(z-a[1])/(d[1]-a[1]);out.push([a[0]+t*(d[0]-a[0]),z]);}}return out;}
+ function slab(p,lo,hi,k){const m=B.MeshBuilder.ExtrudePolygon('part',{shape:p.map(q=>V(q[0],0,q[1])),depth:hi-lo,sideOrientation:B.Mesh.DOUBLESIDE},scene,earcut);m.position.y=hi;return add(m,k);}
+ function bar(a,d,y,h,w,k){const dx=d[0]-a[0],dz=d[1]-a[1],m=B.MeshBuilder.CreateBox('facade',{width:Math.hypot(dx,dz),height:h,depth:w},scene);m.position=V((a[0]+d[0])/2,y+h/2,(a[1]+d[1])/2);m.rotation.y=-Math.atan2(dz,dx);return add(m,k);}
+ const partRecords=[];b.base=Math.min(...b.p.map(p=>height(...p)))-1;b.top=datum;
+ for(const part of s.parts){const partDatum=b.siteDatum??(part.datumPoint?height(...part.datumPoint):datum);let p=b.p;if(part.zMin!=null)p=clip(p,part.zMin,true);if(part.zMax!=null)p=clip(p,part.zMax,false);if(p.length<3)continue;const top=partDatum+part.roof;if(s.pilotiHeight||part.pilotiHeight){const piloti=s.pilotiHeight||part.pilotiHeight,pc=p.reduce((a,q)=>[a[0]+q[0]/p.length,a[1]+q[1]/p.length],[0,0]);const inner=p.map(q=>[pc[0]+(q[0]-pc[0])*.78,pc[1]+(q[1]-pc[1])*.78]);slab(inner,b.base,partDatum+piloti,'glass');slab(p,partDatum+piloti,top,part.material||'wall');for(let e=0;e<p.length;e++){const a=p[e],d=p[(e+1)%p.length],len=Math.hypot(d[0]-a[0],d[1]-a[1]),count=Math.max(1,Math.round(len/8));for(let j=0;j<count;j++){const t=(j+.12)/count;const col=B.MeshBuilder.CreateCylinder('piloti',{height:partDatum+piloti-b.base,diameter:s.finish68&&b.id==='93549089'?1.05:.8,tessellation:8},scene);col.position=V(a[0]+(d[0]-a[0])*t,(b.base+partDatum+piloti)/2,a[1]+(d[1]-a[1])*t);add(col,s.columnMaterial||'wall');}}}else slab(p,b.base,top,part.material||'wall');slab(p,top,top+.35,'roof');b.top=Math.max(b.top,top+.35);partRecords.push({groundDatum:partDatum,bodyHeight:part.roof,roofCap:.35,roofElevation:top+.35,floorElevations:part.floors.map(v=>partDatum+v)});
+ const area=p.reduce((v,a,i)=>v+a[0]*p[(i+1)%p.length][1]-p[(i+1)%p.length][0]*a[1],0),sign=area>0?1:-1;
+ for(let e=0;e<p.length;e++){const a=p[e],d=p[(e+1)%p.length],dx=d[0]-a[0],dz=d[1]-a[1],len=Math.hypot(dx,dz);if(len<2)continue;const face=Math.abs(dx)>Math.abs(dz)?(sign*dx>0?'south':'north'):(sign*dz>0?'east':'west'),f={...part.facade,...part.faces?.[face]};if(f.blank)continue;const point=(t,o=.08)=>[a[0]+dx*t+sign*dz/len*o,a[1]+dz*t-sign*dx/len*o];
+ for(let row=0;row<part.floors.length-1;row++){const lo=partDatum+part.floors[row],fh=part.floors[row+1]-part.floors[row];if(lo>=top||(s.pilotiHeight&&part.floors[row]<s.pilotiHeight))continue;const count=f.bays||Math.max(1,Math.round(len/(f.spacing||3.4))),gap=f.gap??.14;
+ for(let bay=0;bay<count;bay++){if(f.omit?.includes(bay))continue;const aa=point((bay+gap)/count),dd=point((bay+1-gap)/count);bar(aa,dd,lo+(f.sill??.8),Math.min(f.height??Infinity,fh-(f.sill??.8)-.45,top-lo-.45),.13,'glass');if(f.mullions)for(let k=1;k<f.mullions;k++){const t=(bay+gap+(1-2*gap)*k/f.mullions)/count;bar(point(t-.035/len,.18),point(t+.035/len,.18),lo+(f.sill??.8),Math.min(f.height??Infinity,fh-(f.sill??.8)-.45,top-lo-.45),.15,'metal');}}
+ if(f.band)bar(point(0,.2),point(1,.2),lo+fh-.5,.45,.28,part.bandMaterial||part.material||'wall');
+ }
+ if(s.finish68&&b.id==='179742154'&&len>10){
+ const warm=face==='east'&&(a[0]+d[0])/2>-24;
+ if(warm){const lo=partDatum+4.5,hh=top-lo-.35,n=Math.max(1,Math.round(len/.75));for(let j=0;j<n;j++){const t=(j+.5)/n;bar(point(t-.10/len,.40),point(t+.10/len,.40),lo,hh,.45,'wood');}for(const t of[0,1])bar(point(t-.20/len,.40),point(t+.20/len,.40),lo,hh,.65,'concrete');for(const yy of[lo,top-.35])bar(point(0,.40),point(1,.40),yy,.35,.65,'concrete');}
+ else if(face==='north'||face==='west'){const n=Math.max(1,Math.round(len/4.2));for(let row=1;row<part.floors.length-1;row++){const y=partDatum+part.floors[row]+.25,hh=part.floors[row+1]-part.floors[row]-.5;for(let j=0;j<n;j+=2){const t=(j+.5)/n;for(let h=.15;h<hh;h+=.42)bar(point(t-.22/n,.34),point(t+.22/n,.34),y+h,.10,.32,'metal');}}}
+ }
+ if(s.finish67&&len>20&&face==='east'){
+ const count=Math.max(1,Math.round(len/4.4));
+ for(let row=1;row<part.floors.length-1;row++){const y=partDatum+part.floors[row]+.18,fh=part.floors[row+1]-part.floors[row]-.45;
+ for(let j=0;j<count;j++){const t=(j+.5)/count;
+ if(j<count*.62){const half=.23/count;for(let v=.1;v<fh;v+=.38)bar(point(t-half,.40),point(t+half,.40),y+v,.10,.38,'metal');}
+ else bar(point(t-.08/len,.35),point(t+.08/len,.35),y,fh,.65,'concrete');}
+ bar(point(0,.35),point(1,.35),y+fh,.14,.50,'concrete');}
+ }
+ if(f.vertical){const count=Math.round(len/1.25);for(let j=0;j<count;j++){const t=(j+.5)/count;bar(point(t-.18/len,.2),point(t+.18/len,.2),partDatum+part.floors[0]+(j%3)*.6,top-partDatum-part.floors[0]-(j%3)*.6,.25,'wall');}}
+ }
+ }
+ // 301 north-facing arched atrium, visible in official engineering-college photograph.
+ if(s.atrium){const a=s.atrium,y=datum+a.bottom,points=[];for(let i=0;i<=20;i++){const t=Math.PI*i/20;points.push([a.x+Math.cos(t)*a.radius,y+a.straight+Math.sin(t)*a.radius,a.z]);}points.push([a.x-a.radius,y,a.z],[a.x+a.radius,y,a.z]);const pos=points.flat(),idx=[];for(let i=1;i<points.length-1;i++)idx.push(0,i,i+1);const vd=new B.VertexData();vd.positions=pos;vd.indices=idx;vd.uvs=points.flatMap(()=>[0,0]);vd.normals=[];B.VertexData.ComputeNormals(pos,idx,vd.normals);const m=new B.Mesh('atrium',scene);vd.applyToMesh(m);mats.glass.backFaceCulling=false;add(m,'glass');const line=B.MeshBuilder.CreateTube('arch-frame',{path:points.slice(0,21).map(p=>V(...p)),radius:.22,tessellation:6},scene);add(line,'metal');for(let x=-a.radius+2;x<a.radius;x+=2)bar([a.x+x,a.z-.1],[a.x+x+.12,a.z-.1],y,a.straight+Math.sqrt(a.radius*a.radius-x*x),.2,'metal');}
+ if(s.number==='302'){
+ const z=-1109.5,x=38.5,lo=datum+26,hi=datum+37;
+ for(const [a,d]of [[[x-3,lo,z],[x+3,hi,z]],[[x+3,lo,z],[x-3,hi,z]]])add(B.MeshBuilder.CreateTube('red-brace',{path:[V(...a),V(...d)],radius:.35,tessellation:6},scene),'red');
+ }
+ b.heightRecord={parts:partRecords,groundDatum:datum,structureHeight:b.top-datum,roofElevation:b.top,source:s.heightSource,uncertainty:s.uncertainty};
+ for(const [k,list]of groups)if(list.length){const m=B.Mesh.MergeMeshes(list,true,true,undefined,false,false);m.name='building-'+b.id+'-'+k;if(s.finish68)m.metadata={buildingId:b.id,labelSurfaceId49:b.id,exterior68:true};if(s.finish67)m.metadata={buildingId:b.id,labelSurfaceId49:b.id,exterior67:true};m.material=mats[k];m.freezeWorldMatrix();}
+}
+
+if(typeof module!=="undefined")module.exports={prepareEngineering,buildEngineering};
+// Per-part piloti collision: solid older wing, recessed core and columns under raised wing.
+const prepareEngineeringBase=prepareEngineering;
+prepareEngineering=function(data,spec){prepareEngineeringBase(data,spec);for(const b of data.buildings){const s=spec[b.id];if(!s?.parts.some(p=>p.pilotiHeight))continue;const clip=(p,z,above)=>{const out=[];for(let i=0;i<p.length;i++){const a=p[i],d=p[(i+1)%p.length],aa=above?a[1]>=z:a[1]<=z,dd=above?d[1]>=z:d[1]<=z;if(aa)out.push(a);if(aa!==dd){const t=(z-a[1])/(d[1]-a[1]);out.push([a[0]+t*(d[0]-a[0]),z]);}}return out;};b.collisionPolygons=[];for(const part of s.parts){let p=b.p;if(part.zMin!=null)p=clip(p,part.zMin,true);if(part.zMax!=null)p=clip(p,part.zMax,false);if(p.length<3)continue;if(!part.pilotiHeight){b.collisionPolygons.push(p);continue;}const c=p.reduce((a,q)=>[a[0]+q[0]/p.length,a[1]+q[1]/p.length],[0,0]);b.collisionPolygons.push(p.map(q=>[c[0]+(q[0]-c[0])*.78,c[1]+(q[1]-c[1])*.78]));for(let i=0;i<p.length;i++){const a=p[i],d=p[(i+1)%p.length],count=Math.max(1,Math.round(Math.hypot(d[0]-a[0],d[1]-a[1])/8));for(let j=0;j<count;j++){const t=(j+.12)/count,x=a[0]+(d[0]-a[0])*t,z=a[1]+(d[1]-a[1])*t;b.collisionPolygons.push([[x-.4,z-.4],[x+.4,z-.4],[x+.4,z+.4],[x-.4,z+.4]]);}}}}};
+if(typeof module==='object')module.exports={prepareEngineering,buildEngineering};

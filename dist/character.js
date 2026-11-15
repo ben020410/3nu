@@ -1,0 +1,18 @@
+/* Two original reference-based bird rigs. Standing envelope 1.79m, existing collision unchanged. */
+function createWalker15(B,scene){
+ const V=(x,y,z)=>new B.Vector3(x,y,z),root=new B.Mesh('walker',scene);root.ellipsoid=V(.42,.9,.42);
+ const mat=(n,c)=>{const m=new B.StandardMaterial('walker-'+n,scene);m.diffuseColor=B.Color3.FromHexString(c);m.specularColor=B.Color3.Black();return m},white=mat('white','#fff9ed'),cream=mat('cream','#ffe9a9'),ink=mat('ink','#13213b'),orange=mat('orange','#efa52d'),blush=mat('blush','#f4b393');
+ function egg(n,pos,size,m,parent){const q=B.MeshBuilder.CreateSphere('walker-'+n,{diameter:1,segments:20},scene);q.parent=parent;q.position=V(...pos);q.scaling=V(...size);q.material=m;q.isPickable=false;return q}
+ const rigs={};for(const type of ['rio','baekhak']){const bird=new B.TransformNode(type,scene);bird.parent=root;const crane=type==='baekhak',coat=crane?white:cream;
+ egg(type+'-body',[0,crane?-.22:-.14,0],crane?[.57,.72,.54]:[.86,1.08,.67],coat,bird);
+ if(crane)egg('neck',[0,.17,.01],[.24,.68,.29],coat,bird);
+ const head=egg('head',[0,crane?.53:.43,.04],crane?[.78,.62,.66]:[.86,.82,.73],coat,bird);
+ for(const side of[-1,1]){egg('eye',[side*.14,crane?.58:.49,.355],[.065,.083,.035],ink,bird);egg('glint',[side*.14-.01,crane?.6:.51,.373],[.018,.022,.01],white,bird);if(crane)egg('cheek',[side*.27,.48,.31],[.14,.065,.026],blush,bird);else{egg('brow',[side*.15,.63,.34],[.12,.024,.025],ink,bird);}}
+ egg('beak-top',[0,crane?.43:.32,.42],crane?[.37,.12,.31]:[.35,.15,.26],orange,bird);egg('beak-bottom',[0,crane?.395:.225,.42],crane?[.34,.06,.27]:[.32,.12,.24],orange,bird);
+ const legs=[],wings=[];for(const side of[-1,1]){const leg=new B.TransformNode(type+'leg',scene);leg.parent=bird;leg.position=V(side*.17,-.61,0);egg('leg',[0,-.13,0],[.075,.29,.08],crane?ink:orange,leg);egg('foot',[0,-.28,.07],crane?[.17,.12,.25]:[.28,.12,.29],crane?ink:orange,leg);legs.push({node:leg,side});
+ const wing=new B.TransformNode(type+'wing',scene);wing.parent=bird;wing.position=V(side*(crane?.23:.37),-.02,0);egg('wing',[side*.16,-.12,0],crane?[.54,.26,.19]:[.32,.44,.22],coat,wing);if(crane)for(let i=0;i<3;i++)egg('feather',[side*(.23+i*.09),-.18-i*.025,-.02],[.23,.14,.19],coat,wing);wings.push({node:wing,side});}
+ for(let i=0;i<3;i++)egg('tail',[.07*(i-1),-.37,-.32],[.17,.20,.30],coat,bird);
+ rigs[type]={bird,head,legs,wings};}
+ let kind='rio',phase=0;function setCharacter(type){kind=type;for(const [k,r]of Object.entries(rigs))r.bird.setEnabled(k===type)}setCharacter(kind);
+ return{player:root,head:rigs.rio.head,bag:root,setCharacter,animate(dt,moving,airborne,flying,speed=12){phase+=dt*(flying?7:moving?Math.min(20,6+speed*.34):2);const r=rigs[kind];for(const {node,side}of r.legs)node.rotation.x=flying?.65:airborne?.35:Math.sin(phase)*side*(moving?.5:0);for(const {node,side}of r.wings){node.rotation.z=kind==='baekhak'?side*(flying?Math.sin(phase)*.65:.1):side*(moving?.12+Math.sin(phase)*.15:.06);node.rotation.x=airborne&&!flying?-.4:0;}},visibility(v){for(const q of root.getChildMeshes())q.visibility=v}};
+}

@@ -1,0 +1,13 @@
+/* Scratch compilation tools for local R02 source-surface replacement. */
+const earcut=require('../../dist/vendor/earcut.js');
+const cross=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+function masks(poly){const ix=earcut(poly.flat()),out=[];for(let i=0;i<ix.length;i+=3){const t=ix.slice(i,i+3).map(j=>poly[j]);if(cross(...t)<0)t.reverse();out.push(t);}return out;}
+function cut(vs,a,b){const d=v=>(b[0]-a[0])*(v[2]-a[1])-(b[1]-a[1])*(v[0]-a[0]),pos=[],neg=[];for(let i=0;i<vs.length;i++){const p=vs[i],q=vs[(i+1)%vs.length],dp=d(p),dq=d(q);if(dp>=0)pos.push(p);if(dp<=0)neg.push(p);if((dp<0&&dq>0)||(dp>0&&dq<0)){const t=dp/(dp-dq),r=p.map((x,j)=>x+(q[j]-x)*t);pos.push(r);neg.push(r);}}return[pos,neg];}
+function split(vs,mask){let inner=vs,out=[];for(let k=0;k<mask.length&&inner.length>=3;k++){const[a,b]=cut(inner,mask[k],mask[(k+1)%mask.length]);if(b.length>=3)out.push(b);inner=a;}return{inner,out};}
+function subtract(poly,triangles){let rest=[poly];for(const mask of triangles){const next=[];for(const p of rest)next.push(...split(p,mask).out);rest=next;}return rest;}
+function fan(p){const ts=[];for(let i=1;i<p.length-1;i++){let t=[p[0],p[i],p[i+1]],a=t[0],b=t[1],c=t[2],u=b.map((x,j)=>x-a[j]),v=c.map((x,j)=>x-a[j]);if(Math.hypot(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0])>1e-9)ts.push(t);}return ts;}
+function height(t,x,z){const [a,b,c]=t,den=(b[2]-c[2])*(a[0]-c[0])+(c[0]-b[0])*(a[2]-c[2]);if(Math.abs(den)<1e-9)return null;const u=((b[2]-c[2])*(x-c[0])+(c[0]-b[0])*(z-c[2]))/den,v=((c[2]-a[2])*(x-c[0])+(a[0]-c[0])*(z-c[2]))/den;return u>=-1e-7&&v>=-1e-7&&u+v<=1+1e-7?u*a[1]+v*b[1]+(1-u-v)*c[1]:null;}
+function indexTriangles(ts,cell=4){const grid=new Map();for(const t of ts){for(let x=Math.floor(Math.min(...t.map(p=>p[0]))/cell);x<=Math.floor(Math.max(...t.map(p=>p[0]))/cell);x++)for(let z=Math.floor(Math.min(...t.map(p=>p[2]))/cell);z<=Math.floor(Math.max(...t.map(p=>p[2]))/cell);z++){const k=x+','+z;if(!grid.has(k))grid.set(k,[]);grid.get(k).push(t);}}return(x,z)=>{let out=null;for(const t of grid.get(Math.floor(x/cell)+','+Math.floor(z/cell))||[]){const h=height(t,x,z);if(h!==null&&(out===null||h>out))out=h;}return out;};}
+function corridor(a,b,w){const dx=b[0]-a[0],dz=b[1]-a[1],len=Math.hypot(dx,dz),nx=-dz/len*w/2,nz=dx/len*w/2;return[[a[0]-nx,a[1]-nz],[b[0]-nx,b[1]-nz],[b[0]+nx,b[1]+nz],[a[0]+nx,a[1]+nz]];}
+function distance(x,z,poly){return Math.min(...poly.map((a,i)=>{const b=poly[(i+1)%poly.length],dx=b[0]-a[0],dz=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dz)/(dx*dx+dz*dz)));return Math.hypot(x-a[0]-t*dx,z-a[1]-t*dz)}));}
+module.exports={masks,cut,split,subtract,fan,height,indexTriangles,corridor,distance};

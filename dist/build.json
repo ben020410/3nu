@@ -1,0 +1,10 @@
+{
+  "build": 43,
+  "revision": "ground-finish43-r1",
+  "baseline": "2698f6915e0353dfe05f39e95d740c4117fd5bbc",
+  "scope": [
+    "culture-ground-seams",
+    "humanities1-court",
+    "student-court-join"
+  ]
+}

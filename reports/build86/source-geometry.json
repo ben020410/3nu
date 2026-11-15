@@ -1,0 +1,401 @@
+{
+  "item": "R03",
+  "createdAt": "2026-11-15T03:21:57.332Z",
+  "script": "https://gwanak-walk-first-prototype.ben020410.chatgpt.site/app.js?v=84",
+  "removedIDs": [
+    "vw/51",
+    "vw/102",
+    "vw/103"
+  ],
+  "targets": [
+    {
+      "id": "vw/51",
+      "name": "이름 미등록 건물",
+      "p": [
+        [
+          -64.669,
+          -136.092
+        ],
+        [
+          -65.967,
+          -139.302
+        ],
+        [
+          -84.144,
+          -132.281
+        ],
+        [
+          -82.746,
+          -128.67
+        ]
+      ],
+      "holes": [],
+      "h": 4,
+      "heightSource": "SMASH dataset: source/estimated height; not independently surveyed",
+      "roof": "#9aaba5",
+      "sourceId": "vw/51",
+      "source": "SMASH SNU campus data (ODbL); OSM / VWorld attribution per upstream",
+      "levels": null,
+      "siteDatum": 88.65926319928778,
+      "siteBlock": 1,
+      "sourceName15": "이름 미등록 건물",
+      "renderStyleIndex49": 211,
+      "center": [
+        -74.3815,
+        -134.08625
+      ],
+      "base": 86.6592600000003,
+      "top": 92.65926000012222
+    },
+    {
+      "id": "vw/102",
+      "name": "이름 미등록 건물",
+      "p": [
+        [
+          -50.087,
+          -298.78
+        ],
+        [
+          -76.454,
+          -302.09
+        ],
+        [
+          -76.654,
+          -299.482
+        ],
+        [
+          -50.287,
+          -295.972
+        ]
+      ],
+      "holes": [],
+      "h": 4,
+      "heightSource": "SMASH dataset: source/estimated height; not independently surveyed",
+      "roof": "#7b897f",
+      "sourceId": "vw/102",
+      "source": "SMASH SNU campus data (ODbL); OSM / VWorld attribution per upstream",
+      "levels": null,
+      "siteDatum": 88.65926319928778,
+      "siteBlock": 1,
+      "sourceName15": "이름 미등록 건물",
+      "renderStyleIndex49": 228,
+      "center": [
+        -63.3705,
+        -299.08099999999996
+      ],
+      "base": 86.65925999999999,
+      "top": 92.65925999999999
+    },
+    {
+      "id": "vw/103",
+      "name": "이름 미등록 건물",
+      "p": [
+        [
+          -9.238,
+          -293.564
+        ],
+        [
+          -46.791,
+          -298.379
+        ],
+        [
+          -47.19,
+          -295.771
+        ],
+        [
+          -9.737,
+          -290.355
+        ]
+      ],
+      "holes": [],
+      "h": 4,
+      "heightSource": "SMASH dataset: source/estimated height; not independently surveyed",
+      "roof": "#e1e3d6",
+      "sourceId": "vw/103",
+      "source": "SMASH SNU campus data (ODbL); OSM / VWorld attribution per upstream",
+      "levels": null,
+      "siteDatum": 88.65926319928778,
+      "siteBlock": 1,
+      "sourceName15": "이름 미등록 건물",
+      "renderStyleIndex49": 229,
+      "center": [
+        -28.238999999999997,
+        -294.51725
+      ],
+      "base": 86.65925999999997,
+      "top": 92.65925999999999
+    }
+  ],
+  "removedMeshes": [
+    {
+      "name": "building-vw/51",
+      "metadata": null
+    },
+    {
+      "name": "roof-vw/51",
+      "metadata": null
+    },
+    {
+      "name": "building-vw/102",
+      "metadata": null
+    },
+    {
+      "name": "roof-vw/102",
+      "metadata": null
+    },
+    {
+      "name": "building-vw/103",
+      "metadata": null
+    },
+    {
+      "name": "roof-vw/103",
+      "metadata": null
+    }
+  ],
+  "removedFacades": [
+    {
+      "name": "facade-campus:-1:-2",
+      "triangles": 16
+    },
+    {
+      "name": "facade-campus:-1:-1",
+      "triangles": 8
+    }
+  ],
+  "ground": [
+    {
+      "id": "vw/51",
+      "polygon": [
+        [
+          -64.669,
+          -136.092
+        ],
+        [
+          -65.967,
+          -139.302
+        ],
+        [
+          -84.144,
+          -132.281
+        ],
+        [
+          -82.746,
+          -128.67
+        ]
+      ],
+      "groundRemoved": [
+        {
+          "name": "terrain-160-200-grass",
+          "material": "ground-grass",
+          "cutFragments": 132
+        },
+        {
+          "name": "terrain-160-200-path",
+          "material": "ground-path",
+          "cutFragments": 29
+        },
+        {
+          "name": "terrain-160-200-planting",
+          "material": "ground-planting",
+          "cutFragments": 10
+        }
+      ],
+      "boundaryHeights": [
+        [
+          -64.669,
+          -136.092,
+          88.65926028311027
+        ],
+        [
+          -65.967,
+          -139.302,
+          88.65926018087676
+        ],
+        [
+          -84.144,
+          -132.281,
+          88.6592600000003
+        ],
+        [
+          -82.746,
+          -128.67,
+          88.65926000000051
+        ]
+      ]
+    },
+    {
+      "id": "vw/102",
+      "polygon": [
+        [
+          -50.087,
+          -298.78
+        ],
+        [
+          -76.454,
+          -302.09
+        ],
+        [
+          -76.654,
+          -299.482
+        ],
+        [
+          -50.287,
+          -295.972
+        ]
+      ],
+      "groundRemoved": [
+        {
+          "name": "terrain-160-160-grass",
+          "material": "ground-grass",
+          "cutFragments": 115
+        },
+        {
+          "name": "terrain-160-160-plaza",
+          "material": "ground-plaza",
+          "cutFragments": 2
+        }
+      ],
+      "boundaryHeights": [
+        [
+          -50.087,
+          -298.78,
+          88.65926
+        ],
+        [
+          -76.454,
+          -302.09,
+          88.65925999999999
+        ],
+        [
+          -76.654,
+          -299.482,
+          88.65926
+        ],
+        [
+          -50.287,
+          -295.972,
+          88.65925999999999
+        ]
+      ]
+    },
+    {
+      "id": "vw/103",
+      "polygon": [
+        [
+          -9.238,
+          -293.564
+        ],
+        [
+          -46.791,
+          -298.379
+        ],
+        [
+          -47.19,
+          -295.771
+        ],
+        [
+          -9.737,
+          -290.355
+        ]
+      ],
+      "groundRemoved": [
+        {
+          "name": "terrain-160-160-grass-R02-retained",
+          "material": "ground-grass",
+          "cutFragments": 133
+        }
+      ],
+      "boundaryHeights": [
+        [
+          -9.238,
+          -293.564,
+          88.65925999999999
+        ],
+        [
+          -46.791,
+          -298.379,
+          88.65925999999997
+        ],
+        [
+          -47.19,
+          -295.771,
+          88.65925999999999
+        ],
+        [
+          -9.737,
+          -290.355,
+          88.65926
+        ]
+      ]
+    }
+  ],
+  "protectedNearbyIDs": [
+    "vw/288",
+    "vw/305",
+    "167605495",
+    "167595745",
+    "892896238",
+    "347804717",
+    "162045723"
+  ],
+  "units": "current model worldXZ; not surveyed",
+  "collisionQA": "preview only; main must remove corresponding colliders, labels, search and navigation targets",
+  "restoredRoadGaps": [
+    {
+      "id": "161950113",
+      "width": 5,
+      "p": [
+        [
+          -77.891,
+          -130.123
+        ],
+        [
+          -79.543,
+          -134.594
+        ]
+      ]
+    },
+    {
+      "id": "248013966",
+      "width": 2.4,
+      "p": [
+        [
+          -66.518,
+          -139.625
+        ],
+        [
+          -64.894,
+          -135.459
+        ]
+      ]
+    },
+    {
+      "id": "456144031",
+      "width": 6,
+      "p": [
+        [
+          -72.077,
+          -298.368
+        ],
+        [
+          -71.607,
+          -301.985
+        ]
+      ]
+    },
+    {
+      "id": "457001554",
+      "width": 5,
+      "p": [
+        [
+          -24.516,
+          -291.987
+        ],
+        [
+          -23.801,
+          -295.935
+        ]
+      ]
+    }
+  ]
+}

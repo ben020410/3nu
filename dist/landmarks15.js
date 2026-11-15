@@ -1,0 +1,22 @@
+/* Geometry from supplied photos. Exact dimensions and unseen sides are estimates. */
+function buildLandmarks15(B,scene,nav,height){
+const V=(x,y,z)=>new B.Vector3(x,y,z),groups=new Map();
+const mat=(n,c)=>{const m=new B.StandardMaterial('landmark15-'+n,scene);m.diffuseColor=B.Color3.FromHexString(c);m.specularColor=B.Color3.Black();return m},ivory=mat('ivory','#f5f0e5'),blue=mat('blue','#2879cb'),shirt=mat('shirt','#cbd2d1'),navy=mat('navy','#263c76'),black=mat('face','#323b39'),wood=mat('deck','#94816a'),seam=mat('deck-seams','#776855'),rope=mat('rope','#b4ab83'),reed=mat('reed','#6d8d45'),stone=mat('stone','#a2a18b');
+function add(m,material,id){m.material=material;m.metadata={facilityId:id};m.isPickable=true;const key=id+'|'+material.name;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(m);return m}
+function tube(name,ps,r,m,id){return add(B.MeshBuilder.CreateTube(name,{path:ps.map(q=>V(...q)),radius:r,tessellation:6},scene),m,id)}
+const l=nav.outdoor.lawn,c=l.bear15.center,y=l.base+l.rise,scale=l.bear15.height/5.5,rot=l.bear15.rotation;
+function at(x,h,z){return[c[0]+scale*(Math.cos(rot)*x+Math.sin(rot)*z),y+scale*h,c[1]+scale*(-Math.sin(rot)*x+Math.cos(rot)*z)]}
+function egg(n,p,d,m){const q=B.MeshBuilder.CreateSphere('snubear-'+n,{diameter:1,segments:24},scene);q.position=V(...at(...p));q.scaling=V(d[0]*scale,d[1]*scale,d[2]*scale);q.rotation.y=rot;return add(q,m,'snubear')}
+egg('body',[0,2.0,0],[2.45,2.4,1.85],ivory);egg('jacket',[0,2.05,-.08],[3.18,2.45,2.32],blue);egg('shirt',[0,2.12,1.06],[1.15,1.95,.20],shirt);egg('shorts',[0,.95,.48],[2.6,1.10,2.25],navy);
+for(const s of[-1,1]){egg('foot',[s*1.0,.90,1.03],[1.65,1.80,2.0],ivory);egg('sleeve',[s*1.47,2.25,.15],[1.03,1.42,1.11],blue);egg('paw',[s*1.65,1.9,.53],[1.05,1.06,1.03],ivory);egg('ear',[s*1.02,4.72,-.06],[.70,.73,.49],ivory);tube('snubear-jacket-trim',[at(s*.54,3.05,1.08),at(s*.32,2.65,1.16),at(s*.38,1.22,1.10)],.065*scale,ivory,'snubear')}
+egg('head',[0,3.91,.17],[2.63,2.33,2.0],ivory);for(const s of[-1,1]){egg('eye',[s*.50,4.12,1.10],[.23,.28,.15],black);egg('eye-highlight',[s*.50-.035,4.17,1.17],[.05,.07,.02],ivory)}egg('muzzle',[0,3.65,1.11],[.94,.68,.20],ivory);egg('nose',[0,3.84,1.24],[.29,.27,.19],black);
+tube('snubear-mouth',[at(0,3.75,1.28),at(0,3.46,1.26),at(-.19,3.55,1.25)],.022*scale,black,'snubear');tube('snubear-smile',[at(0,3.46,1.26),at(.19,3.55,1.25)],.022*scale,black,'snubear');
+const cap=B.MeshBuilder.CreateBox('snubear-academic-cap',{width:1.74*scale,height:.15*scale,depth:1.66*scale},scene);cap.position=V(...at(-.70,5.13,-.09));cap.rotation.set(.12,rot-.15,.34);add(cap,navy,'snubear');egg('cap-base',[-.65,4.83,-.08],[1.20,.66,1.08],navy);tube('snubear-tassel',[at(-1.37,5.17,.40),at(-1.52,4.50,.55),at(-1.54,4.30,.55)],.035*scale,rope,'snubear');
+// Photo3: timber walks run around banks, not through the water. Placement is estimated on retained outline.
+const pond=nav.facilities.find(q=>q.id==='jahayon');if(pond&&!nav.landmark44){const p=pond.outer,center=p.reduce((a,q)=>[a[0]+q[0]/p.length,a[1]+q[1]/p.length],[0,0]),id=pond.id;
+for(const edge of[0,3,4]){const a=p[edge],b=p[(edge+1)%p.length],dx=b[0]-a[0],dz=b[1]-a[1],len=Math.hypot(dx,dz);let nx=-dz/len,nz=dx/len;if((a[0]-center[0])*nx+(a[1]-center[1])*nz<0){nx=-nx;nz=-nz}const mid=[(a[0]+b[0])/2+nx*1.7,(a[1]+b[1])/2+nz*1.7],ground=height(...mid),q=B.MeshBuilder.CreateBox('pond15-deck',{width:len+1,height:.12,depth:3.0},scene);q.position=V(mid[0],ground+.06,mid[1]);q.rotation.y=-Math.atan2(dz,dx);add(q,wood,id);for(let t=0;t<len;t+=.32){const x=a[0]+dx*t/len,z=a[1]+dz*t/len;tube('pond15-plank-joint',[[x+nx*.21,ground+.123,z+nz*.21],[x+nx*3.18,ground+.123,z+nz*3.18]],.008,seam,id)}
+for(let t=0;t<len;t+=3){const x=a[0]+dx*t/len+nx*.25,z=a[1]+dz*t/len+nz*.25,h=height(x,z);tube('pond15-post',[[x,h,z],[x,h+1.0,z]],.095,wood,id);const end=Math.min(len,t+3),xx=a[0]+dx*end/len+nx*.25,zz=a[1]+dz*end/len+nz*.25;for(const rail of[.55,.95])tube('pond15-rope',[[x,h+rail,z],[(x+xx)/2,h+rail-.1,(z+zz)/2],[xx,height(xx,zz)+rail,zz]],.035,rope,id);}
+for(let t=.2;t<len;t+=.65){const x=a[0]+dx*t/len+nx*.55,z=a[1]+dz*t/len+nz*.55;for(let k=0;k<3;k++){const h=pond.elevation+.1,tall=.40+((t+k)%1)*.5;tube('pond15-reed',[[x+k*.12,h,z],[x+k*.12+.14,h+tall,z+.05]],.025,reed,id)}}
+}}
+for(const list of groups.values()){const material=list[0].material,id=list[0].metadata.facilityId,mesh=B.Mesh.MergeMeshes(list,true,true);mesh.material=material;mesh.metadata={facilityId:id};mesh.name='facility15-'+id+'-'+material.name;mesh.freezeWorldMatrix();}
+}

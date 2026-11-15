@@ -1,0 +1,8 @@
+const Facades70=(()=>{
+ const ids=new Set(['430040354','439704946','424949442','439703629','430040359']);const handles=b=>ids.has(b.id);
+ function build(B,scene,b,height){if(!handles(b))return false;const old=b.officialProfile,foundation=b.foundationDatum46;let profile=old;if(!profile){const rows=b.levels||Math.round(b.h/3.8);profile={height:b.h,rows,floorHeights:Array(rows).fill(b.h/rows),style:'punched',wall:'#d5d7cf',windowSpacing:3.5,source:'Existing generic height and floor count retained',heightStatus:'not surveyed'};b.foundationDatum46=Math.min(...b.p.map(p=>height(...p)))-2;}
+ b.officialProfile={...profile,finish70:true,...(b.id==='439703629'?{windowHeight:.95,windowSill:1.35}:b.id==='430040354'?{windowRatio:.82}:b.id==='424949442'?{windowRatio:.78}:{})};buildOfficialBuilding(B,scene,b,height);b.officialProfile=old;b.foundationDatum46=foundation;if(!old)b.facade53=true;return true;}
+ function routes(world,nav){return [...ids].map(id=>{const a=nav.anchors[id],seen=new Set([a]),path=[world.points[a]];let at=a,length=0;while(length<14){const next=world.adj[at].filter(([i])=>!seen.has(i)).sort((a,b)=>a[1]-b[1])[0];if(!next)break;const[i,len]=next;seen.add(i);const prev=path.at(-1),end=world.points[i];if(length+len>18){const t=(18-length)/len;path.push([prev[0]+(end[0]-prev[0])*t,prev[1]+(end[1]-prev[1])*t]);break;}path.push(end);length+=len;at=i;}const coords=path.map(p=>p.slice(0,2)).reverse();return{zone:'local facade check',road:id,coords,startFeet:world.floorAt(...coords[0]),endFeet:world.floorAt(...coords.at(-1))};});}
+
+
+ return{handles,build,routes};})();if(typeof module==='object')module.exports=Facades70;

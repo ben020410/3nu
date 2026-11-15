@@ -1,0 +1,18 @@
+/* Selected pedestrian-material ownership. Original elevations/triangles remain authoritative. */
+(function(root,factory){const api=factory();if(typeof module==='object')module.exports=api;else root.Surface74=api;})(this,()=>{
+let regions=[];
+function prepare(nav){regions=[];const circle=(p,r)=>Array.from({length:24},(_,i)=>[p[0]+r*Math.cos(i*Math.PI/12),p[1]+r*Math.sin(i*Math.PI/12)]);function corridor(a,b,w,kind){const l=Math.hypot(b[0]-a[0],b[1]-a[1]),nx=-(b[1]-a[1])/l*w,nz=(b[0]-a[0])/l*w;regions.push({p:[[a[0]-nx,a[1]-nz],[b[0]-nx,b[1]-nz],[b[0]+nx,b[1]+nz],[a[0]+nx,a[1]+nz]],kind});regions.push({p:circle(a,w),kind},{p:circle(b,w),kind});}
+const j=nav.roads.find(r=>r.id==='456522816');corridor(j.p[0],j.p[1],j.width/2+.08,'path');
+// Only the terminal pedestrian segment inside the existing admin forecourt; P3 remains a road.
+const a=nav.roads.find(r=>r.id==='455468340');for(let i=1;i<a.p.length;i++)corridor(a.p[i-1],a.p[i],a.width/2+.08,'plaza');
+// Service drive remains asphalt up to the shared pedestrian junction, with its round end trimmed.
+const s=nav.roads.find(r=>r.id==='167984623'),end=s.p.at(-1),prev=s.p.at(-2),len=Math.hypot(end[0]-prev[0],end[1]-prev[1]),dx=(end[0]-prev[0])/len,dz=(end[1]-prev[1])/len,nx=-dz*3.1,nz=dx*3.1;regions.push({p:[[end[0]-nx,end[1]-nz],[end[0]+dx*3.2-nx,end[1]+dz*3.2-nz],[end[0]+dx*3.2+nx,end[1]+dz*3.2+nz],[end[0]+nx,end[1]+nz]],kind:'path'});
+for(const r of regions)r.only=['road','rearPaving'];
+for(let i=1;i<s.p.length;i++){const first=regions.length;corridor(s.p[i-1],s.p[i],s.width/2+.08,'road');for(const r of regions.slice(first))r.only=['rearPaving','finishStone43'];}
+if(nav.arts78)regions.push({p:[[54.8,295.5],[62.5,292],[69,293],[68.8,296],[63.5,303],[56,301.5],[54,299]],kind:'path',only:['grass','path','plaza','steps']});
+regions.push({p:Tunnel80.paving,kind:'path',only:['grass','plaza','road','path','planting','finishStone43','finishStone45','finishGrass45']});
+for(const r of regions){r.bounds=[Math.min(...r.p.map(p=>p[0])),Math.min(...r.p.map(p=>p[1])),Math.max(...r.p.map(p=>p[0])),Math.max(...r.p.map(p=>p[1]))];}}
+function clip(p,a,b,positive){const out=[],d=v=>((b[0]-a[0])*(v[2]-a[1])-(b[1]-a[1])*(v[0]-a[0]))*(positive?1:-1);for(let i=0;i<p.length;i++){const A=p[i],B=p[(i+1)%p.length],da=d(A),db=d(B);if(da>=-1e-8)out.push(A);if((da>1e-8&&db< -1e-8)||(da< -1e-8&&db>1e-8)){const t=da/(da-db);out.push(A.map((v,j)=>v+t*(B[j]-v)));}}return out;}
+function partition(pos,indices,kind){if(!regions.some(r=>r.only.includes(kind)))return[{pos,indices,kind}];let xs=[],zs=[];for(let i=0;i<pos.length;i+=3){xs.push(pos[i]);zs.push(pos[i+2]);}const box=[Math.min(...xs),Math.min(...zs),Math.max(...xs),Math.max(...zs)],rs=regions.filter(r=>(!r.only||r.only.includes(kind))&&box[0]<r.bounds[2]&&box[2]>r.bounds[0]&&box[1]<r.bounds[3]&&box[3]>r.bounds[1]);if(!rs.length)return[{pos,indices,kind}];const groups={};function put(p,k){if(p.length<3)return;const g=groups[k]||(groups[k]={pos:[],indices:[],kind:k}),off=g.pos.length/3;g.pos.push(...p.flat());for(let i=1;i<p.length-1;i++)g.indices.push(off,off+i,off+i+1);}
+for(let i=0;i<indices.length;i+=3){let fragments=[Array.from(indices.slice(i,i+3),j=>Array.from(pos.slice(j*3,j*3+3)))];for(const r of rs){const next=[];for(const f of fragments){let inner=f;for(let k=0;k<r.p.length;k++){if(inner.length<3)break;const outside=clip(inner,r.p[k],r.p[(k+1)%r.p.length],false);if(outside.length>=3)next.push(outside);inner=clip(inner,r.p[k],r.p[(k+1)%r.p.length],true);}if(inner.length>=3)put(inner,r.kind);}fragments=next;}for(const f of fragments)put(f,kind);}return Object.values(groups);}
+return{prepare,partition};});

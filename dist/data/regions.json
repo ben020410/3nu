@@ -1,0 +1,182 @@
+[
+  {
+    "number": "1",
+    "name": "인문대학",
+    "short": "인문대",
+    "priority": 1,
+    "center": [
+      29.9135,
+      141.67383333333336
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46027&lon_val=126.95234&convinType=Y&inst_seq=1",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "11",
+    "name": "사범대학",
+    "short": "사범대",
+    "priority": 2,
+    "center": [
+      285.6944,
+      91.81099999999999
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.45979&lon_val=126.9552&convinType=Y&inst_seq=12",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "16",
+    "name": "사회과학대학",
+    "short": "사회대",
+    "priority": 1,
+    "center": [
+      -81.7872,
+      510.50139999999993
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46353&lon_val=126.95092&convinType=Y&inst_seq=18",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "21",
+    "name": "약학대학",
+    "short": "약대",
+    "priority": 1,
+    "center": [
+      21.852,
+      -125.84728571428569
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.45784&lon_val=126.95223&convinType=Y&inst_seq=24",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "25",
+    "name": "자연과학대학",
+    "short": "자연대",
+    "priority": 1,
+    "center": [
+      -178.7385,
+      -32.732375
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.45856&lon_val=126.94988&convinType=Y&inst_seq=29",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "35",
+    "name": "공과대학 저지대 강의동",
+    "short": "공학관",
+    "priority": 1,
+    "center": [
+      12.25625,
+      -272.26729166666667
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.45665&lon_val=126.95211&convinType=Y&inst_seq=44",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "301",
+    "name": "공과대학 301·302동",
+    "short": "윗공대",
+    "priority": 1,
+    "center": [
+      30.96755555555556,
+      -1030.8358888888888
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.45016&lon_val=126.95259&convinType=Y&inst_seq=187",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "52",
+    "name": "미술대학",
+    "short": "미대",
+    "priority": 2,
+    "center": [
+      110.86414814814816,
+      505.9774074074074
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46352&lon_val=126.95319&convinType=Y&inst_seq=65",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "53",
+    "name": "음악대학",
+    "short": "음대",
+    "priority": 2,
+    "center": [
+      138.67764705882354,
+      471.2523529411764
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46304&lon_val=126.95344&convinType=Y&inst_seq=68",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "58",
+    "name": "경영대학",
+    "short": "경영대",
+    "priority": 1,
+    "center": [
+      3.4749523809523817,
+      722.1621428571428
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46568&lon_val=126.95203&convinType=Y&inst_seq=74",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "200",
+    "name": "농업생명과학대학",
+    "short": "농생대",
+    "priority": 1,
+    "center": [
+      -309.0713076923077,
+      -149.91046153846153
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.45769&lon_val=126.94868&convinType=Y&inst_seq=174",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "222",
+    "name": "생활과학대학",
+    "short": "생활대",
+    "priority": 2,
+    "center": [
+      113.4,
+      608.7046363636363
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46437&lon_val=126.95318&convinType=Y&inst_seq=180",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "85",
+    "name": "수의과대학",
+    "short": "수의대",
+    "priority": 1,
+    "center": [
+      144.5004,
+      935.0796999999999
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46744&lon_val=126.95365&convinType=Y&inst_seq=105",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "221",
+    "name": "보건대학원",
+    "short": "보건대학원",
+    "priority": 2,
+    "center": [
+      241.037375,
+      651.50675
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46489&lon_val=126.95469&convinType=Y&inst_seq=179",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  },
+  {
+    "number": "86",
+    "name": "치의학대학원",
+    "short": "치의학대학원",
+    "priority": 2,
+    "center": [
+      80.57525,
+      1098.961
+    ],
+    "source": "https://map.snu.ac.kr/web/facility_detail.action?lat_val=37.46899&lon_val=126.95304&convinType=Y&inst_seq=107",
+    "scope": "대표 건물 위치 안내점; 소속 건물 전체를 감싸는 경계 아님"
+  }
+]

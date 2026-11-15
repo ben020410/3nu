@@ -1,0 +1,18 @@
+const fs=require('fs'),assert=require('assert');global.Library17=require('../dist/library17.js');const Walk=require('../dist/walk-core.js'),data=JSON.parse(fs.readFileSync('dist/data/campus.json')),nav=JSON.parse(fs.readFileSync('dist/data/walk.json')),s=Library17.prepare(data,nav),student=require('../dist/student21.js').prepare(data,nav),w=Walk.create(data,nav),p=(a,d)=>[s.origin[0]+s.u[0]*a+s.v[0]*d,s.origin[1]+s.u[1]*a+s.v[1]*d];
+const result=[];for(const [id,nodes]of Object.entries(s.routes)){let steps=0,fail=[];for(let i=1;i<nodes.length;i++){const a=nodes[i-1],b=nodes[i],aa=p(...a),bb=p(...b),n=Math.ceil(Math.hypot(bb[0]-aa[0],bb[1]-aa[1])/.12);for(let j=0;j<=n;j++){const t=j/n,x=aa[0]+(bb[0]-aa[0])*t,z=aa[1]+(bb[1]-aa[1])*t,expected=s.base+a[2]+(b[2]-a[2])*t,ground=Library17.floor({...s,surfaces:s.surfaces.filter(q=>q.id.startsWith(id+'-'))},x,z,Infinity)??w.floorAt(x,z,expected+.18);if(w.blocked(x,z,.42,ground))fail.push({segment:i,t:+t.toFixed(3),ground});steps++;}}result.push({id,steps,blockedSamples:fail.length,first:fail[0]});}
+console.log(JSON.stringify(result,null,2));fs.writeFileSync('BUILD21-ROUTES.json',JSON.stringify(result,null,2));
+for(const [id,nodes]of Object.entries(s.routes)){
+ const start=p(...nodes[0]);let state={x:start[0],z:start[1],y:s.base+nodes[0][2]+.95};let failed=null;
+ for(let i=1;i<nodes.length;i++){const end=p(...nodes[i]),dx=end[0]-state.x,dz=end[1]-state.z,n=Math.ceil(Math.hypot(dx,dz)/.08);for(let j=0;j<n;j++){const next=w.move(state,dx/n,dz/n);if(next.distance<.001){failed={segment:i,j,x:state.x,z:state.z,y:state.y};break;}state=next;}if(failed)break;}
+ console.log(id,failed||{arrivedHeight:state.y-s.base-.95});if(failed)process.exitCode=1;
+}
+let edgeHits=[];for(const surf of s.surfaces.filter(q=>q.from)){const dx=surf.to[0]-surf.from[0],dz=surf.to[1]-surf.from[1],len=Math.hypot(dx,dz);for(let t=.1;t<.95;t+=.1)for(const off of[-.4,.4]){const x=surf.from[0]+dx*t-dz/len*surf.width*off,z=surf.from[1]+dz*t+dx/len*surf.width*off,h=s.base+surf.lo+(surf.hi-surf.lo)*t;if(w.blocked(x,z,.42,h+.18))edgeHits.push({id:surf.id,t,off});}}console.log('stair usable-width blocked samples',edgeHits);
+
+assert(result.every(r=>r.blockedSamples===0));assert.equal(edgeHits.length,0);fs.writeFileSync("BUILD21-GEOMETRY.json",JSON.stringify(s,null,2));
+for(const [id,path]of Object.entries(s.routes)){const nodes=path.slice().reverse(),start=p(...nodes[0]);let st={x:start[0],z:start[1],y:s.base+nodes[0][2]+.95};for(let i=1;i<nodes.length;i++){const end=p(...nodes[i]),dx=end[0]-st.x,dz=end[1]-st.z,n=Math.ceil(Math.hypot(dx,dz)/.08);for(let j=0;j<n;j++){const next=w.move(st,dx/n,dz/n);assert(next.distance>.001,id+' descent blocked');st=next;}}assert(Math.abs(st.y-s.base-.95-path[0][2])<.21,id+' descent level');}console.log('All reverse walks passed');
+const upper=s.volumes.find(q=>q.id==='upper'),wing=s.volumes.find(q=>q.id==='right-wing');assert.equal(upper.local[2],165);assert.equal(upper.local[3],30);assert.equal(wing.local[2],30);assert.equal(s.volumes.filter(q=>q.id.startsWith('roof-room')).length,2);
+// Independently test open passage/entry recesses and stone that must remain solid.
+for(const [a,d,h]of[[-1,16,4.45],[130,13.2,4.45],[15,0,13],[15,18,13],[70,0,22]]){const q=p(a,d);assert(!w.blocked(...q,.42,s.base+h),'open passage blocked '+[a,d,h]);}
+for(const [a,d,h]of[[-10,16,4.45],[125,13,4.45]]){const q=p(a,d);assert(w.blocked(...q,.42,s.base+h),'stone collision missing '+[a,d,h]);}
+assert(!s.routes['right-roof'],'unverified stair must not occlude VR passage');
+console.log('Open passages, recessed entries and stone collisions passed');

@@ -1,0 +1,42 @@
+[
+  {
+    "file": "dist/data/campus.json",
+    "unchanged": true,
+    "sha256": "29248a63ea8c0814fa69a319496866725ecbd2497feb76bd3391c8b4861f51e6"
+  },
+  {
+    "file": "sources/landuse31.json",
+    "unchanged": true,
+    "sha256": "b48fe6421d5e3129189e0e3e9c39431a56ff6db738b05b7e855ae1dd63d8ba35"
+  },
+  {
+    "file": "dist/library17.js",
+    "unchanged": true,
+    "sha256": "ca13997292bd9ea99291e26c21efe40aa130f356458e0967d0d18fe29107b0e2"
+  },
+  {
+    "file": "dist/student22.js",
+    "unchanged": true,
+    "sha256": "7415206f0b75e1919487d200401c67472c15f7d72cb0edffb02f6825401f4472"
+  },
+  {
+    "file": "dist/landmarks30.js",
+    "unchanged": true,
+    "sha256": "87ac81e0cef9898c379e23244ffe5102af26bfd537e5afaed3f7f3bd524e014d"
+  },
+  {
+    "file": "dist/style.css",
+    "unchanged": true,
+    "sha256": "f82da91e135d43ece99c02f4b3d09321cbe146451152858a263eee14f9b8e008"
+  },
+  {
+    "file": "dist/character.js",
+    "unchanged": true,
+    "sha256": "b2b3a638ff8282ccf0a21cc637b97f484946c1c0730e2851272301a0ec092159"
+  },
+  {
+    "file": "dist/player-state.js",
+    "unchanged": true,
+    "sha256": "b3d561cb01de2ef7a1851331f0bf0d5235f81eba47aaca81d9f5dea608e2859f"
+  }
+]

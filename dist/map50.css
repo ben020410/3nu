@@ -1,0 +1,44 @@
+#mapbox #mapViewport{position:relative;letter-spacing:0}#map{touch-action:none;cursor:grab}#map:active,#campusMapCanvas:active{cursor:grabbing}
+#mapbox .miniMapTools{display:flex;gap:4px;margin-top:5px;letter-spacing:0}#mapbox .miniMapTools button{padding:2px 8px;min-height:25px;font-size:12px}#miniLocate{flex:1}#mapDestination{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#openGuide{top:350px}#route{top:398px}
+#campusMapDialog{width:min(1180px,calc(100vw - 32px));height:min(900px,calc(100dvh - 32px));max-width:none;max-height:none;padding:0;border:1px solid #d4ded9;border-radius:16px;background:#f8f9f4;color:#203e48;overflow:hidden;box-shadow:0 24px 90px #0c24365c}
+#campusMapDialog::backdrop{background:#12293688;backdrop-filter:blur(3px)}
+.campusMapHead{height:66px;display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid #dde4dc}.campusMapHead h2{margin:0;font-size:20px;letter-spacing:-.5px}.campusMapHead p{margin:0;font-size:11px;color:#687c7d}.mapNorth{margin-left:auto;font-weight:700;font-size:14px}#closeCampusMap{font-size:18px;padding:5px 11px}
+.campusMapToolbar{display:flex;align-items:center;gap:7px;padding:9px 18px;border-bottom:1px solid #dde4dc;flex-wrap:wrap}.campusMapToolbar button{padding:7px 12px;font-size:12px;background:#fff}.campusMapToolbar #mapSearch{margin-left:auto;background:#1c3377;color:white;border-color:#1c3377}.mapZoomGroup{display:flex;gap:4px}.mapZoomGroup button{width:34px;font-size:16px;padding:4px}
+.campusMapBody{display:grid;grid-template-columns:minmax(0,1fr) 240px;height:calc(100% - 149px)}.campusMapStage{position:relative;min-width:0;min-height:0;background:#edf0e7}#campusMapCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;outline:none}.campusMapLegend{padding:15px 12px;background:#f8f9f4;border-left:1px solid #dce3dc;overflow:auto}.campusMapLegend h3{margin:0 0 10px;font-size:12px;color:#5a7175;font-weight:500}.campusMapLegend p{font-size:11px;color:#5a7175;line-height:1.5;margin:12px 3px 0}
+#mapZones{display:grid;grid-template-columns:1fr 1fr;gap:5px}#mapZones button{display:flex;align-items:center;gap:6px;padding:8px 5px;background:transparent;border:1px solid transparent;text-align:left;color:#284650;font-size:12px;white-space:nowrap;border-radius:6px}#mapZones button:hover{background:#e9efe9}#mapZones button[aria-pressed=true]{background:white;border-color:#9caaa8}#mapZones i{width:8px;height:8px;flex:none;border-radius:50%}#mapZones span{letter-spacing:-.45px}
+.campusMapFoot{height:31px;display:flex;justify-content:space-between;align-items:center;padding:0 18px;border-top:1px solid #dde4dc;font-size:10px;color:#526c72}.campusMapFoot b{color:#1763a2;font-weight:500}
+@media(max-width:700px){#openGuide{top:258px}#route{top:304px}#mapbox .miniMapTools button{padding:2px 6px;font-size:11px}#campusMapDialog{width:calc(100vw - 16px);height:calc(100dvh - 16px);border-radius:12px}.campusMapHead{padding:9px 12px;height:58px}.campusMapHead h2{font-size:18px}.campusMapHead p{font-size:10px}.campusMapToolbar{padding:7px 10px;gap:5px}.campusMapToolbar button{font-size:11px;padding:7px 8px}.mapZoomGroup button{width:28px}.campusMapBody{height:calc(100% - 140px);display:grid;grid-template-columns:1fr;grid-template-rows:minmax(180px,1fr) auto}.campusMapLegend{border-left:0;border-top:1px solid #dce3dc;padding:7px 8px;overflow:auto;max-height:30dvh}.campusMapLegend h3,.campusMapLegend p{display:none}#mapZones{grid-template-columns:repeat(3,1fr);gap:1px 3px}#mapZones button{font-size:11px;padding:4px 5px;min-height:25px}.campusMapFoot{height:30px;padding:0 10px;font-size:9px}.campusMapFoot .mapGestureHint{display:none}}
+@media(max-height:600px) and (min-width:701px){#openGuide{top:310px}#route{top:354px}}
+
+/* BUILD51: map-first layout; the compact mobile directory leaves room for gestures. */
+#campusMapDialog{width:min(960px,calc(100vw - 24px));height:min(1000px,calc(100dvh - 24px))}
+#campusMapDialog[open]{display:flex;flex-direction:column}
+.campusMapHead{height:60px;flex:none;padding:10px 16px}.campusMapToolbar{flex:none;padding:7px 14px}.campusMapToolbar button{min-height:38px}.mapZoomGroup button{width:40px}
+.campusMapBody{height:auto;flex:1;min-height:0;grid-template-columns:minmax(0,1fr) 204px}.campusMapLegend{padding:14px 9px}.campusMapFoot{flex:none;height:28px}
+#mapZones{gap:4px 1px}#mapZones button{font-size:12px;padding:10px 3px;min-height:38px;gap:4px}#mapZonesToggle{display:none}#mapZoneList[hidden]{display:none}
+@media(max-width:700px){
+ #campusMapDialog{width:calc(100vw - 12px);height:calc(100dvh - 12px)}
+ .campusMapHead{height:56px;padding:8px 12px}.campusMapHead p{font-size:9px}
+ .campusMapToolbar{padding:5px 8px;gap:5px;flex-wrap:nowrap}.campusMapToolbar button{min-height:44px;padding:6px 9px}.mapZoomGroup button{width:44px;font-size:20px}.campusMapToolbar #mapSearch{padding:6px 10px}
+ .campusMapBody{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}
+ .campusMapLegend{padding:0;max-height:none;overflow:hidden}.campusMapLegend h3{display:none}
+ #mapZonesToggle{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:44px;padding:10px 14px;border:0;border-radius:0;background:#f8f9f4;color:#284650;font-size:13px}
+ #mapZonesToggle[aria-expanded=true] span{transform:rotate(180deg)}
+ #mapZoneList{max-height:34dvh;overflow:auto;overscroll-behavior:contain;padding:0 8px 8px}
+ #mapZones{grid-template-columns:repeat(3,1fr);gap:2px}#mapZones button{font-size:12px;min-height:44px;padding:8px 5px}
+ .campusMapFoot{height:26px}
+}
+@media(max-width:350px){.campusMapToolbar{gap:3px}.campusMapToolbar button{padding:6px}.mapZoomGroup button{width:40px}.campusMapToolbar #mapSearch{padding:6px}}
+
+/* BUILD52: physical map palette and explicit selection, independent of district colors. */
+#mapZones i{background:#9cad9b!important;width:5px;height:5px;margin:0 3px}
+#mapZones button[aria-pressed=true]{color:#21669c;background:#e8f2fb;border-color:#bbd2e5;font-weight:700}
+#mapZones button[aria-pressed=true] i{background:transparent!important;width:11px;height:16px;margin:0;color:#21669c;font-style:normal}
+#mapZones button[aria-pressed=true] i:before{content:'✓';font-size:13px}
+.campusMapFoot b{color:#c64138}
+#mapBuildingTip{position:absolute;pointer-events:none;z-index:4;max-width:min(285px,calc(100% - 12px));padding:10px 13px;background:#233f4d;color:white;border-radius:9px;box-shadow:0 4px 16px #1c39442b;font-size:13px}
+#mapBuildingTip strong{display:block}#mapBuildingTip small{display:block;color:#cfdee5;margin-top:4px;font-size:11px}
+#mapNavigationMessage{position:absolute;bottom:28px;left:12px;right:12px;padding:12px;border-radius:9px;background:#fff9eb;color:#6b512a;font-size:13px;box-shadow:0 3px 15px #1c394422}
+#guidance52Hint{position:fixed;left:50%;top:72px;transform:translateX(-50%);padding:6px 12px;border-radius:15px;background:#ffffffd9;color:#2b6487;font-size:12px;pointer-events:none;z-index:8}
+@media(max-width:700px){#guidance52Hint{left:12px;top:16px;transform:none;max-width:calc(100vw - 170px);font-size:10px}}

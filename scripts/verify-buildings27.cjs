@@ -1,0 +1,6 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),B=require('../dist/vendor/babylon.js');global.earcut=require('../dist/vendor/earcut.js');
+vm.runInThisContext(fs.readFileSync('dist/photo-masses27.js','utf8'));
+const D=require('../dist/data/campus.json'),P=require('../dist/data/official-profiles.json');for(const b of D.buildings)if(P[b.id])b.officialProfile=P[b.id];preparePhotoMasses27(D);
+const scene=new B.Scene(new B.NullEngine()),build=require('../dist/official-buildings.js').buildOfficialBuilding,out=[];
+for(const id of ['238935852','162045723']){const b=D.buildings.find(b=>b.id===id);for(const [i,p]of b.renderParts.entries()){const q={...b,...p,id:id+'-part'+i};q.center=q.p.reduce((a,v)=>[a[0]+v[0]/q.p.length,a[1]+v[1]/q.p.length],[0,0]);build(B,scene,q,()=>b.siteDatum);const roof=scene.getMeshByName('roof-'+q.id),ys=roof.getVerticesData(B.VertexBuffer.PositionKind).filter((_,i)=>i%3===1);out.push({id:q.id,roofRise:Math.max(...ys)-Math.min(...ys),profile:q.officialProfile,height:q.heightRecord});assert(q.top>b.siteDatum);if(q.officialProfile.roof27)assert(Math.max(...ys)-Math.min(...ys)>2.5);}}
+fs.writeFileSync('BUILD27-MESH.json',JSON.stringify(out,null,2));console.log(out.map(r=>({id:r.id,rise:r.roofRise})));scene.dispose();

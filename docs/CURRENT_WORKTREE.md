@@ -8,7 +8,7 @@ BUILD91의 정적 앱은 `dist/index.html`에서 시작한다. 별도의 번들 
 - 현재 앱 코드, 캐릭터·표지 자산, 지도·건물·지형 데이터
 - 의존 라이브러리와 라이선스, 원출처·권한 문서
 - 후속 수정과 검증에 쓰는 생성·검증 스크립트
-- 최근 도로·광장 작업의 `reports/build85`~`build90/source-geometry.json`
+- 최근 도로·광장 작업의 `source-data/terrain-layouts/build85`~`build90/source-geometry.json`
 - 복구·보관·제작자 표시 기준
 
 파일명의 숫자는 구현이 도입된 버전이다. 예를 들어 `photo-masses27.js`는 현재 앱에서도 로드된다.
@@ -32,3 +32,5 @@ BUILD91의 정적 앱은 `dist/index.html`에서 시작한다. 별도의 번들 
 GitHub 저장소, 원래 Sites 작업 폴더, 공개 배포는 자동으로 동기화되지 않는다.
 후속 변경은 한 작업본에서 진행한 뒤 검토한 변경을 반영한다. 과거 캡처·보고서를 `dist`에 다시 복사하지 않는다.
 실행 중 생긴 새 캡처·성능 로그는 로컬 검토 폴더에 보관한다.
+
+자료 저장 위치와 새 보고서 작성 규칙은 [STORAGE_POLICY.md](STORAGE_POLICY.md)를 따른다. 보고서와 검수 이미지는 저장소 밖에서 관리한다.

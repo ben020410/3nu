@@ -39,3 +39,9 @@ reports/**/screenshots/
 /scripts/report29.py
 /scripts/review26.cjs
 /scripts/review28.cjs
+
+# Human-facing build outputs live outside the app repository.
+/reports/
+/outputs/
+/screenshots/
+/build-logs/

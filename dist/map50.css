@@ -42,3 +42,5 @@
 #mapNavigationMessage{position:absolute;bottom:28px;left:12px;right:12px;padding:12px;border-radius:9px;background:#fff9eb;color:#6b512a;font-size:13px;box-shadow:0 3px 15px #1c394422}
 #guidance52Hint{position:fixed;left:50%;top:72px;transform:translateX(-50%);padding:6px 12px;border-radius:15px;background:#ffffffd9;color:#2b6487;font-size:12px;pointer-events:none;z-index:8}
 @media(max-width:700px){#guidance52Hint{left:12px;top:16px;transform:none;max-width:calc(100vw - 170px);font-size:10px}}
+
+#miniFacilityTip{position:absolute;bottom:6px;left:6px;right:6px;pointer-events:none;z-index:4;padding:6px 8px;border-radius:5px;background:#233f4df0;color:#fff;font-size:11px;text-align:center}

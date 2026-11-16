@@ -81,10 +81,10 @@ UI를 제외한 화면을 촬영하고 프레임과 문구를 더합니다. 이�
 <p align="center">
 <img src="dist/assets/title105/baekhak.webp" width="22%" alt="백학 · 비행 캐릭터">
 &nbsp; &nbsp; &nbsp;
-<img src="dist/assets/title105/rio.webp" width="22%" alt="리오 · 지상 캐릭터">
+<img src="dist/assets/title105/rio.webp" width="22%" alt="오리 · 지상 캐릭터">
 </p>
 
-<p align="center"><strong>백학</strong> · 비행, 상승과 하강 &nbsp; / &nbsp; <strong>리오</strong> · 걷기, 점프와 웅크리기</p>
+<p align="center"><strong>백학</strong> · 비행, 상승과 하강 &nbsp; / &nbsp; <strong>오리</strong> · 걷기, 점프와 웅크리기</p>
 
 캐릭터는 설정에서 전환할 수 있습니다. 이동속도, 카메라 거리, 표시 거리와 화질도 조절할 수 있습니다.
 
@@ -190,7 +190,7 @@ UI를 제외한 화면을 촬영하고 프레임과 문구를 더합니다. 이�
 미니맵의 시설 선택은 막되, 전체 지도에서는 점 표시를 없애도 시설 영역 선택과 길안내를 유지하도록 구분했습니다. 같은 데이터라도 화면별 표시와 입력 동작이 달라야 한다는 조건을 명시했습니다.
 
 **캐릭터 상태에 따른 조작 안내**<br>
-백학에게는 상승·하강, 리오에게는 점프·웅크리기만 표시하도록 요청했습니다. 길어진 안내 문구를 줄이면서 실제 입력과 화면 안내가 일치하도록 수정했습니다.
+백학에게는 상승·하강, 오리에게는 점프·웅크리기만 표시하도록 요청했습니다. 길어진 안내 문구를 줄이면서 실제 입력과 화면 안내가 일치하도록 수정했습니다.
 
 **셔틀 탑승 흐름과 검수 기준**<br>
 정류장에서 대기를 선택하면 자동 탑승하고, 탑승 중에는 다음 정류장 하차를 예약하도록 흐름을 정했습니다. 대기 상태처럼 내용이 가장 긴 경우에도 데스크톱 안내창에 스크롤이 없어야 한다는 확인 기준을 제시했습니다.
@@ -248,8 +248,8 @@ python3 -m http.server 8765 --bind 127.0.0.1 --directory dist
 | 키 | 동작 |
 |---|---|
 | <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> / 방향키 | 이동 |
-| <kbd>Space</kbd> / <kbd>E</kbd> | 백학 상승 · 리오 점프 |
-| <kbd>Q</kbd> / <kbd>C</kbd> | 백학 하강 · 리오 웅크리기 |
+| <kbd>Space</kbd> / <kbd>E</kbd> | 백학 상승 · 오리 점프 |
+| <kbd>Q</kbd> / <kbd>C</kbd> | 백학 하강 · 오리 웅크리기 |
 | <kbd>Shift</kbd> | 가속 |
 | <kbd>F</kbd> | 가까운 대상과 상호작용 |
 | <kbd>M</kbd> | 전체 지도 |

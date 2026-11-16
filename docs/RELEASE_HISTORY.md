@@ -12,3 +12,6 @@ For every future public deployment:
 4. Preserve notice, help and feedback features. Opening history must never submit feedback or discard a draft. Credits/source text remains in 프로젝트 소개.
 
 Current local v1.0.1 notes cover first-load waiting, camera/flight processing, update history and the project introduction label. The user authorized GitHub synchronization and public deployment on 2026-11-17 (KST). v1.0.1 is dated 2026.11.17.
+
+
+2026-11-17 hotfix: v1.0.2 = BUILD121. The title corner now carries `data-release-version` and an accessible version label; release packaging rejects a mismatch with `package.json.releaseVersion`. Preserve the v1.0 and v1.0.1 entries. On mobile, character/nickname selection precedes campus loading; successful preparation enters gameplay automatically. Physical iPhone verification remains separate from desktop WebKit tests.

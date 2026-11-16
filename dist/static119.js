@@ -6,15 +6,18 @@ async function fetchStatic119(url,signal){const controller=new AbortController()
 async function jsonStatic119(url){return JSON.parse(new TextDecoder().decode(await fetchStatic119(url)));}
 async function binaryStatic119(url,bytes){bytes=bytes||await fetchStatic119(url);return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();}
 
-/* Four compressed payloads at a time. Decode/apply exactly one in authoring order.
+/* BUILD121: one compressed payload at a time on the mobile static path.
+ * No next request during decode/apply: restore BUILD119-like allocation pacing.
+ * The generic bounded queue still supports an explicit higher limit for tests.
+ * Decode/apply exactly one in authoring order.
  * Scene failure/disposal aborts outstanding requests; failures are observed at take().
  * This bounds prefetch memory and avoids hundreds of serial network round trips. */
-function createStaticQueue120(files,load,limit=4){
+function createStaticQueue120(files,load,limit=1){
  const slots=new Map(),controller=new AbortController();let next=0,cursor=0,closed=false,buffered=0;
  const stats={requested:0,peakSlots:0,peakBufferedBytes:0};
  function fill(){while(!closed&&slots.size<limit&&next<files.length){const key=files[next++],slot={bytes:0,promise:null};slots.set(key,slot);stats.requested++;stats.peakSlots=Math.max(stats.peakSlots,slots.size);slot.promise=Promise.resolve().then(()=>load(key,controller.signal)).then(data=>{if(!closed&&slots.get(key)===slot){slot.bytes=data.byteLength;buffered+=slot.bytes;stats.peakBufferedBytes=Math.max(stats.peakBufferedBytes,buffered);}return{data};},error=>({error}));}}
  function dispose(){closed=true;controller.abort();slots.clear();buffered=0;}
- fill();return{stats,dispose,async take(key){if(closed)throw Error('Static preparation stopped');if(key!==files[cursor])throw Error('Static asset order changed');const slot=slots.get(key),result=await slot.promise;if(closed)throw Error('Static preparation stopped');if(result.error){dispose();throw result.error;}slots.delete(key);buffered-=slot.bytes;cursor++;fill();return result.data;}};
+ fill();return{stats,dispose,async take(key){if(closed)throw Error('Static preparation stopped');if(key!==files[cursor])throw Error('Static asset order changed');fill();const slot=slots.get(key),result=await slot.promise;if(closed)throw Error('Static preparation stopped');if(result.error){dispose();throw result.error;}slots.delete(key);buffered-=slot.bytes;cursor++;if(limit>1)fill();return result.data;}};
 }
 
 async function createStaticBuildings119(B,scene,buildings){

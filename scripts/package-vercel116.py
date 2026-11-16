@@ -5,6 +5,9 @@ ROOT=Path(__file__).resolve().parent.parent
 def digest(data):return hashlib.sha256(data).hexdigest()
 def package(output):
  pkg=json.loads((ROOT/'package.json').read_text());build=int(pkg['version'].split('.')[-1]);assert build>=116
+ release=pkg.get('releaseVersion');html=(ROOT/'dist/index.html').read_text()
+ assert release and re.fullmatch(r'[0-9]+\.[0-9]+(?:\.[0-9]+)?',release),'Missing public releaseVersion'
+ assert f'data-release-version="{release}" aria-label="버전 {release}">v{release}</span>' in html,'Title version differs from package releaseVersion'
  output=output.resolve();assert not output.is_relative_to(ROOT),'Outputs must stay outside app'
  output.mkdir(parents=True,exist_ok=True)
  backend=output/'backend-source';frontend=output/'frontend-source'
@@ -30,7 +33,7 @@ def package(output):
    dst=stage/name;dst.parent.mkdir(parents=True,exist_ok=True);dst.write_bytes(data);dst.chmod(0o644)
    entries.append({'path':name,'size':len(data),'sha256':digest(data)})
   if label=='frontend':
-   base={'name':'3nu-vercel-frontend','version':pkg['version'],'private':True,'engines':{'node':'24.x'},'scripts':{'build':'node scripts/vercel-build116.cjs'}}
+   base={'name':'3nu-vercel-frontend','version':pkg['version'],'releaseVersion':release,'private':True,'engines':{'node':'24.x'},'scripts':{'build':'node scripts/vercel-build116.cjs'}}
    lock={'name':base['name'],'version':base['version'],'lockfileVersion':3,'requires':True,'packages':{'':{'name':base['name'],'version':base['version'],'engines':base['engines']}}}
    for name,obj in [('package.json',base),('package-lock.json',lock)]:
     data=(json.dumps(obj,indent=2)+'\n').encode();(stage/name).write_bytes(data);entries.append({'path':name,'size':len(data),'sha256':digest(data)})

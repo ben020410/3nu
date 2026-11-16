@@ -1,0 +1,16 @@
+const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');const c={Float32Array,Uint16Array,Uint32Array};vm.createContext(c);vm.runInContext(fs.readFileSync('dist/render-quality.js','utf8'),c);const n=3600,p=[],normal=[],uv=[],indices=[];for(let i=0;i<n;i++){const k=i%36;p.push(k%6,Math.floor(k/6),0);normal.push(0,0,i%72<36?1:-1);uv.push(k%6/6,Math.floor(k/6)/6);indices.push(i)}const vd={positions:new Float32Array(p),normals:new Float32Array(normal),uvs:new Float32Array(uv),indices};const originals={positions:vd.positions.slice(),normals:vd.normals.slice(),uvs:vd.uvs.slice()};c.compactTerrain118(vd);assert.equal(vd.positions.length/3,72);assert.equal(vd.indices.length,n);for(let i=0;i<n;i++)for(const [key,stride]of Object.entries({positions:3,normals:3,uvs:2}))for(let j=0;j<stride;j++)assert.equal(vd[key][vd.indices[i]*stride+j],originals[key][i*stride+j]);const special={positions:new Float32Array(p),indices:[...indices],materialInfos:[{}]};c.compactTerrain118(special);assert.equal(special.positions.length,p.length);console.log('PASS exact expanded triangles, normals/UV seams, index order and multi-material exclusion');
+
+const scene={onDisposeObservable:{addOnce(){}}};class VD{applyToMesh(){return this}};c.matchMedia=()=>({matches:true});const original=VD.prototype.applyToMesh;const hook=c.compactBootGeometry117({VertexData:VD},scene);for(const [n,values,Type] of [[3,[0,2,1],Uint16Array],[65536,[65535,0,1],Uint32Array],[70000,[69999,65536,0],Uint32Array]]){const vd=new VD;vd.positions=new Float32Array(n*3);vd.indices=values;vd.applyToMesh({name:'building-test',getScene:()=>scene});assert(vd.indices instanceof Type);assert.deepEqual(Array.from(vd.indices),values);}hook.release();assert.equal(VD.prototype.applyToMesh,original);console.log('PASS index widths preserve large meshes, reserved index and hook cleanup');
+for(const coarse of [false,true]){
+ const control={},engine={maxFPS:144,getCaps:()=>({maxMSAASamples:4}),setHardwareScalingLevel(v){this.scaling=v},resize(){},getRenderWidth:()=>393,getRenderHeight:()=>852};
+ const box={matchMedia:()=>({matches:coarse}),localStorage:{getItem:()=>null,setItem(){}},devicePixelRatio:3,performance:{now:()=>0}};
+ vm.createContext(box);vm.runInContext(fs.readFileSync('dist/render-quality.js','utf8'),box);
+ const B={DefaultRenderingPipeline:class{},ImageProcessingConfiguration:{TONEMAPPING_STANDARD:0},CascadedShadowGenerator:{IsSupported:false}};
+ const scene={imageProcessingConfiguration:{},meshes:[],textures:[]};
+ const rendering=box.createCampusRendering(B,scene,engine,{},null,control);
+ assert.equal(engine.renderEvenInBackground,false);assert.equal(engine.maxFPS,coarse?30:60);
+ rendering.cadence(true);assert.equal(engine.maxFPS,15);rendering.cadence(false);assert.equal(engine.maxFPS,coarse?30:60);
+ control.onchange({target:{value:'high'}});assert.equal(engine.maxFPS,60);assert.equal(engine.scaling,coarse?1/1.5:1/2);
+ control.onchange({target:{value:'standard'}});assert.equal(engine.maxFPS,coarse?30:60);assert.equal(engine.scaling,coarse?1:1/1.25);
+}
+console.log('PASS mobile/desktop cadence, menu restore and quality selection');

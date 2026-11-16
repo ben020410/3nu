@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 170" role="img" aria-labelledby="title desc">
+<title id="title">제작 과정</title><desc id="desc">요구사항 구체화, 시안 비교와 수정, 구현 요청, 로컬 검증, 빌드별 기록 순서로 진행.</desc>
+<rect width="1200" height="170" rx="18" fill="#f0f4f8"/><path d="M120 61H1080" stroke="#c7d5e3" stroke-width="2" fill="none"/>
+<g fill="#15234a"><circle cx="120" cy="61" r="25"/><circle cx="360" cy="61" r="25"/><circle cx="600" cy="61" r="25"/><circle cx="840" cy="61" r="25"/><circle cx="1080" cy="61" r="25"/></g>
+<g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo',sans-serif" text-anchor="middle">
+<g fill="#fff" font-size="22" font-weight="650"><text x="120" y="69">1</text><text x="360" y="69">2</text><text x="600" y="69">3</text><text x="840" y="69">4</text><text x="1080" y="69">5</text></g>
+<g fill="#15234a" font-size="24" font-weight="650"><text x="120" y="124">요구사항 구체화</text><text x="360" y="124">시안 비교·수정</text><text x="600" y="124">구현 요청</text><text x="840" y="124">로컬 검증</text><text x="1080" y="124">빌드별 기록</text></g></g></svg>

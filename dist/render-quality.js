@@ -5,16 +5,22 @@ function createCampusRendering(B,scene,engine,camera,sun,control){
  const ic=scene.imageProcessingConfiguration;// Avoid notifying every existing material when its image-processing values already match.
  for(const [key,value]of Object.entries({toneMappingEnabled:false,toneMappingType:B.ImageProcessingConfiguration.TONEMAPPING_STANDARD,exposure:1,contrast:1}))if(ic[key]!==value)ic[key]=value;
  engine.renderEvenInBackground=false;
+ const isCaster123=m=>(m.name.startsWith('building-')&&!m.name.includes('-detail-')||m.name.startsWith('gate-')||m.name.startsWith('walker-')||m.metadata?.facilityId==='snubear'||m.metadata?.facilityId==='main-lawn'||m.metadata?.humanities45===true||m.metadata?.pungsan48Tree===true||m.name==='walker'||m.name==='head'||m.name==='backpack')&&!/[-](glass|solar|stone-joint)$/.test(m.material?.name||'');
  let shadows=null,settings={},frames=[],previous=performance.now(),started=previous;
  function apply(q){quality=q;engine.maxFPS=coarse&&q==='standard'?30:60;control.value=q;frames=[];started=previous=performance.now();const high=q==='high';const dpr=Math.min(devicePixelRatio||1,coarse?(high?1.5:1):(high?2:1.25));engine.setHardwareScalingLevel(1/dpr);pipe.samples=high&&!coarse?Math.min(4,engine.getCaps().maxMSAASamples||1):1;
   if(shadows)shadows.dispose();const size=coarse?(high?1024:512):(high?2048:1024);
   if(B.CascadedShadowGenerator.IsSupported){shadows=new B.CascadedShadowGenerator(size,sun);shadows.numCascades=coarse?2:(high?3:2);shadows.shadowMaxZ=coarse?(high?350:200):(high?1000:600);shadows.lambda=.4;shadows.stabilizeCascades=true;shadows.cascadeBlendPercentage=.05;shadows.usePercentageCloserFiltering=true;shadows.filteringQuality=high?B.ShadowGenerator.QUALITY_MEDIUM:B.ShadowGenerator.QUALITY_LOW;shadows.bias=.001;shadows.normalBias=.2;shadows.setDarkness(.2);
-   const casters=scene.meshes.filter(m=>m.name.startsWith('building-')&&!m.name.includes('-detail-')||m.name.startsWith('gate-')||m.name.startsWith('walker-')||m.metadata?.facilityId==='snubear'||m.metadata?.facilityId==='main-lawn'||m.metadata?.humanities45===true||m.metadata?.pungsan48Tree===true||m.name==='walker'||m.name==='head'||m.name==='backpack');for(const m of casters)if(!/[-](glass|solar|stone-joint)$/.test(m.material?.name||''))shadows.addShadowCaster(m,false);
+   const casters=scene.meshes.filter(isCaster123);for(const m of casters)shadows.addShadowCaster(m,false);shadows.getShadowMap()._sourceCasters123=casters;
   }
   for(const m of scene.meshes)m.receiveShadows=!m.name.startsWith('route')&&!m.name.startsWith('cloud97');for(const t of scene.textures)t.anisotropicFilteringLevel=high?8:4;
   settings={quality:q,resolution:engine.getRenderWidth()+'×'+engine.getRenderHeight(),msaa:pipe.samples,fxaa:true,shadowSize:shadows?size:0,cascades:shadows?shadows.numCascades:0};engine.resize();try{localStorage.setItem('gwanak.quality',q)}catch{}
  }
  control.onchange=e=>apply(e.target.value);apply(quality);
+ // New static units arrive after initial quality setup. Keep caster sources current.
+ if(scene.metadata?.residency123){const added123=new Set();scene.onNewMeshAddedObservable.add(m=>added123.add(m));
+ scene.onMeshRemovedObservable.add(m=>{added123.delete(m);if(shadows){shadows.removeShadowCaster(m,false);const map=shadows.getShadowMap();if(map)map._sourceCasters123=(map._sourceCasters123||[]).filter(q=>q!==m);}});
+ scene.onBeforeRenderObservable.add(()=>{if(!added123.size)return;const map=shadows?.getShadowMap();for(const m of added123){if(m.isDisposed())continue;m.receiveShadows=!m.name.startsWith('route')&&!m.name.startsWith('cloud97');for(const t of m.material?.getActiveTextures()||[])t.anisotropicFilteringLevel=quality==='high'?8:4;if(shadows&&isCaster123(m)){shadows.addShadowCaster(m,false);map._sourceCasters123.push(m);}}added123.clear();});}
+
  return {cadence(occluded){const limit=occluded?15:coarse&&quality==='standard'?30:60;if(engine.maxFPS!==limit)engine.maxFPS=limit;},sample(){const now=performance.now(),dt=now-previous;previous=now;if(dt<500&&now-started>2000){frames.push(dt);if(frames.length>600)frames.shift();}},metrics(){const sorted=[...frames].sort((a,b)=>a-b),avg=frames.reduce((s,v)=>s+v,0)/(frames.length||1);return{...settings,resolution:engine.getRenderWidth()+'×'+engine.getRenderHeight(),frameLimit:engine.maxFPS,samples:frames.length,meanMs:+avg.toFixed(2),p95Ms:+(sorted[Math.floor(sorted.length*.95)]||0).toFixed(2),fps:avg?+(1000/avg).toFixed(1):0,activeMeshes:scene.getActiveMeshes().length,activeTriangles:Math.round(scene.getActiveIndices()/3)};}};
 }
 

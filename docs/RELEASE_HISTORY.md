@@ -18,3 +18,5 @@ Current local v1.0.1 notes cover first-load waiting, camera/flight processing, u
 
 
 2026-11-17: v1.0.3 = BUILD122. Initial mobile title separates 3D runtime downloads from title controls; mobile background uses one active image and no continuous scaling. The v1.0.2 physical iPhone retry failed despite desktop WebKit passing. Keep verification limits explicit.
+
+2026-11-17 candidate: v1.0.4 = BUILD123. Mobile static building/terrain residency loads nearby units and releases distant geometry without changing the stored models. Validate arrivals, unload/re-entry, picking, labels, shadows, settings and retries. BUILD122 passed desktop WebKit but still restarted near loading completion on the physical iPhone; do not claim a resolved device fault before retest.

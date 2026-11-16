@@ -23,31 +23,33 @@ function createStaticQueue120(files,load,limit=1){
 async function createStaticBuildings119(B,scene,buildings){
  if(!useStatic119())return null;
  const manifest=await jsonStatic119('data/static119/manifest.json?v=119'),materials=new Map(),stats={buildings:0,bytes:0,meshes:0};
- const files=(buildings?buildings.map(b=>manifest.buildings[b.id]).filter(Boolean):Object.values(manifest.buildings)).map(e=>e.file),queue=createStaticQueue120(files,(file,signal)=>fetchStatic119('data/static119/'+file+'?v=119',signal));stats.prefetch=queue.stats;scene.onDisposeObservable.addOnce(queue.dispose);
- function material(id){if(!id)return null;const key=id.replace('static119-material-','');if(materials.has(key))return materials.get(key);
-  const record=manifest.materials[key];if(!record)throw Error('Invalid static material '+key);
-  const parsed={...record};delete parsed._imageProcessingConfiguration;const result=B.Material.Parse(parsed,scene,'');materials.set(key,result);return result;
- }
- return {stats,async build(b){const entry=manifest.buildings[b.id];if(!entry)return false;
-  window.Title105?.stage('건물 준비 중… '+(stats.buildings+1)+' / '+Object.keys(manifest.buildings).length);const buffer=await binaryStatic119(null,await queue.take(entry.file));if(buffer.byteLength!==entry.bytes)throw Error('Incomplete static building '+b.id);
-  for(const [index,item]of entry.meshes.entries()){
-   const vd=new B.VertexData(),kindMap={position:'positions',normal:'normals',uv:'uvs',uv2:'uvs2',color:'colors'};
-   for(const [kind,f]of Object.entries(item.geometry.fields)){const key=kindMap[kind];if(!key)throw Error('Unsupported static vertex field '+kind);vd[key]=new Float32Array(buffer,f.data.offset,f.data.count);}
-   const ix=item.geometry.indices,Index=ix.type==='Uint16Array'?Uint16Array:Uint32Array;vd.indices=new Index(buffer,ix.offset,ix.count);
-   const geometryId='static119-'+b.id+'-'+index;const geometry=new B.Geometry(geometryId,scene,vd,false);scene.pushGeometry(geometry,true);material(item.record.materialId);
-   const mesh=B.Mesh.Parse({...item.record,geometryId},scene,'');mesh.material=material(item.record.materialId);mesh.freezeWorldMatrix();stats.meshes++;
-  }
-  Object.assign(b,entry.changes);stats.buildings++;stats.bytes+=buffer.byteLength;return true;
+ const residency=scene.metadata.residency123;
+ function material(id){if(!id)return null;const key=id.replace('static119-material-','');if(materials.has(key))return materials.get(key);const record=manifest.materials[key];if(!record)throw Error('Invalid static material '+key);const parsed={...record};delete parsed._imageProcessingConfiguration;const result=B.Material.Parse(parsed,scene,'');materials.set(key,result);return result;}
+ return {stats,async build(b){const entry=manifest.buildings[b.id];if(!entry)return false;Object.assign(b,entry.changes);
+  residency.register('building:'+b.id,residency.bounds.buildings[b.id],'building',entry.bytes,async signal=>{
+   const meshes=[];try{const buffer=await binaryStatic119(null,await fetchStatic119('data/static119/'+entry.file+'?v=119',signal));if(signal.aborted||scene.isDisposed)throw Error('Static loading cancelled');if(buffer.byteLength!==entry.bytes)throw Error('Incomplete static building '+b.id);
+    for(const [index,item]of entry.meshes.entries()){
+     const vd=new B.VertexData(),kindMap={position:'positions',normal:'normals',uv:'uvs',uv2:'uvs2',color:'colors'};
+     for(const [kind,f]of Object.entries(item.geometry.fields)){const key=kindMap[kind];if(!key)throw Error('Unsupported static vertex field '+kind);vd[key]=new Float32Array(buffer,f.data.offset,f.data.count);}
+     const ix=item.geometry.indices,Index=ix.type==='Uint16Array'?Uint16Array:Uint32Array;vd.indices=new Index(buffer,ix.offset,ix.count);
+     const geometryId='static119-'+b.id+'-'+index,geometry=new B.Geometry(geometryId,scene,vd,false);scene.pushGeometry(geometry,true);material(item.record.materialId);
+     const mesh=B.Mesh.Parse({...item.record,geometryId},scene,'');meshes.push(mesh);mesh.material=material(item.record.materialId);mesh.freezeWorldMatrix();
+    }stats.buildings++;stats.bytes+=buffer.byteLength;stats.meshes+=meshes.length;return meshes;
+   }catch(error){for(const m of meshes)m.dispose(false,false);throw error;}
+  });return true;
  }};
 }
 
-async function loadStaticGround119(B,scene,yieldWork){
- const manifest=await jsonStatic119('data/static119/ground.json?v=119');let completed=0;const queue=createStaticQueue120(manifest.chunks.map(c=>c.file),(file,signal)=>fetchStatic119('data/static119/'+file+'?v=119',signal));scene.onDisposeObservable.addOnce(queue.dispose);scene.metadata={...scene.metadata,groundPrefetch120:queue.stats};
- for(const chunk of manifest.chunks){await yieldWork(true);window.Title105?.stage('지형 준비 중… '+(++completed)+' / '+manifest.chunks.length);const buffer=await binaryStatic119(null,await queue.take(chunk.file));if(buffer.byteLength!==chunk.bytes)throw Error('Incomplete static terrain');
-  for(const item of chunk.meshes){const vd=new B.VertexData(),keys={position:'positions',normal:'normals',uv:'uvs'};
-   for(const [kind,f]of Object.entries(item.fields)){if(!keys[kind])throw Error('Unexpected terrain attribute');vd[keys[kind]]=new Float32Array(buffer,f.offset,f.count);}
-   const ix=item.indices;vd.indices=new (ix.type==='Uint16Array'?Uint16Array:Uint32Array)(buffer,ix.offset,ix.count);
-   const mesh=new B.Mesh(item.name,scene),geometry=new B.Geometry('static119-ground-'+mesh.uniqueId,scene,vd,false,mesh);mesh.material=scene.getMaterialByName(item.material);if(!mesh.material)throw Error('Missing terrain material '+item.material);mesh.isPickable=item.pickable;mesh.metadata=item.metadata;mesh.freezeWorldMatrix();
-  }
- }
+async function loadStaticGround119(B,scene,yieldWork,nav){
+ const manifest=await jsonStatic119('data/static119/ground.json?v=119'),residency=await Residency123.attach(scene,nav);
+ for(const chunk of manifest.chunks)residency.register('ground:'+chunk.file,residency.bounds.ground[chunk.file],'ground',chunk.bytes,async signal=>{
+  const meshes=[];try{const buffer=await binaryStatic119(null,await fetchStatic119('data/static119/'+chunk.file+'?v=119',signal));if(signal.aborted||scene.isDisposed)throw Error('Static loading cancelled');if(buffer.byteLength!==chunk.bytes)throw Error('Incomplete static terrain');
+   for(const item of chunk.meshes){const vd=new B.VertexData(),keys={position:'positions',normal:'normals',uv:'uvs'};
+    for(const [kind,f]of Object.entries(item.fields)){if(!keys[kind])throw Error('Unexpected terrain attribute');vd[keys[kind]]=new Float32Array(buffer,f.offset,f.count);}
+    const ix=item.indices;vd.indices=new (ix.type==='Uint16Array'?Uint16Array:Uint32Array)(buffer,ix.offset,ix.count);
+    const mesh=new B.Mesh(item.name,scene);meshes.push(mesh);new B.Geometry('static119-ground-'+mesh.uniqueId,scene,vd,false,mesh);mesh.material=scene.getMaterialByName(item.material);if(!mesh.material)throw Error('Missing terrain material '+item.material);mesh.isPickable=item.pickable;mesh.metadata=item.metadata;mesh.freezeWorldMatrix();
+   }return meshes;
+  }catch(error){for(const m of meshes)m.dispose(false,false);throw error;}
+ });
+ await residency.warm();
 }

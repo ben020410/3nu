@@ -15,7 +15,7 @@
   }).filter(Boolean);return data.facilityLabels;
  }
  // Candidate set is built once. Existing physical meshes remain non-colliding/non-walkable as before.
- function picker(scene,entries){const meshes=new Set();for(const m of scene.meshes){const surface=m.name.startsWith('terrain-')||(m.metadata?.library17&&['walkway','stairs'].includes(m.metadata.category29)),fall=m.name.startsWith('waterfall83-')&&(/rock|core|falling-water/.test(m.name));if(!surface&&!fall)continue;const b=m.getBoundingInfo().boundingBox;if(entries.some(q=>q.bounds[0]<=b.maximumWorld.x&&q.bounds[2]>=b.minimumWorld.x&&q.bounds[1]<=b.maximumWorld.z&&q.bounds[3]>=b.minimumWorld.z))meshes.add(m);}
+ function picker(scene,entries){const meshes=new Set();function register(m){const surface=m.name.startsWith('terrain-')||(m.metadata?.library17&&['walkway','stairs'].includes(m.metadata.category29)),fall=m.name.startsWith('waterfall83-')&&(/rock|core|falling-water/.test(m.name));if(!surface&&!fall)return;const b=m.getBoundingInfo().boundingBox;if(entries.some(q=>q.bounds[0]<=b.maximumWorld.x&&q.bounds[2]>=b.minimumWorld.x&&q.bounds[1]<=b.maximumWorld.z&&q.bounds[3]>=b.minimumWorld.z))meshes.add(m);}for(const m of scene.meshes)register(m);const pending=new Set();scene.onNewMeshAddedObservable.add(m=>pending.add(m));scene.onMeshRemovedObservable.add(m=>{pending.delete(m);meshes.delete(m);});scene.onBeforeRenderObservable.add(()=>{for(const m of pending)if(!m.isDisposed())register(m);pending.clear();});
   const predicate=m=>meshes.has(m)&&m.isEnabled()&&m.isVisible&&m.visibility>0;
   const resolve=hit=>hit?.hit&&predicate(hit.pickedMesh)?entries.find(q=>matches(q,hit.pickedPoint.x,hit.pickedPoint.z))?.record||null:null;
   return{predicate,resolve};

@@ -240,24 +240,6 @@ python3 -m http.server 8765 --bind 127.0.0.1 --directory dist
 
 </details>
 
-<br>
-
-<details>
-<summary><strong>키보드 조작</strong></summary>
-
-| 키 | 동작 |
-|---|---|
-| <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> / 방향키 | 이동 |
-| <kbd>Space</kbd> / <kbd>E</kbd> | 백학 상승 · 오리 점프 |
-| <kbd>Q</kbd> / <kbd>C</kbd> | 백학 하강 · 오리 웅크리기 |
-| <kbd>Shift</kbd> | 가속 |
-| <kbd>F</kbd> | 가까운 대상과 상호작용 |
-| <kbd>M</kbd> | 전체 지도 |
-| <kbd>L</kbd> | 사진 찍기 |
-| <kbd>P</kbd> | 설정 |
-
-</details>
-
 ---
 
 <details>

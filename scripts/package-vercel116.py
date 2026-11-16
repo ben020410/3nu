@@ -34,7 +34,7 @@ def package(output):
    lock={'name':base['name'],'version':base['version'],'lockfileVersion':3,'requires':True,'packages':{'':{'name':base['name'],'version':base['version'],'engines':base['engines']}}}
    for name,obj in [('package.json',base),('package-lock.json',lock)]:
     data=(json.dumps(obj,indent=2)+'\n').encode();(stage/name).write_bytes(data);entries.append({'path':name,'size':len(data),'sha256':digest(data)})
-  record={'build':build,'kind':label,'publicDeployment':False,'targetOrigin':'https://3nu.vercel.app','targetNameReserved':True,'files':entries,'excluded':['private runtime','credentials','node_modules','Git metadata','reports']}
+  record={'build':build,'releaseVersion':pkg.get('releaseVersion'),'kind':label,'publicDeployment':False,'targetOrigin':'https://3nu.vercel.app','targetNameReserved':True,'files':entries,'excluded':['private runtime','credentials','node_modules','Git metadata','reports']}
   (stage/'RELEASE-MANIFEST.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n');(output/(label+'-manifest.json')).write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n')
   filename=f'3nu-build{build}.tar.gz' if label=='backend' else f'3nu-vercel{build}.tar.gz';archive=output/filename
   with tarfile.open(archive,'w:gz',format=tarfile.PAX_FORMAT) as tf:

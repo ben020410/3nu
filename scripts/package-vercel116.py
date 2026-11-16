@@ -10,7 +10,8 @@ def package(output):
  backend=output/'backend-source';frontend=output/'frontend-source'
  assert not backend.exists() and not frontend.exists(),'Immutable release already exists; choose a new output folder'
  files={'package.json','package-lock.json','source-data/multiplayer106-anchors.json','scripts/vercel-build116.cjs'}
- files.update(pkg['scripts']['test'].split()[2:])
+ # Include script arguments from chained test commands; shell operators are not files.
+ files.update(re.findall(r'\bscripts/[A-Za-z0-9_./-]+\.cjs\b',pkg['scripts']['test']))
  files.update('scripts/'+n+'.cjs' for n in ['setup-community107','backup-community107','scheduled-backup112','retention112'])
  files.update('docs/'+n for n in ['RESILIENCE113.md','OPERATIONS112_RUNBOOK.md','SECURITY_RETENTION112.md','RIGHTS_REVIEW.md','SMASH-LICENSE.txt','VERCEL_PREPUBLIC116.md'])
  for folder in ['dist','server']:

@@ -1,16 +1,18 @@
 {
   "name": "3nu-local-campus",
-  "version": "0.0.118",
+  "version": "0.0.119",
   "private": true,
   "engines": {
     "node": ">=24.0.0"
   },
   "scripts": {
     "start": "node server/local107.cjs",
-    "test": "node --test scripts/multiplayer106.test.cjs scripts/community107.test.cjs scripts/channels110.test.cjs scripts/operations111.test.cjs scripts/security112.test.cjs scripts/retention112.test.cjs scripts/backup-ops112.test.cjs scripts/resilience113.test.cjs scripts/vercel116.test.cjs scripts/mobile-boot117.test.cjs scripts/mobile-memory118.test.cjs",
+    "test": "node --test scripts/multiplayer106.test.cjs scripts/community107.test.cjs scripts/channels110.test.cjs scripts/operations111.test.cjs scripts/security112.test.cjs scripts/retention112.test.cjs scripts/backup-ops112.test.cjs scripts/resilience113.test.cjs scripts/vercel116.test.cjs scripts/mobile-boot117.test.cjs scripts/mobile-memory118.test.cjs && node scripts/check-static119.cjs",
     "setup:local": "node scripts/setup-community107.cjs",
     "retention:preview": "node scripts/retention112.cjs",
-    "backup:run": "node scripts/scheduled-backup112.cjs"
+    "backup:run": "node scripts/scheduled-backup112.cjs",
+    "bake:buildings": "node scripts/bake-buildings119.cjs",
+    "bake:ground": "node scripts/bake-ground119.cjs"
   },
   "dependencies": {
     "ws": "8.23.0"

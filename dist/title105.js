@@ -8,7 +8,7 @@ let waiting117=!!(mobile117&&previous117?.pending&&Date.now()-previous117.at>=0&
 const permission117=waiting117?new Promise(resolve=>resume117=resolve):Promise.resolve();
 function checkpoint117(pending,stage){try{sessionStorage.setItem(bootKey117,JSON.stringify({pending,stage,at:Date.now()}))}catch{}}
 let stall=null,total=null;function watch(){clearTimeout(stall);if(!ready&&!failed&&!waiting117)stall=setTimeout(()=>window.Title105?.fail('파일 준비가 멈췄어요. 연결 상태를 확인한 뒤 다시 시도해 주세요.'),45000)}
-function arm117(){clearTimeout(total);total=setTimeout(()=>window.Title105?.fail('준비가 오래 걸리고 있어요. 연결 상태를 확인한 뒤 다시 시도해 주세요.'),120000);watch()}
+function arm117(){clearTimeout(total);total=setTimeout(()=>window.Title105?.fail('준비가 오래 걸리고 있어요. 연결 상태를 확인한 뒤 다시 시도해 주세요.'),mobile117?300000:120000);watch()}
 if(waiting117){q('#titleLoadLabel105').textContent='준비 중 화면이 다시 열렸어요';q('#titleStage105').textContent='다른 탭과 앱을 닫은 뒤 다시 준비해 주세요. 반복 로딩을 막기 위해 잠시 멈췄어요.';q('#titleProgress105').textContent='';q('#titleRetry105').hidden=false;q('#titleRetry105').textContent='다시 준비하기'}else arm117();
 const stages=['data-ready','world-ready','ground-ready','buildings-ready','facilities-ready','controls-ready','distance-ready','scene-ready'],completed=new Set();
 function pause(){if(timer!==null)clearTimeout(timer);timer=null;root.classList.add('paused');}

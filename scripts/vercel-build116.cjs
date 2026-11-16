@@ -10,7 +10,7 @@ function configure(root,env){
  html=html.replaceAll('https://165.22.247.213/',origin.origin+'/');
  const tag='<script defer src="hosting116.js?v='+build+'"></script>';
  html=html.replace(/<script defer src="hosting116\.js[^"]*"><\/script>/g,'');
- if(!html.includes('src="hosting116.js'))html=html.replace('<script defer src="multiplayer106.js',tag+'<script defer src="multiplayer106.js');
+ if(!html.includes('src="hosting116.js')){const anchor=['<script defer src="multiplayer106.js','<script type="application/x-3nu-runtime" data-runtime-src="multiplayer106.js'].find(value=>html.includes(value));if(!anchor)throw Error('Multiplayer script anchor missing');html=html.replace(anchor,tag+anchor);}
  if(!html.includes(tag))throw Error('Multiplayer script anchor missing');
  fs.writeFileSync(file,html);
  fs.writeFileSync(path.join(site,'hosting116.js'),'"use strict";\nif(location.origin==='+JSON.stringify(origin.origin)+')window.CAMPUS_MULTIPLAYER_URL='+JSON.stringify(upstream.origin.replace(/^https:/,'wss:')+'/multiplayer')+';\n');

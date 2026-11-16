@@ -81,3 +81,11 @@ test('116 Vercel build fails closed without release flag and never writes gatewa
  fs.writeFileSync(path.join(root,'package.json'),JSON.stringify({version:'0.0.117'}));assert.throws(()=>configure(root,{...env,CAMPUS_RELEASE_APPROVED:'116'}),/Publication/);configure(root,{...env,CAMPUS_RELEASE_APPROVED:'117'});const next=fs.readFileSync(path.join(root,'dist/index.html'),'utf8');assert(next.includes('hosting116.js?v=117'));assert.equal((next.match(/src="hosting116\.js/g)||[]).length,1);
  }finally{fs.rmSync(root,{recursive:true,force:true})}
 });
+
+test('122 Vercel config precedes deferred campus loader without activating runtime',()=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'3nu122-build-'));fs.mkdirSync(path.join(root,'dist'));
+ const marker='<script type="application/x-3nu-runtime" data-runtime-src="multiplayer106.js?v=113"></script>';
+ fs.writeFileSync(path.join(root,'package.json'),JSON.stringify({version:'0.0.122'}));
+ fs.writeFileSync(path.join(root,'dist/index.html'),marker+'<script defer src="startup122.js?v=122"></script>');
+ try{configure(root,{CAMPUS_BROWSER_ORIGIN:browser,CAMPUS_UPSTREAM_ORIGIN:upstream,CAMPUS_EDGE_PROXY_SECRET:secret,CAMPUS_RELEASE_APPROVED:'122'});const html=fs.readFileSync(path.join(root,'dist/index.html'),'utf8');assert(html.includes(marker));assert(html.indexOf('hosting116.js?v=122')<html.indexOf('startup122.js'));assert(!html.includes('<script defer src="multiplayer106.js'));assert(!html.includes(secret));}finally{fs.rmSync(root,{recursive:true,force:true})}
+});

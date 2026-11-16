@@ -15,3 +15,6 @@ Current local v1.0.1 notes cover first-load waiting, camera/flight processing, u
 
 
 2026-11-17 hotfix: v1.0.2 = BUILD121. The title corner now carries `data-release-version` and an accessible version label; release packaging rejects a mismatch with `package.json.releaseVersion`. Preserve the v1.0 and v1.0.1 entries. On mobile, character/nickname selection precedes campus loading; successful preparation enters gameplay automatically. Physical iPhone verification remains separate from desktop WebKit tests.
+
+
+2026-11-17: v1.0.3 = BUILD122. Initial mobile title separates 3D runtime downloads from title controls; mobile background uses one active image and no continuous scaling. The v1.0.2 physical iPhone retry failed despite desktop WebKit passing. Keep verification limits explicit.

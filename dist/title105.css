@@ -43,3 +43,6 @@ body:not(.playing)>:not(#title105):not(script):not(style){visibility:hidden!impo
 
 /* Public release notes; keep all four board tabs reachable on small screens. */
 #title105 .tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(86px,1.4fr);gap:8px}#title105 .tabs button{white-space:nowrap;font-size:14px;min-height:44px}#title105 .releaseHeading120{display:flex;align-items:center;gap:12px;flex-wrap:wrap}#title105 .releaseHeading120 h3{margin:0;font-size:21px}#title105 .releaseBadge120{font-size:12px;background:#edf2f5;color:#526875;padding:3px 9px;border-radius:20px}#title105 .updateHistory120 ul{padding-left:21px;color:var(--muted);line-height:1.8}#title105 .updateHistory120 li+li{margin-top:7px}@media(max-width:380px){#title105 .tabs{gap:4px}#title105 .tabs button{font-size:13px}}
+
+/* BUILD122: keep the mobile title artwork; avoid continuous scaled compositing. */
+@media(pointer:coarse){#title105 .backdrop img{transition:none}#title105 .backdrop img.active:nth-child(n){animation:none;transform:none}}

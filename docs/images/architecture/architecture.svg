@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="800" viewBox="0 0 1440 800" role="img" aria-labelledby="title desc">
+<title id="title">3NU — 탐험, 연결, 기록</title><desc id="desc">브라우저에서 3D 캠퍼스를 탐험합니다. Node.js 서버가 HTTP 요청과 WebSocket 실시간 연결을 처리하고 SQLite에 방명록, 피드백, 방문 통계를 저장합니다. 서버와 데이터베이스는 하나의 서버에서 운영합니다. 현재 비공개 운영 기준입니다.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" markerWidth="7" markerHeight="7" refX="8" refY="5" orient="auto-start-reverse"><path d="M2 2 L8 5 L2 8" fill="none" stroke="#8592a2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect width="1440" height="800" fill="#ffffff"/>
+<g font-family="-apple-system,BlinkMacSystemFont,Apple SD Gothic Neo,Noto Sans KR,sans-serif" fill="#202b3a">
+<text x="64" y="88" font-size="46" font-weight="700">3NU</text><text x="178" y="88" font-size="34" font-weight="500">시스템 구조</text>
+<text x="66" y="130" font-size="22" fill="#758091">브라우저의 3D 화면을 서버와 연결하고, 기록을 저장합니다.</text>
+<!-- Shared deployment boundary: server and SQLite are not separate servers. -->
+<rect x="525" y="192" width="851" height="493" rx="28" fill="#f6f8fb"/>
+<text x="950" y="230" text-anchor="middle" font-size="18" fill="#758091">하나의 서버에서 운영</text>
+<!-- Three conceptual cards -->
+<rect x="64" y="253" width="352" height="409" rx="22" fill="#fff" stroke="#dce2ea" stroke-width="1.5"/>
+<rect x="550" y="253" width="352" height="409" rx="22" fill="#fff" stroke="#dce2ea" stroke-width="1.5"/>
+<rect x="1000" y="253" width="352" height="409" rx="22" fill="#fff" stroke="#dce2ea" stroke-width="1.5"/>
+<!-- Browser window with miniature campus illustration -->
+<g stroke-linejoin="round" stroke-linecap="round">
+<rect x="104" y="298" width="272" height="173" rx="11" fill="#f6f9fd" stroke="#7993b0" stroke-width="2"/>
+<path d="M104 326 H376" stroke="#bac9d9" stroke-width="1.5"/>
+<circle cx="120" cy="313" r="3" fill="#94a9bf"/><circle cx="132" cy="313" r="3" fill="#94a9bf"/><circle cx="144" cy="313" r="3" fill="#94a9bf"/>
+<path d="M128 433 L224 373 L354 425 L260 457 Z" fill="#e1eadf"/>
+<path d="M153 424 L238 400 L318 437" fill="none" stroke="#fff" stroke-width="8"/>
+<path d="M155 393 L189 375 L216 387 L182 406 Z" fill="#e2ebf7"/>
+<path d="M155 393 V426 L182 440 V406 Z" fill="#a9bedb"/>
+<path d="M182 406 L216 387 V421 L182 440 Z" fill="#7798c1"/>
+<path d="M232 369 L268 352 L307 369 L271 387 Z" fill="#e2ebf7"/>
+<path d="M232 369 V410 L271 430 V387 Z" fill="#a9bedb"/>
+<path d="M271 387 L307 369 V411 L271 430 Z" fill="#7798c1"/>
+<g stroke="#edf5ff" stroke-width="3"><path d="M164 405 L173 409 M164 416 L173 420 M191 412 L204 405 M191 424 L204 417 M242 385 L259 393 M242 398 L259 406 M281 392 L297 384 M281 406 L297 398"/></g>
+<circle cx="330" cy="410" r="12" fill="#a6bea0"/><path d="M330 419 V431" stroke="#899a84" stroke-width="3"/>
+<circle cx="134" cy="431" r="8" fill="#a6bea0"/>
+</g>
+<!-- Server icon: one application, with compact connection glyph -->
+<g stroke="#7391b5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect x="648" y="310" width="156" height="58" rx="11" fill="#eaf0f9"/><rect x="648" y="380" width="156" height="58" rx="11" fill="#eaf0f9"/>
+<circle cx="670" cy="339" r="5" fill="#4e78b4" stroke="none"/><circle cx="670" cy="409" r="5" fill="#4e78b4" stroke="none"/>
+<path d="M695 339 H778 M695 409 H778 M726 368 V380 M726 438 V455 M684 455 H768"/>
+<circle cx="684" cy="455" r="5" fill="white"/><circle cx="768" cy="455" r="5" fill="white"/>
+</g>
+<!-- SQLite storage icon -->
+<g stroke="#7391b5" stroke-width="2" stroke-linejoin="round">
+<path d="M1097 334 C1097 309 1255 309 1255 334 V431 C1255 458 1097 458 1097 431 Z" fill="#eaf0f9"/>
+<ellipse cx="1176" cy="334" rx="79" ry="23" fill="#f3f7fd"/>
+<path d="M1097 367 C1097 394 1255 394 1255 367 M1097 399 C1097 426 1255 426 1255 399" fill="none"/>
+</g>
+<!-- Relationships -->
+<path d="M435 405 H530" fill="none" stroke="#8592a2" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="483" y="374" text-anchor="middle" font-size="17" fill="#68778b">요청 · 응답</text>
+<text x="483" y="440" text-anchor="middle" font-size="17" fill="#68778b">실시간 연결</text>
+<path d="M921 405 H980" fill="none" stroke="#8592a2" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="951" y="374" text-anchor="middle" font-size="17" fill="#68778b">읽기 · 저장</text>
+<!-- Functional labels -->
+<text x="240" y="529" text-anchor="middle" font-size="29" font-weight="650">사용자 브라우저</text>
+<text x="240" y="568" text-anchor="middle" font-size="20" fill="#647184">3D 캠퍼스 · 이동 · 상호작용</text>
+<text x="240" y="614" text-anchor="middle" font-size="19" fill="#2a65b7">JavaScript · Babylon.js</text>
+<text x="726" y="529" text-anchor="middle" font-size="29" font-weight="650">3NU 서버</text>
+<text x="726" y="568" text-anchor="middle" font-size="20" fill="#647184">사용자 연결 · 요청 처리</text>
+<text x="726" y="614" text-anchor="middle" font-size="19" fill="#2a65b7">Node.js · HTTP / WebSocket</text>
+<text x="1176" y="529" text-anchor="middle" font-size="29" font-weight="650">데이터 저장</text>
+<text x="1176" y="568" text-anchor="middle" font-size="20" fill="#647184">방명록 · 피드백 · 방문 통계</text>
+<text x="1176" y="614" text-anchor="middle" font-size="19" fill="#2a65b7">SQLite</text>
+<text x="64" y="747" font-size="17" fill="#7d8795">BUILD113 · 비공개 운영 기준</text>
+<text x="1376" y="747" text-anchor="end" font-size="17" fill="#7d8795">실시간 플레이어 상태는 서버 메모리에서 관리</text>
+</g></svg>

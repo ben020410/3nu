@@ -112,16 +112,20 @@ UI를 제외한 화면을 촬영하고 프레임과 문구를 더합니다. 이�
 
 ## 기술 구성
 
-<img src="docs/assets/readme/system-layout.svg" width="100%" alt="브라우저는 3D 렌더링과 개인 조작을 담당하고, WebSocket으로 연결된 Node.js 서버는 공유 상태·좌석 점유·셔틀 시각을 관리합니다.">
-
-<br>
-
 **클라이언트** · JavaScript, Babylon.js, HTML/CSS<br>
 **서버와 통신** · Node.js, WebSocket (`ws`)<br>
 **공간 데이터** · OpenStreetMap 기반 건물·도로, 지형 참고 데이터, 공식 캠퍼스 자료 대조<br>
 **검증** · Node.js 테스트, Playwright, 프레임·드로콜 계측
 
 장면과 지도 자산은 브라우저에서 렌더링하며, 서버에는 플레이어 상태와 상호작용 메시지를 전송합니다. 서버가 전체 물리 시뮬레이션을 수행하는 구조는 아닙니다.
+
+<br>
+
+## 시스템 구조
+
+![3NU 시스템 구조: 사용자 브라우저, 3NU 서버, SQLite 데이터 저장](docs/images/architecture/architecture.svg)
+
+브라우저에서 Babylon.js로 캠퍼스를 렌더링합니다. Node.js 서버는 요청과 실시간 연결을 처리하고, SQLite는 방명록·피드백·방문 통계를 보관합니다.
 
 <br>
 
@@ -232,7 +236,7 @@ python3 -m http.server 8765 --bind 127.0.0.1 --directory dist
 
 로컬 멀티플레이어 (`docs/LOCAL_MULTIPLAYER.md`) · [현재 작업 트리](docs/CURRENT_WORKTREE.md) · [저장 규칙](docs/STORAGE_POLICY.md) · [복구 안내](docs/RECOVERY.md)
 
-이 소개는 BUILD106까지 완료된 로컬 기능을 기준으로 합니다. 공개 사이트와 로컬 작업본은 자동으로 동기화되지 않습니다. 보고서와 검증 캡처는 저장소 밖에서 관리합니다.
+기능 소개와 검증 수치는 각 항목에 명시한 로컬 빌드를 기준으로 하며, 시스템 구조 그림은 BUILD113 비공개 운영 기준입니다. 공개 사이트와 로컬 작업본은 자동으로 동기화되지 않습니다. 보고서와 검증 캡처는 저장소 밖에서 관리합니다.
 
 </details>
 

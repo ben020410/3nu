@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict');
+const F=require('../dist/flight-navigation94.js');
+const roof=[[[4,-2,12],[6,-2,12],[6,2,12]],[[4,-2,12],[6,2,12],[4,2,12]]];
+const base={start:[0,0,0],end:[10,0,0],bounds:[-100,-100,100,100],terrain:()=>0,triangles:roof};
+const low=F.plan(base);assert(low.ok);assert(low.cruise>12);assert.equal(low.coords.length,4);assert.equal(low.distance,low.ascent+10+low.descent);
+const high=F.plan({...base,start:[0,0,30]});assert(high.ok);assert.equal(high.ascent,0);assert.equal(high.cruise,30);assert.equal(high.coords.length,3);
+assert(!F.plan({...base,start:[5,0,0]}).ok,'launch through roof must fail');
+assert(!F.plan({...base,end:[5,0,0]}).ok,'descent through roof must fail');
+assert(!F.plan({...base,landingSafe:()=>false}).ok,'water/blocked landing must fail');
+assert(!F.plan({...base,end:[200,0,0]}).ok,'bounds');
+assert(!F.plan({...base,terrain:()=>599}).ok,'ceiling');
+const remote=F.plan({...base,triangles:roof.map(t=>t.map(p=>[p[0],p[1]+50,p[2]+100]))});assert(remote.cruise<2,'remote building must not force ascent');
+const slope=F.plan({...base,triangles:[],terrain:x=>x>3&&x<7?8:0});assert(slope.cruise>8,'ground ridge');
+assert.equal(F.remaining(low.coords,1,low.coords[0]),low.distance);
+assert.equal(F.remaining(low.coords,low.coords.length,base.end),0);
+console.log(JSON.stringify({passed:true,cases:10,low,high}));

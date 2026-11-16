@@ -30,12 +30,12 @@ const Navigation52=(()=>{
   const meshes=[arrow,edge,pole,flag,beam];for(const m of meshes){m.isPickable=false;m.checkCollisions=false;m.receiveShadows=false;m.metadata={navigationOverlay52:true};}
   root.setEnabled(false);pin.setEnabled(false);let bearing=null;
   function update({active,player,camera,step,destination,dt,flight,ceiling=Infinity}){
-   const visible=!!(active&&step&&destination);root.setEnabled(visible);pin.setEnabled(visible);if(!visible){bearing=null;return null;}
+   const visible=!!(active&&step&&destination);root.setEnabled(false);pin.setEnabled(visible);if(!visible){bearing=null;return null;}
    const wanted=step.bearing;bearing=bearing===null?wanted:bearing+wrap(wanted-bearing)*(1-Math.exp(-12*Math.min(.1,dt)));
    const distance=B.Vector3.Distance(camera.position,player),size=Math.min(Math.max(.65,Math.min(2.4,distance*.055)),Math.max(.25,(ceiling-player.y-.2)/6.6),Number.isFinite(ceiling)?.35:Infinity);
    const forward=camera.getForwardRay().direction,flat=Math.hypot(forward.x,forward.z)||1;
    root.position.set(player.x+forward.x/flat*size*2,player.y+size*4.8,player.z+forward.z/flat*size*2);
-   root.scaling.setAll(size);
+   root.scaling.setAll(size*.55);
    // Keep the arrow readable above the avatar; project the real route bearing
    // into the camera plane instead of showing a horizontal face edge-on.
    const direction=V(Math.sin(bearing),0,Math.cos(bearing)),right=camera.getDirection(B.Axis.X),up=camera.getDirection(B.Axis.Y);

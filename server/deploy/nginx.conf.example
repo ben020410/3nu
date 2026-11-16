@@ -1,0 +1,66 @@
+# Install only after hostname and certificate are verified. No automatic provisioning.
+map $http_upgrade $connection_upgrade { default upgrade; '' close; }
+upstream campus_node { server 127.0.0.1:8766; keepalive 48; }
+server {
+    listen 443 ssl;
+    server_name campus.example;
+    ssl_certificate /etc/3nu/tls/fullchain.pem;
+    ssl_certificate_key /etc/3nu/tls/privkey.pem;
+    client_max_body_size 20k;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy same-origin always;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_read_timeout 15s;
+    proxy_cache off;
+    # Optional BUILD113 initial-document fallback. Install the standalone file first:
+    # /srv/3nu/fallback/unavailable113.html (readable by nginx, no private data).
+    # Deliberately intercept only document requests; API and /ready retain their status/JSON.
+    location = / {
+        proxy_pass http://campus_node;
+        proxy_intercept_errors on;
+        error_page 502 504 =503 /_unavailable113.html;
+    }
+    location = /index.html {
+        proxy_pass http://campus_node;
+        proxy_intercept_errors on;
+        error_page 502 504 =503 /_unavailable113.html;
+    }
+    location = /_unavailable113.html {
+        internal;
+        alias /srv/3nu/fallback/unavailable113.html;
+        add_header Cache-Control "no-store" always;
+        add_header X-Content-Type-Options nosniff always;
+        add_header Referrer-Policy same-origin always;
+    }
+    location / {
+        proxy_pass http://campus_node;
+        proxy_set_header Connection "";
+        # Headers must be repeated when this location declares proxy_set_header.
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $remote_addr;
+    }
+    location /api/ {
+        proxy_pass http://campus_node;
+        proxy_buffering off;
+    }
+    location = /ready {
+        proxy_pass http://campus_node;
+        proxy_buffering off;
+        add_header Cache-Control "no-store" always;
+    }
+    location = /multiplayer {
+        proxy_pass http://campus_node;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Origin $http_origin;
+        proxy_read_timeout 40s;
+        proxy_buffering off;
+    }
+}

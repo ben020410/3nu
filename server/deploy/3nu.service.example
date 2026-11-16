@@ -1,0 +1,31 @@
+[Unit]
+Description=3NU shared campus API and multiplayer
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+OnFailure=3nu-failure@%n.service
+[Service]
+Type=simple
+User=3nu
+Group=3nu
+WorkingDirectory=/srv/3nu/current
+EnvironmentFile=/etc/3nu/production.env
+ExecStart=/usr/bin/node server/local107.cjs
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=30
+TimeoutStopSec=10
+KillSignal=SIGTERM
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/3nu/community
+LimitNOFILE=8192
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=3nu
+[Install]
+WantedBy=multi-user.target

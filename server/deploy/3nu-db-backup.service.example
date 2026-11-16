@@ -1,0 +1,25 @@
+[Unit]
+Description=3NU consistent database and secret backup
+After=network-online.target
+Wants=network-online.target
+OnFailure=3nu-failure@%n.service
+[Service]
+Type=oneshot
+User=3nu
+Group=3nu
+WorkingDirectory=/srv/3nu/current
+EnvironmentFile=/etc/3nu/backup.env
+ExecStart=/usr/bin/node scripts/scheduled-backup112.cjs
+TimeoutStartSec=20min
+UMask=0077
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/3nu/community /var/lib/3nu/backups /var/lib/3nu/ops /var/cache/3nu-restic
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=3nu-backup

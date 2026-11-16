@@ -1,0 +1,9 @@
+[Unit]
+Description=Record 3NU unit failure for diagnosis
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/logger -p daemon.err -t 3nu-ops "Unit %i failed; inspect journal and external readiness alert."
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true

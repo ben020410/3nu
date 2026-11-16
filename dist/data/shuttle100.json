@@ -1,0 +1,291 @@
+{
+  "routeId": "3nu-shuttle-ccw",
+  "routeName": "순환셔틀",
+  "direction": "counterclockwise",
+  "vehicleCount": 6,
+  "speedUnitsPerSecond": 19.444444444444443,
+  "defaultDwellSeconds": 4.0,
+  "laneOffset": -4.95,
+  "stops": [
+    {
+      "id": "S01",
+      "name": "정문",
+      "routeS": 45,
+      "roadCenter": {
+        "x": -299.906,
+        "z": 678.867
+      },
+      "platform": {
+        "x": -311.756,
+        "z": 676.973,
+        "y": null
+      },
+      "tangent": {
+        "x": 0.15787105432460177,
+        "z": -0.9874597359925307
+      },
+      "shelterVariant": "large",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S02",
+      "name": "법대·사회대",
+      "routeS": 350.0,
+      "roadCenter": {
+        "x": -248.067,
+        "z": 378.307
+      },
+      "platform": {
+        "x": -258.41,
+        "z": 376.49,
+        "y": null
+      },
+      "tangent": {
+        "x": 0.1729,
+        "z": -0.9849
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S03",
+      "name": "중앙광장",
+      "routeS": 590.0,
+      "roadCenter": {
+        "x": -267.91,
+        "z": 143.843
+      },
+      "platform": {
+        "x": -278.01,
+        "z": 146.72,
+        "y": null
+      },
+      "tangent": {
+        "x": -0.2742,
+        "z": -0.9617
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S04",
+      "name": "자연대·농생대",
+      "routeS": 870.0,
+      "roadCenter": {
+        "x": -255.04,
+        "z": -130.373
+      },
+      "platform": {
+        "x": -265.33,
+        "z": -132.48,
+        "y": null
+      },
+      "tangent": {
+        "x": 0.2008,
+        "z": -0.9796
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S05",
+      "name": "아랫공대",
+      "routeS": 1260.0,
+      "roadCenter": {
+        "x": -170.605,
+        "z": -510.996
+      },
+      "platform": {
+        "x": -180.81,
+        "z": -513.48,
+        "y": null
+      },
+      "tangent": {
+        "x": 0.2365,
+        "z": -0.9716
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S06",
+      "name": "302동·엔지니어하우스",
+      "routeS": 2460.0,
+      "roadCenter": {
+        "x": -3.506,
+        "z": -1128.562
+      },
+      "platform": {
+        "x": 6.99,
+        "z": -1128.25,
+        "y": null
+      },
+      "tangent": {
+        "x": -0.0294,
+        "z": 0.9996
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S07",
+      "name": "301동·303동",
+      "routeS": 2555.0,
+      "roadCenter": {
+        "x": -4.13,
+        "z": -1034.245
+      },
+      "platform": {
+        "x": 6.37,
+        "z": -1033.94,
+        "y": null
+      },
+      "tangent": {
+        "x": -0.0292,
+        "z": 0.9996
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S08",
+      "name": "300동",
+      "routeS": 2760.0,
+      "roadCenter": {
+        "x": 45.928,
+        "z": -839.522
+      },
+      "platform": {
+        "x": 55.81,
+        "z": -843.07,
+        "y": null
+      },
+      "tangent": {
+        "x": 0.3377,
+        "z": 0.9412
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S09",
+      "name": "공대연구단지",
+      "routeS": 3227.0,
+      "roadCenter": {
+        "x": 235.565,
+        "z": -418.291
+      },
+      "platform": {
+        "x": 244.69,
+        "z": -423.48,
+        "y": null
+      },
+      "tangent": {
+        "x": 0.4941,
+        "z": 0.8694
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S10",
+      "name": "버들골·약대입구",
+      "routeS": 3485.0,
+      "roadCenter": {
+        "x": 373.34,
+        "z": -200.501
+      },
+      "platform": {
+        "x": 383.02,
+        "z": -204.58,
+        "y": null
+      },
+      "tangent": {
+        "x": 0.388,
+        "z": 0.9216
+      },
+      "shelterVariant": "poleOnly",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S11",
+      "name": "사범대",
+      "routeS": 3815.0,
+      "roadCenter": {
+        "x": 447.26,
+        "z": 112.392
+      },
+      "platform": {
+        "x": 457.12,
+        "z": 116.02,
+        "y": null
+      },
+      "tangent": {
+        "x": -0.3451,
+        "z": 0.9386
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S12",
+      "name": "기숙사삼거리",
+      "routeS": 4030.0,
+      "roadCenter": {
+        "x": 319.943,
+        "z": 269.816
+      },
+      "platform": {
+        "x": 322.07,
+        "z": 280.1,
+        "y": null
+      },
+      "tangent": {
+        "x": -0.9793,
+        "z": 0.2026
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S13",
+      "name": "국제대·보건대학원",
+      "routeS": 4485.0,
+      "roadCenter": {
+        "x": 284.954,
+        "z": 654.352
+      },
+      "platform": {
+        "x": 295.45,
+        "z": 654.52,
+        "y": null
+      },
+      "tangent": {
+        "x": -0.0163,
+        "z": 0.9999
+      },
+      "shelterVariant": "standard",
+      "dwellSeconds": 4.0
+    },
+    {
+      "id": "S14",
+      "name": "경영대·박물관",
+      "routeS": 4856.0,
+      "roadCenter": {
+        "x": 16.51,
+        "z": 778.881
+      },
+      "platform": {
+        "x": 16.14,
+        "z": 789.38,
+        "y": null
+      },
+      "tangent": {
+        "x": -0.9994,
+        "z": -0.0348
+      },
+      "shelterVariant": "poleOnly",
+      "dwellSeconds": 4.0
+    }
+  ]
+}

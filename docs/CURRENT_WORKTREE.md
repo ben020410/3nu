@@ -1,5 +1,13 @@
 # 현재 작업 트리
 
+## 현재 공개 버전: BUILD117 (2026-11-16)
+
+공개 주소는 https://3nu.vercel.app/ 이다. Vercel은 정적 클라이언트와 동일 출처 API 중계를 제공하고, DigitalOcean의 Node.js 서버는 WebSocket과 SQLite 기반 방명록·게시판·통계를 처리한다. GitHub push와 서비스 배포는 별개다. 아래의 과거 빌드별 비공개·미검증 표기는 해당 빌드를 작성한 시점의 기록이다.
+
+BUILD117은 완성된 초기 정점 데이터를 Float32Array로 보관하여 시험 환경의 초기 JS 메모리를 약 1.44GB에서 666MB로 줄였다. 모바일 초기화 중단 기록과 명시적 재시도, 초기 그래픽 컨텍스트 손실 안내를 추가했다. Chrome·macOS WebKit 모바일 프로필 검증 및 단위 검사 28개를 통과했다. 실제 iPhone의 메모리 부족 여부와 최종 동작은 별도 확인이 필요하다.
+
+현재 게임 화면을 사용한 1200×630 공유 이미지는 `dist/og-preview-117.png`이며, 카카오 서버의 미리보기 캐시 초기화는 별도 작업이다. 로컬 보고서와 배포 묶음은 저장소 밖 `03-history/build-reports/BUILD117` 및 `03-history/server-releases/BUILD117-20261116`에 보관한다. 운영 비밀, 관리자 인증 자료, 실제 사용자 DB와 백업은 Git에 포함하지 않는다.
+
 BUILD91의 정적 앱은 `dist/index.html`에서 시작한다. 별도의 번들 컴파일은 필요하지 않다.
 저장소 루트에서 `python3 -m http.server 8765 --directory dist`를 실행하고 `http://localhost:8765`를 연다.
 
@@ -34,3 +42,98 @@ GitHub 저장소, 원래 Sites 작업 폴더, 공개 배포는 자동으로 동�
 실행 중 생긴 새 캡처·성능 로그는 로컬 검토 폴더에 보관한다.
 
 자료 저장 위치와 새 보고서 작성 규칙은 [STORAGE_POLICY.md](STORAGE_POLICY.md)를 따른다. 보고서와 검수 이미지는 저장소 밖에서 관리한다.
+
+## BUILD094 로컬 후보 (2026-11-15)
+
+BUILD092 지도 변경과 BUILD093 성능 변경 위에 승인된 미니맵·검색·보행/비행 길안내를 적용했다. 공개 배포와 GitHub 반영은 하지 않았다. 실제 화면·이동·미확인 사항은 [BUILD094 보고서](../../../03-history/build-reports/BUILD094/REPORT.html)에 기록한다.
+
+`flight-navigation94.js`는 기존 도착 앵커와 현재 정적 충돌 메시의 경로 구간 삼각형, 지형을 사용해 상승·수평·하강 경로를 계획한다. 세계 좌표 기하 및 같은 출발/도착 계획을 캐시하고 자동 이동 프레임에서는 전수 메시 검사를 하지 않는다. 안전한 수직 통과가 불가능하면 이유를 표시하고 자동 비행을 막는다. 건물 형상이나 충돌을 변경할 때에는 정적 계획 캐시도 새로 생성해야 한다.
+
+`navigation94.css`는 승인 HUD의 반응형 스타일이다. 검색 시설 유형 UI는 제거했지만 내부 분류·장소 ID·별칭 및 지도 18구역은 유지한다. 미승인 캡슐·건물 소개 패널은 포함하지 않는다.
+
+## BUILD097 로컬 작업본 (2026-11-16)
+
+BUILD095 지도·안내 캡슐·건물 소개와 BUILD096 웅크리기를 유지한 채, `leisure97.js/css`의 조작 방법·설정·사진·잔디 빈백 30개 착석을 추가했다. `sky29.js`는 기존 구름 아틀라스 대신 공유 형상의 얇은 직각 구름을 사용한다. 공개 배포/GitHub 반영은 하지 않았다.
+
+리오 공중 수평 이동의 지면 단차 오인을 분리했다. 점프 중력 20은 유지하고 launch=7.2×sqrt(1.2)로 최고 높이를 1.296→1.5552로 변경했다. 백학 비행 속도는 그대로다. 빈백은 레이블/검색/지도 대상으로 등록하지 않는다. 배치 입력은 `dist/data/beanbags97.json`, 실제 높이와 안전 후보는 현재 장면에서 검사한다.
+
+설정의 사용자 시점은 walk 고정이고 개발용 리뷰 카메라는 유지한다. 속도는 .5~3.0의 6단계, 거리 6~65는 양 끝 포함 10단계다. 사진은 로컬 PNG/기기 공유만 지원하며 서버에 올리지 않는다. 출처 원문 `dist/credits.html`은 보존하며 타이틀에서 연다.
+
+보고서와 실제 화면: `../../../03-history/build-reports/BUILD097/REPORT.html`. 실제 모바일 공유 시트는 미확인이다. 기존 경로의 잔디 내부 일부 앵커 연결 없음 및 행정관 비행 하강 안전 거절은 유지하며 이번 범위에서 그래프를 변경하지 않았다.
+
+## BUILD098 로컬 작업본 (2026-11-16)
+
+BUILD097을 기준으로 조작 방법 아이콘과 사진 결과의 다시 찍기를 제거하고, 캐릭터 표시를 백학/리오로 바꿨다. 사진 X 닫기·공유·저장과 기존 지도·안내·소개·상호작용은 유지한다. 공개 배포/GitHub 반영은 하지 않았다.
+
+`dist/view-distance98.js`는 물리·검색·상태와 분리된 렌더링 후보 관리다. 128 단위 공간 셀, 건물/시설 전체 묶음과 기존 숲의 줄기+수관 묶음을 사용한다. 표시 거리 180/320/550/900/전체(6000), 기본2단계. 진입100/유지180의 여유와 이동 예측, 250ms/8단위 갱신 조건을 사용한다. `3nu.viewDistance`로 저장하며 카메라/FOV/화질을 변경하지 않는다.
+
+지면·도로·캐릭터·길안내·빈백·신규 동적 메시는 상주한다. 표시 제한을 collision 또는 시뮬레이션 중지 신호로 사용하지 않는다. 버스/멀티플레이어 추가 시 이 분리를 유지한다. 원본 자산을 모두 로딩하고 수목 인스턴스 CPU 배열도 유지하므로 초기 로딩·메모리 절감을 주장하지 않는다.
+
+실제 화면, 097 대비 단계별 측정, 기능·좁은 화면 검증과 미확인 사항: `../../../03-history/build-reports/BUILD098/REPORT.html`. 실제 모바일 기기 및 네이티브 공유 시트는 미확인이다.
+
+## BUILD099 로컬 작업본 (2026-11-16)
+
+조작방법 접기와 설정 순서·공통 기본값, ID별 건물 표시 및 공간 파티션을 적용했다. 거리60/110/180/450/전체6000, 기본2. 원본 충돌은 유지하고 먼 지형은 렌더링 전용이다. 실제 검증·성능·제약은 `../../../03-history/build-reports/BUILD099/REPORT.html`. 공개 배포/GitHub 반영 없음.
+
+## BUILD100 로컬 작업본 (2026-11-16)
+
+BUILD099 위에 승인 r3 순환셔틀6대·14정류장, ETA·대기·F탑승·예약/취소/하차·정류장 지도를 연결했다. 순환 시간647.834초, 속도9.722222장면단위/초·정차8초. 물리 충돌 없이 통과하며 화면 밖에서도 시간표가 진행된다. S06만 기존 구조 간섭으로 표주형, 나머지 확정 위치 유지. 건물 레이블/검색에는 등록하지 않는다.
+
+차량 상태는 shuttle-simulation100.js의 순수 시간표, 시각·입력 연결은 shuttle100.js다. 렌더 표시/물리/길찾기와 분리했다. 실제 서버 동기화는 없음. 공개 배포/GitHub 반영 없음. 보고서와 실제 캡처: `../../../03-history/build-reports/BUILD100/REPORT.html`.
+
+## BUILD101 로컬 작업본 (2026-11-16)
+
+명시적 ‘버스 대기하기’ 선택은 해당 정류장에서의 일회 자동 탑승 권한이다. 기존 ‘자동 탑승 금지’는 이 경우에 한해 대체한다. 단순 접근/안내 열기는 미탑승, 취소/8단위 이탈/지상 조건 상실/타이틀 복귀 시 취소한다. 모달 중 탑승은 보류하며 닫은 후 현재 정차 조건을 재확인한다. 탑승 시 대기 소모. 수동F앞문 탑승 유지.
+
+속도19.4444444444·각 정차4초, cycle323.916816초·6대 배차53.986136초. 버튼 세로 패딩 축소, 정류장 지도 하단 선택창 제거 및 원 선택→여백 이름 표시. 실제 변경 범위 검증과 화면: `../../../03-history/build-reports/BUILD101/REPORT.html`. 공개 배포/GitHub 반영 없음. NPC/추가 상호작용/사진 꾸미기는 미구현 논의 범위로 유지.
+
+## BUILD102 로컬 작업본
+표시 거리 기본3(180), 기존 유효 저장값 보존. 데스크톱 버스 대기/탑승/예약/정차 카드와 목록 및 부모 스크롤 제거, 내용 높이 자동. 1280×800·1920×1080 검증. 보고서 ../../../03-history/build-reports/BUILD102/REPORT.html. 공개 배포 없음.
+
+
+## BUILD103 로컬 작업본 (2026-11-16)
+승인 생활 고양이6종·가상180명/표시24명/세밀동작10명, 기존 보행면에서 구운 안전 경로·22명 대화·4명 정류장 옆 대기·기존 벤치2석을 연결했다. NPC 상태와 렌더를 분리하고 레이블·지도·검색·물리 충돌을 추가하지 않았다. 데이터는 dist/data/campus-life103.json, 재생성 소스는 source-data/campus-life103-baker.js.
+
+10개 F 상호작용과 손 소품·기존 종 동작, 버스/빈백/사진/설정 입력 우선순위를 연결했다. 지상 거리·높이 검사 및 종료 정리 유지. 사진창은4프레임·장소/날짜/로고·30자 문구·원본복원. 원본 캔버스 보존, 같은 PNG를 미리보기/저장/공유에 사용하며 닫을 때 자원 해제. 설명봇·NPC 버스 승하차·네트워크 구현 없음.
+
+최종 실제 화면·성능·검증·미확인 사항: ../../../03-history/build-reports/BUILD103/REPORT.html. 표시거리 기본3 유지. 전체표시 비행은 기존 무거움이 남고 실제 모바일 공유 시트 미확인. 공개 배포/GitHub push 없음. 사용자 별도 시작 전 후속 성능/로딩·보안/자산·백업 묶음 착수 금지.
+
+
+## BUILD104 로컬 작업본 (2026-11-16)
+BUILD103 위에서 초기 지형·건물 생성 순서를 유지하며12ms 예산 후 scheduler.yield(미지원 시 setTimeout)로 작업을 분산했다. 렌더 전 재질 dirty 통지를 잠시 묶고 실제 렌더 파이프라인 생성 전에 해제한다. 동일한 일반 지붕 재질만 공유(총 재질1340→1301), 같은 색처리값 재설정 통지 생략. 기본 표시거리3·객체/텍스처 수·NPC·상호작용·사진·버스·길안내 보존.
+
+최대 초기 연속 작업4469→503ms. 첫 프레임5.751→5.698초로 총로딩 개선은 미확인, 이동은60FPS 상한 부근이며 개선 주장 없음. 원본 건물·지형2,081개 버퍼/색상 대조 동일. 실제 모바일·원격 로딩·확정 메모리 절감은 미확인. 보고서 ../../../03-history/build-reports/BUILD104/REPORT.html. 공개 배포/GitHub push 없음. 후속 작업 없이 완료 대기.
+
+
+## BUILD105 로컬 작업본 (2026-11-16)
+승인 r5 타이틀: 실제 기존 배경4장·2D 캐릭터·메뉴·v0.0,10초/1.2초 슬라이드, 환영 문구 넓은 명도 보정. title105.js/css는 실제 완료8단계와 첫 렌더 readiness를 연결하며 타이머 진행률을 쓰지 않는다. 준비 이후 타이틀에서는3D 렌더/시뮬레이션을 쉬고 기존 scene을 재사용한다. 메뉴 서버 없음은 빈 공지/미연결 피드백으로 명시. 상세 credits.html 보존. 최초/실패재시도/메뉴/캐릭터/버스/사진/재진입/390px 확인. 보고서 ../../../03-history/build-reports/BUILD105/REPORT.html. 공개 배포/GitHub push 없음. 다음 승인 멀티플레이어는 별도 빌드.
+
+
+## BUILD106 로컬 작업본 (2026-11-16)
+ws8.23.0 단일 로컬 Node서버를 추가. 무작위 접속ID/60초 재접속·33자리 서버 선점·버스 공통시각·10Hz 원격 캐릭터 상태. 개인 카메라/설정/지도/길안내 및 NPC로컬 상태 보존. 기본127.0.0.1:8766,20개접속. 서버 미실행 시 혼자 탐방. 데이터 source-data/multiplayer106-anchors.json은 실제 런타임 접점; 변경 시 baker로 재생성. 기존 건물·지형·충돌 변경 없음. 3컨텍스트/동시자리/실제버스/강제단절/재시작/30초freeze/20가상연결/19원격렌더 확인. 보고서 ../../../03-history/build-reports/BUILD106/REPORT.html, 실행 docs/LOCAL_MULTIPLAYER.md. 공개 배포/GitHub push 없음. 다음 승인 방명록·통계/타이틀보완은 별도BUILD107.
+
+
+## BUILD107 로컬 작업본 (2026-11-16)
+정문 포장 가장자리(-299,807)에 방명록 시설·F 안내를 추가했다. 이전 건물/지형/도로/이동 그래프와 레이블은 보존하며 새 안내판의 작은 충돌만 명시 등록한다. Node24 내장SQLite, HttpOnly 작성권한, 관리자 인증/CSRF, 60초/5개24시간·정규화 중복·idempotency 및 네트워크 보조 제한을 서버에서 적용한다. DB/비밀은 main 밖 05-management/local-runtime/development에 보관한다. 기본 실행 npm start, 첫 설정 npm run setup:local, 문서 docs/LOCAL_COMMUNITY.md.
+
+방문은 브라우저별30분 세션·활성 탭 합집합·KST 시작일 집계, 기간별 DISTINCT 고유/재방문·탐험시작·평균활성·누적 및 관리자CSV. HeadlessChrome/인증된 개발 제외, 시험DB분리. 복구 시 DB와 private.json을 새폴더로 복원하며 기존 데이터 덮어쓰기 금지. 관리자 자격은 별도 비공개 파일로만 전달한다.
+
+로딩 부제·짧은 상세페이지 전체배경·가이드4열·실제고양이6종 투명 정적 이미지 적용. 신규 API/동시요청/재시작/백업복구와 두 브라우저 UI/390px/타이틀재진입 확인. 성능은 동일 정문1280×800 표준/거리3에서10660.15FPS→10760.08FPS, 드로콜191→196. 성능 개선이나 메모리 절감을 주장하지 않는다. 보고서 ../../../03-history/build-reports/BUILD107/REPORT.html. 공개 배포·GitHub push 없음. 다음 승인 모바일 대응은 BUILD108로 분리한다.
+
+
+## 진행 제약 정정 (2026-11-16)
+사용자가 사용량 중단 기준을 명시적으로 해제하고 계속 진행하도록 승인했다. 이전 주간 잔여72% 중단 기준은 더 이상 적용하지 않는다. 모바일108·방명록109·후속3채널 구현은 로컬에서 계속 진행한다. 공개 사이트 배포는 금지한다. GitHub README·소개이미지만의 push는 전략 담당 채팅이 별도 승인받아 담당하며, 제품 코드 push 권한으로 확대하지 않는다.
+
+## BUILD108–111 local completion (2026-11-16)
+
+BUILD108 touch controls, responsive UI, bus/navigation/photo/building info; BUILD109 two shared guestbook facilities; BUILD110 three 100-person logical channels with server-side near-peer transmission; BUILD111 explicit production ingress and backup/restore preparation. Public deployment and product GitHub push were not performed. The separate README commit is 3f6a2b3.
+
+Usage-budget stopping criteria were revoked by the user; they do not apply. Reports/checks/screenshots are in ../../03-history/build-reports/BUILD108 through BUILD111, never in main. Current local entry: npm start (Node 24+) at http://127.0.0.1:8766. Operational examples have not been installed on an external host. Physical mobile/Safari and public-server load remain unverified.
+
+## BUILD112 local follow-up (2026-11-16)
+
+Security hardening, admin-only notice editing, private feedback, explicitly disabled retention proposal/CLI and shared-campus correction are implemented locally. Default topology is one 300-capacity campus, near-peer cap24; old channel preferences migrate. BUILD110's three-channel default did not match the user's single-space choice and is superseded in new BUILD112 instances. Existing 8766 process and real runtime data remain untouched. Schema2 is additive and tested only on disposable data; real migration requires a later backed-up restart. See SECURITY_RETENTION112.md and external BUILD112/REPORT.html for measured results and limitations. No public deployment, purchase or product push.
+
+### BUILD112 operations preparation addendum
+
+Prepared systemd bounded restart/boot templates, daily KST consistent SQLite+secret backup job and optional encrypted remote export, failure/freshness readiness gate, Nginx ingress and monitoring/restore runbook. OPERATIONS111 is updated to current shared-campus/schema2/DigitalOcean baseline. Local isolated tests passed; systemd/nginx/restic are unavailable on this Mac, so Linux activation, real remote backup restore and email delivery remain unverified. No account changes, external service creation, actual runtime reads/restarts, purchases or public deployment. See OPERATIONS112_RUNBOOK.md and external BUILD112/OPERATIONS.html.

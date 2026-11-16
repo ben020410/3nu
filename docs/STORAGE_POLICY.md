@@ -22,6 +22,7 @@
 | 단독 원시 검증 로그 | `03-history/validation-logs` | 빌드 보고서에 해당하는 새 로그는 보고서 폴더 checks 사용 |
 | 미사용 확인된 자산 | `03-history/unused-assets/<주제>` | 참조·동적 로딩·출처 확인 후만 이동. 이름만 보고 삭제 금지 |
 | 개발 도구 환경 | `03-history/environment-tools` | 과거 Python/Node 환경, 재설치가 필요할 수 있음 |
+| 비공개 로컬 서버 DB·관리자 자격 | `05-management/local-runtime/<환경>` | main·dist·Git·보고서에 포함 금지. 폴더0700/파일0600, 테스트 DB 별도 |
 | 백업 | `04-backups` | 외부 장치 사본 별도 필요 |
 | 분류·이동·출처 검토 관리 | `05-management` | 이동표, 보관 규칙, 권리 검토 등 |
 
@@ -36,3 +37,6 @@ main에 reports, outputs, screenshots, build-logs, 옛 배포 ZIP, 비교용 갤
 빌드 보고서는 REPORT.html 또는 REPORT.md/REPORT.txt, screenshots/, checks/, 구현·검증·미확인 사항으로 구성한다. 배포하지 않았으면 로컬 완료라고 명시한다. 빌드1부터의 목록은 존재하는 원본을 연결하고 없는 보고서는 미확인으로 표시한다. 없는 보고서·배포 완료를 만들어내지 않는다. 옛 코드 스냅샷 속 보고서는 원본 보존용이며 중앙 보고서 모음에 열람용 사본을 모은다.
 
 자료 이동은 경로표와 연결 확인을 남긴다. 파일명만으로 자동 삭제/중복 제거하지 않는다. 공개 배포는 사용자가 다시 지시할 때까지 중단한다.
+
+
+2026-11-16 사용자 변경: 홍보영상·홍보물은 최상위 06-promotion에 저장한다. 일반 제품 시안은 02-design-and-resources에 유지한다. 06-promotion의 briefs/assets/captures/editing/exports/copy/rights 분류를 사용하고 main/dist에 홍보 출력물을 넣지 않는다. 기존 촬영안 이동 기록은 06-promotion/MIGRATION-20261116.json을 참조한다.

@@ -1,0 +1,9 @@
+[Unit]
+Description=3NU daily consistent backup (Korea time)
+[Timer]
+OnCalendar=*-*-* 03:20:00 Asia/Seoul
+RandomizedDelaySec=10min
+Persistent=true
+Unit=3nu-db-backup.service
+[Install]
+WantedBy=timers.target

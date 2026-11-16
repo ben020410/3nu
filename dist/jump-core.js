@@ -1,6 +1,6 @@
 /* Ballistic ground jump, analytic substeps; rendering-independent and repeat-key safe. */
 (function(root,factory){if(typeof module==='object')module.exports=factory();else root.JumpCore=factory()})(this,()=>{
-const gravity=20,launch=7.2;
+const gravity=20,launch=7.2*Math.sqrt(1.2);
 function create(){return{velocity:0,airborne:false}}
 function start(s){if(s.airborne)return false;s.velocity=launch;s.airborne=true;return true}
 function reset(s){s.velocity=0;s.airborne=false}

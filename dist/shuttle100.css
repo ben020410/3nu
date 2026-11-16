@@ -1,0 +1,29 @@
+/* Transit uses the existing guidance slot, never overlays a second route card. */
+.shuttleCard100 #route{display:none!important}.shuttleRiding100 #autoWalk{pointer-events:none;opacity:.5}
+#shuttleHint100{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:30;border:1px solid #d4dfdf;background:#fafbf5;color:#173b4c;border-radius:12px;padding:12px 20px;font:700 14px system-ui;box-shadow:0 6px 22px #152e3c22}
+#shuttleHint100[hidden]{display:none}.capturing97 .nuShuttleCard,.capturing97 #shuttleHint100{visibility:hidden!important}
+.nuShuttleCard{max-height:calc(100dvh - 480px);overflow:auto;box-sizing:border-box}.nuShuttleCard header{flex-wrap:wrap;gap:6px}.nuShuttleCard h3{font-size:17px}.nuShuttleMap canvas{min-width:0;min-height:180px}
+@media(max-width:600px){#shuttleHint100{bottom:95px;max-width:90vw;white-space:nowrap;font-size:12px;padding:10px}.nuShuttleCard{max-height:46dvh}.nuShuttleCard header button{font-size:11px}.nuShuttleStops{display:none}.nuShuttleMap{width:calc(100vw - 24px);max-height:90dvh}.nuShuttleMap canvas{height:50dvh}}
+.nuShuttleCard header,.nuShuttleMap header{position:static;inset:auto;pointer-events:auto}.nuShuttleCard{flex-shrink:0;max-height:300px;padding:12px}.nuShuttleStatus{margin-top:8px}.nuShuttleMessage{margin-bottom:8px}.nuShuttleCard .nuShuttleAction{position:sticky;bottom:0;z-index:1;box-shadow:0 0 0 4px #faf9f4}.nuShuttleStops{margin:8px 0}.nuShuttleStops li{padding:5px 0}
+
+body.shuttleCard100 #navigationHud #mapbox #mapViewport{height:150px;aspect-ratio:auto}.nuShuttleCard .nuShuttleStops{max-height:86px;overflow:auto}.nuShuttleCard .nuShuttleNotice{padding:5px;margin:5px 0}.nuShuttleCard .nuShuttleAction{margin:8px 0 0}
+@media(max-width:700px){body.shuttleCard100 #navigationHud #mapbox #mapViewport{height:100px}.nuShuttleCard{padding:10px;max-height:320px}.nuShuttleCard header button{white-space:normal;text-align:left}.nuShuttleMessage{font-size:11px}}
+.nuShuttleAction span{word-break:keep-all}@media(max-width:700px){.nuShuttleVehicle{display:none}}
+
+/* BUILD101: compact actions retain a clear touch target and their original emphasis. */
+.nuShuttleCard .nuShuttleAction{padding-top:7px;padding-bottom:7px;min-height:40px}
+@media(pointer:coarse){.nuShuttleCard .nuShuttleAction{min-height:44px}}
+.nuShuttleMap canvas{touch-action:manipulation;outline-offset:2px}
+
+/* BUILD102 desktop: content owns card height; no nested or parent scroll. */
+@media(min-width:701px){
+ body.shuttleCard100 #navigationHud{width:288px;max-height:none;overflow:visible;gap:8px}
+ body.shuttleCard100 #navigationHud #mapbox{padding:12px}
+ body.shuttleCard100 #navigationHud #mapbox #mapViewport{height:clamp(70px,calc(100dvh - 650px),150px)}
+ .nuShuttleCard{height:auto;max-height:none;overflow:visible}
+ .nuShuttleCard .nuShuttleStops{height:auto;max-height:none;overflow:visible;margin:8px 0 0}
+ .nuShuttleCard .nuShuttleAction{position:static;box-shadow:none}
+ .nuShuttleCard h3{white-space:normal;overflow:visible;text-overflow:clip}
+ .nuShuttleCard .nuShuttleStops li{padding:4px 0;line-height:1.4}
+ .nuShuttleCard .nuShuttleStops li:before{top:8px}
+}

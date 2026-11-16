@@ -11,7 +11,7 @@
 
 <br>
 
-[기능](#주요-기능) &nbsp; · &nbsp; [기술](#기술-구성) &nbsp; · &nbsp; [설계와 검증](#설계와-검증) &nbsp; · &nbsp; [제작 과정](#제작-과정과-역할) &nbsp; · &nbsp; [실행](#로컬-실행)
+[플레이](https://3nu.vercel.app/) &nbsp; · &nbsp; [기능](#주요-기능) &nbsp; · &nbsp; [기술](#기술-구성) &nbsp; · &nbsp; [설계와 검증](#설계와-검증) &nbsp; · &nbsp; [제작 과정](#제작-과정과-역할) &nbsp; · &nbsp; [실행](#로컬-실행)
 
 <br>
 
@@ -125,7 +125,7 @@ UI를 제외한 화면을 촬영하고 프레임과 문구를 더합니다. 이�
 
 ![3NU 시스템 구조: 사용자 브라우저, 3NU 서버, SQLite 데이터 저장](docs/images/architecture/architecture.svg)
 
-브라우저에서 Babylon.js로 캠퍼스를 렌더링합니다. Node.js 서버는 요청과 실시간 연결을 처리하고, SQLite는 방명록·피드백·방문 통계를 보관합니다.
+브라우저에서 Babylon.js로 캠퍼스를 렌더링합니다. Vercel은 정적 파일과 API 중계를 제공하며, DigitalOcean의 Node.js 서버가 실시간 연결과 데이터 요청을 처리합니다. SQLite는 방명록·피드백·방문 통계를 보관합니다. API 쿠키는 공개 사이트 주소에서 관리하고, 멀티플레이는 WebSocket으로 서버에 직접 연결합니다.
 
 <br>
 
@@ -201,12 +201,13 @@ UI를 제외한 화면을 촬영하고 프레임과 문구를 더합니다. 이�
 
 ## 로컬 실행
 
-현재 GitHub 코드와 최신 로컬 작업본은 버전이 다릅니다. 아래 Node.js 실행 절차는 서버 코드와 `package.json`이 포함된 최신 로컬 작업본 기준입니다. 저장소에 반영된 코드만 실행하려면 아래의 정적 서버 방식을 사용합니다.
+게임 클라이언트와 Node.js 서버를 함께 실행할 수 있습니다. 관리자 인증 자료와 SQLite 데이터는 저장소 밖에 생성됩니다.
 
 **Node.js 24 이상과 npm**이 있는 환경에서 저장소 루트에서 실행합니다.
 
 ```sh
 npm ci --ignore-scripts
+npm run setup:local  # 처음 한 번만 실행
 npm start
 ```
 
@@ -236,7 +237,7 @@ python3 -m http.server 8765 --bind 127.0.0.1 --directory dist
 
 로컬 멀티플레이어 (`docs/LOCAL_MULTIPLAYER.md`) · [현재 작업 트리](docs/CURRENT_WORKTREE.md) · [저장 규칙](docs/STORAGE_POLICY.md) · [복구 안내](docs/RECOVERY.md)
 
-기능 소개와 검증 수치는 각 항목에 명시한 로컬 빌드를 기준으로 하며, 시스템 구조 그림은 BUILD113 비공개 운영 기준입니다. 공개 사이트와 로컬 작업본은 자동으로 동기화되지 않습니다. 보고서와 검증 캡처는 저장소 밖에서 관리합니다.
+기능 소개와 성능 수치는 각 항목에 명시한 검증 환경을 기준으로 합니다. 위 구조도는 브라우저·서버·저장소의 기본 구성이며, 공개 운영에는 Vercel 정적 호스팅과 API 중계가 추가됩니다. GitHub 반영과 서비스 배포는 별도 절차로 진행합니다. 보고서와 검증 캡처는 저장소 밖에서 관리합니다.
 
 </details>
 

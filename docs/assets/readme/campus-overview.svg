@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 160" role="img" aria-labelledby="title desc">
+<title id="title">3NU 주요 구성</title><desc id="desc">캠퍼스 18개 구역, 순환셔틀 6대, 정류장 14곳, 고양이 NPC 6종, 상호작용 10곳.</desc>
+<rect width="1200" height="160" rx="18" fill="#101c40"/>
+<path d="M240 38v84M480 38v84M720 38v84M960 38v84" stroke="#35405e"/>
+<g text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo',sans-serif">
+<g fill="#fff" font-size="44" font-weight="750"><text x="120" y="78">18</text><text x="360" y="78">6</text><text x="600" y="78">14</text><text x="840" y="78">6</text><text x="1080" y="78">10</text></g>
+<g fill="#c2d0e7" font-size="22"><text x="120" y="119">캠퍼스 구역</text><text x="360" y="119">순환셔틀</text><text x="600" y="119">정류장</text><text x="840" y="119">고양이 NPC 종류</text><text x="1080" y="119">상호작용 지점</text></g>
+</g></svg>

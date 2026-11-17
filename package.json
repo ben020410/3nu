@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node server/local107.cjs",
-    "test": "node --test scripts/multiplayer106.test.cjs scripts/community107.test.cjs scripts/channels110.test.cjs scripts/operations111.test.cjs scripts/security112.test.cjs scripts/retention112.test.cjs scripts/backup-ops112.test.cjs scripts/resilience113.test.cjs scripts/vercel116.test.cjs scripts/mobile-boot117.test.cjs scripts/mobile-memory118.test.cjs scripts/static-prefetch120.test.cjs && node scripts/check-static119.cjs && node --test scripts/startup122.test.cjs && node --test scripts/residency123.test.cjs",
+    "test": "node --test scripts/multiplayer106.test.cjs scripts/community107.test.cjs scripts/channels110.test.cjs scripts/operations111.test.cjs scripts/security112.test.cjs scripts/retention112.test.cjs scripts/backup-ops112.test.cjs scripts/resilience113.test.cjs scripts/vercel116.test.cjs scripts/mobile-boot117.test.cjs scripts/mobile-memory118.test.cjs scripts/static-prefetch120.test.cjs && node scripts/check-static119.cjs && node --test scripts/startup122.test.cjs && node --test scripts/residency123.test.cjs scripts/visit-log123.test.cjs",
     "setup:local": "node scripts/setup-community107.cjs",
     "retention:preview": "node scripts/retention112.cjs",
     "backup:run": "node scripts/scheduled-backup112.cjs",

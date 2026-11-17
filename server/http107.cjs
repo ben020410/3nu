@@ -2,12 +2,13 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {createRequestPolicy}=require('./request-policy111.cjs');
 const {openCommunity,Problem,hash}=require('./community107.cjs');
+const {createVisitLog}=require('./visit-log123.cjs');
 const defaultDirectory=path.resolve(__dirname,'../../../05-management/local-runtime/development');
 function privateConfig(directory=defaultDirectory){const file=path.join(directory,'private.json');if(!fs.existsSync(file))throw Error('Run npm run setup:local first. Private credentials stay outside main.');const config=JSON.parse(fs.readFileSync(file,'utf8'));if(!/^[a-f0-9]{64}$/.test(config.salt)||!/^[a-f0-9]{128}$/.test(config.passwordHash)||!/^[a-f0-9]{64}$/.test(config.secret))throw Error('Invalid private config');return config}
 function createCommunityHTTP({directory=defaultDirectory,now=()=>Date.now(),environment='development',publicOrigin,trustProxy=[],requestPolicy}={}){
  directory=path.resolve(directory);const main=path.resolve(__dirname,'..');if(directory===main||directory.startsWith(main+path.sep))throw Error('Private runtime must be outside main');
  const policy=requestPolicy||createRequestPolicy({environment,publicOrigin,trustProxy});
- const config=privateConfig(directory),store=openCommunity(path.join(directory,'community.sqlite'),{now,environment}),admins=new Map();let loginJobs=0;
+ const config=privateConfig(directory),store=openCommunity(path.join(directory,'community.sqlite'),{now,environment}),admins=new Map(),visitLog=createVisitLog(store,now);let loginJobs=0;
  const hmac=s=>crypto.createHmac('sha256',config.secret).update(s).digest('hex');
  const equal=(a,b)=>typeof a==='string'&&typeof b==='string'&&Buffer.byteLength(a)===Buffer.byteLength(b)&&crypto.timingSafeEqual(Buffer.from(a),Buffer.from(b));
  const cookies=req=>Object.fromEntries((req.headers.cookie||'').split(';').map(p=>p.trim().split('=')));const valid=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
@@ -44,6 +45,7 @@ function createCommunityHTTP({directory=defaultDirectory,now=()=>Date.now(),envi
    if(u.pathname==='/api/admin/session'&&req.method==='GET')return json(res,200,{csrf:hmac('admin:'+c.nuAdmin107)});
    if(u.pathname==='/api/admin/logout'&&req.method==='POST'){admins.delete(hash(c.nuAdmin107));cookie(res,'nuAdmin107','',0,secure);return json(res,200,{ok:true})}
    if(u.pathname==='/api/admin/exclusion'&&req.method==='POST'){const b=await body(req);cookie(res,'nuExclude107',b.exclude?hmac('exclude'):'',b.exclude?31536000:0,secure);return json(res,200,{ok:true,excluded:!!b.exclude})}
+   if(u.pathname==='/api/admin/visits'&&req.method==='GET')return json(res,200,visitLog.list(u.searchParams));
    if(u.pathname==='/api/admin/stats'&&req.method==='GET')return json(res,200,store.stats(Number(u.searchParams.get('days')||7)));
    if(u.pathname==='/api/admin/export'&&req.method==='GET'){const csv=store.csv(Number(u.searchParams.get('days')||7));res.writeHead(200,{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':'attachment; filename="3nu-visits.csv"'});return res.end(csv)}
    if(u.pathname==='/api/admin/posts'&&req.method==='GET'){const r=store.list(o,{admin:true,before:before(u)});for(const p of r.posts)p.reportDetails=store.db.prepare('SELECT reason,state,at FROM reports WHERE post=? ORDER BY at DESC').all(p.id);return json(res,200,r)}
@@ -51,7 +53,7 @@ function createCommunityHTTP({directory=defaultDirectory,now=()=>Date.now(),envi
    throw new Problem(404,'관리자 경로를 찾을 수 없습니다.');
   }
   if(!o)throw new Problem(401,'연결을 다시 확인해 주세요.');if(req.method!=='GET'&&!equal(req.headers['x-csrf-token'],hmac('owner:'+c.nuOwner107)))throw new Problem(403,'연결을 다시 열어 주세요.');
-  if(u.pathname==='/api/visits'&&req.method==='POST'){if(!valid(c.nuVisitor107))throw new Problem(401,'방문 연결을 다시 열어 주세요.');const b=await body(req);store.rate(o,'heartbeat',20,60000);const excluded=equal(c.nuExclude107,hmac('exclude'))||/HeadlessChrome|Playwright|puppeteer|\bbot\b|crawler/i.test(req.headers['user-agent']||'');return json(res,200,store.track(hash(c.nuVisitor107),b,excluded))}
+  if(u.pathname==='/api/visits'&&req.method==='POST'){if(!valid(c.nuVisitor107))throw new Problem(401,'방문 연결을 다시 열어 주세요.');const b=await body(req);store.rate(o,'heartbeat',20,60000);const excluded=equal(c.nuExclude107,hmac('exclude'))||/HeadlessChrome|Playwright|puppeteer|\bbot\b|crawler/i.test(req.headers['user-agent']||'');const visitor=hash(c.nuVisitor107),result=store.track(visitor,b,excluded);visitLog.remember(visitor,b);return json(res,200,result)}
   if(u.pathname==='/api/feedback'&&req.method==='POST')return json(res,201,store.bulletin.submitFeedback(o,await body(req),network));
   if(u.pathname==='/api/posts'&&req.method==='GET')return json(res,200,store.list(o,{mine:u.searchParams.get('mine')==='1',before:before(u)}));
   if(u.pathname==='/api/posts'&&req.method==='POST'){const b=await body(req);return json(res,201,store.post(o,b.key,b,network))}

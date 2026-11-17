@@ -41,7 +41,7 @@ test('116 Vercel gateway preserves sessions, CSRF, spam limits, private feedback
  try{
   const owner={},other={ip:'203.0.113.8'},admin={};const s=await call(owner,'/api/session');owner.csrf=s.data.csrf;assert.equal(s.status,200);assert.equal(s.cookies.length,2);assert(s.cookies.every(c=>c.includes('Secure')&&c.includes('HttpOnly')&&c.includes('SameSite=Strict')&&!c.includes('Domain=')));assert.equal(s.headers.get('cache-control'),'no-store');
   other.csrf=(await call(other,'/api/gateway?__3nu_path=session')).data.csrf;assert.equal(forwarded.at(-1).url,upstream+'/api/session');assert.equal(forwarded.at(-1).ip,other.ip);
-  assert.equal((await call(owner,'/api/admin/stats')).status,401);
+  assert.equal((await call(owner,'/api/admin/stats')).status,401);assert.equal((await call(owner,'/api/admin/visits')).status,401);
   const entry={key:crypto.randomUUID(),name:'배포검증',character:'rio',body:'공개 전 격리 테스트'};
   const created=await call(owner,'/api/posts','POST',entry);assert.equal(created.status,201);
   assert.equal((await call(owner,'/api/posts','POST',entry)).data.id,created.data.id);
@@ -53,6 +53,8 @@ test('116 Vercel gateway preserves sessions, CSRF, spam limits, private feedback
   assert.equal((await call(other,'/api/feedback')).status,404);
   const password=fs.readFileSync(path.join(directory,'ADMIN-PASSWORD.txt'),'utf8').trim();const login=await call(admin,'/api/admin/login','POST',{password});assert.equal(login.status,200);admin.csrf=login.data.csrf;
   assert.equal((await call(admin,'/api/admin/stats')).status,200);assert.equal((await call(admin,'/api/admin/feedback')).data.items.length,1);
+  assert.equal((await call(owner,'/api/visits','POST',{tab:'visitlog123',kind:'enter',visible:true,name:'테스트 방문'})).status,200);
+  const visits=await call(admin,'/api/gateway?__3nu_path=admin/visits');assert.equal(visits.status,200);assert.equal(visits.data.items[0].name,'테스트 방문');assert.equal(visits.headers.get('cache-control'),'no-store');assert.equal((await call(admin,'/api/admin/visits?from=bad')).status,400);assert.equal((await call(owner,'/api/admin/visits')).status,401);
   const before=forwarded.length;for(const bad of ['/api/gateway?__3nu_path=..%2Fprivate.json','/api/gateway?__3nu_path=session&__3nu_path=admin/stats','/private.json','/api/gateway?__3nu_path=https://evil.example'])assert.notEqual((await call(owner,bad)).status,200);
   assert.equal((await call(owner,'/api/session','GET',undefined,{Origin:'https://evil.example'})).status,403);
   assert.equal((await call(owner,'/api/session','GET',undefined,{'sec-fetch-site':'cross-site'})).status,403);

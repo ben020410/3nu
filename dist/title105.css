@@ -46,3 +46,8 @@ body:not(.playing)>:not(#title105):not(script):not(style){visibility:hidden!impo
 
 /* BUILD122: keep the mobile title artwork; avoid continuous scaled compositing. */
 @media(pointer:coarse){#title105 .backdrop img{transition:none}#title105 .backdrop img.active:nth-child(n){animation:none;transform:none}}
+
+/* Every release uses the same container, including newly prepended entries. */
+#title105 .updateHistory120 .entry{margin:0;padding:22px 0;border-bottom:1px solid #e1e5e9}#title105 .updateHistory120 .entry:first-child{padding-top:0}#title105 .updateHistory120 .entry:last-child{border-bottom:0}#title105 .updateHistory120 .releaseHeading120{gap:10px 14px;align-items:center}#title105 .updateHistory120 h3{margin:0;color:#142449;font-size:20px;font-weight:800;line-height:1.5}#title105 .updateHistory120 .releaseBadge120{flex:none;font-size:12px;line-height:1.5;font-weight:500;padding:4px 10px}#title105 .updateHistory120 :is(ul,p){margin:12px 0 0;color:#687583;font-size:14px;line-height:1.8}#title105 .updateHistory120 ul{padding-left:21px}#title105 .updateHistory120 li{margin:0;padding:0}#title105 .updateHistory120 li+li{margin-top:7px}@media(max-width:600px){#title105 .updateHistory120 h3{font-size:18px}#title105 .updateHistory120 .entry{padding:20px 0}}
+
+#title105 .updateHistory120 :is(h3,li,p){word-break:keep-all;overflow-wrap:anywhere}

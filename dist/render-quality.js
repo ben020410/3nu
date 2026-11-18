@@ -1,6 +1,6 @@
 /* Quality settings alter actual render targets, AA and shadow resources. No runtime CDN. */
 function createCampusRendering(B,scene,engine,camera,sun,control){
- const coarse=matchMedia('(pointer:coarse)').matches;let quality=coarse?'standard':'high';try{const q=localStorage.getItem('gwanak.quality');if(['standard','high'].includes(q))quality=q;}catch{}
+ const coarse=matchMedia('(pointer:coarse)').matches;let quality='high';try{const q=localStorage.getItem('gwanak.quality');if(['standard','high'].includes(q))quality=q;}catch{}
  const pipe=new B.DefaultRenderingPipeline('campus-quality',false,scene,[camera]);pipe.bloomEnabled=false;pipe.depthOfFieldEnabled=false;pipe.fxaaEnabled=true;
  const ic=scene.imageProcessingConfiguration;// Avoid notifying every existing material when its image-processing values already match.
  for(const [key,value]of Object.entries({toneMappingEnabled:false,toneMappingType:B.ImageProcessingConfiguration.TONEMAPPING_STANDARD,exposure:1,contrast:1}))if(ic[key]!==value)ic[key]=value;

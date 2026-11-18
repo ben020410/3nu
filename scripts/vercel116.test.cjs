@@ -52,6 +52,14 @@ test('116 Vercel gateway preserves sessions, CSRF, spam limits, private feedback
   assert.equal((await call(owner,'/api/feedback','POST',{key:crypto.randomUUID(),body:'비공개 피드백'})).status,201);
   assert.equal((await call(other,'/api/feedback')).status,404);
   const password=fs.readFileSync(path.join(directory,'ADMIN-PASSWORD.txt'),'utf8').trim();const login=await call(admin,'/api/admin/login','POST',{password});assert.equal(login.status,200);admin.csrf=login.data.csrf;
+  assert.equal((await call(owner,'/api/admin/test-nickname-exclusion','POST',{enabled:false})).status,401);
+  assert.equal((await call(admin,'/api/admin/test-nickname-exclusion','POST',{enabled:false},{'X-CSRF-Token':'wrong'})).status,403);
+  assert.equal((await call(admin,'/api/admin/test-nickname-exclusion','POST',{enabled:'false'})).status,400);
+  assert.equal((await call(admin,'/api/admin/stats')).data.testNicknameExclusion,true);
+  assert.equal((await call(admin,'/api/admin/test-nickname-exclusion','POST',{enabled:false})).data.enabled,false);
+  assert.equal((await call(admin,'/api/admin/stats')).data.testNicknameExclusion,false);
+  assert.equal((await call(admin,'/api/admin/test-nickname-exclusion','POST',{enabled:true})).data.enabled,true);
+
   assert.equal((await call(admin,'/api/admin/stats')).status,200);assert.equal((await call(admin,'/api/admin/feedback')).data.items.length,1);
   assert.equal((await call(owner,'/api/visits','POST',{tab:'visitlog123',kind:'enter',visible:true,name:'테스트 방문'})).status,200);
   const visits=await call(admin,'/api/gateway?__3nu_path=admin/visits');assert.equal(visits.status,200);assert.equal(visits.data.items[0].name,'테스트 방문');assert.equal(visits.headers.get('cache-control'),'no-store');assert.equal((await call(admin,'/api/admin/visits?from=bad')).status,400);assert.equal((await call(owner,'/api/admin/visits')).status,401);

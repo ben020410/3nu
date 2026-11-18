@@ -1,0 +1,32 @@
+{
+  "purpose": "Approved R5 guide photographs, actual game screenshots, no synthetic scenery",
+  "outputSize": [
+    256,
+    256
+  ],
+  "format": "webp",
+  "quality": 0.85,
+  "images": [
+    {
+      "source": "dist/assets/title105/guide-shuttle.jpg",
+      "crop": [
+        205,
+        120,
+        210,
+        210
+      ],
+      "output": "dist/assets/guide124/shuttle.webp"
+    },
+    {
+      "source": "source-data/ui-guide124/beanbag-landscape.png",
+      "crop": [
+        345,
+        170,
+        180,
+        180
+      ],
+      "output": "dist/assets/guide124/beanbag.webp",
+      "originalReport": "/Users/semin-na/Documents/Projects/3NU/03-history/build-reports/BUILD108/screenshots/beanbag-landscape.png"
+    }
+  ]
+}

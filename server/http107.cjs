@@ -45,8 +45,9 @@ function createCommunityHTTP({directory=defaultDirectory,now=()=>Date.now(),envi
    if(u.pathname==='/api/admin/session'&&req.method==='GET')return json(res,200,{csrf:hmac('admin:'+c.nuAdmin107)});
    if(u.pathname==='/api/admin/logout'&&req.method==='POST'){admins.delete(hash(c.nuAdmin107));cookie(res,'nuAdmin107','',0,secure);return json(res,200,{ok:true})}
    if(u.pathname==='/api/admin/exclusion'&&req.method==='POST'){const b=await body(req);cookie(res,'nuExclude107',b.exclude?hmac('exclude'):'',b.exclude?31536000:0,secure);return json(res,200,{ok:true,excluded:!!b.exclude})}
+   if(u.pathname==='/api/admin/test-nickname-exclusion'&&req.method==='POST')return json(res,200,visitLog.setOptions(await body(req)));
    if(u.pathname==='/api/admin/visits'&&req.method==='GET')return json(res,200,visitLog.list(u.searchParams));
-   if(u.pathname==='/api/admin/stats'&&req.method==='GET')return json(res,200,store.stats(Number(u.searchParams.get('days')||7)));
+   if(u.pathname==='/api/admin/stats'&&req.method==='GET')return json(res,200,{...store.stats(Number(u.searchParams.get('days')||7)),testNicknameExclusion:visitLog.options().enabled});
    if(u.pathname==='/api/admin/export'&&req.method==='GET'){const csv=store.csv(Number(u.searchParams.get('days')||7));res.writeHead(200,{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':'attachment; filename="3nu-visits.csv"'});return res.end(csv)}
    if(u.pathname==='/api/admin/posts'&&req.method==='GET'){const r=store.list(o,{admin:true,before:before(u)});for(const p of r.posts)p.reportDetails=store.db.prepare('SELECT reason,state,at FROM reports WHERE post=? ORDER BY at DESC').all(p.id);return json(res,200,r)}
    const match=u.pathname.match(/^\/api\/admin\/posts\/(\d+)$/);if(match&&req.method==='POST'){const b=await body(req);return json(res,200,store.moderate(Number(match[1]),b.action))}

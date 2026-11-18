@@ -5,9 +5,20 @@ const Player=require('../dist/player-state.js');
 function createVisitLog(store,now=()=>Date.now()){
  const db=store.db;
  db.exec(`CREATE TABLE IF NOT EXISTS visit_names123(visit INTEGER PRIMARY KEY REFERENCES visits(id) ON DELETE CASCADE,name TEXT NOT NULL,updated INTEGER NOT NULL)`);
+ db.exec(`CREATE TABLE IF NOT EXISTS analytics_options124(key TEXT PRIMARY KEY,value INTEGER NOT NULL CHECK(value IN (0,1)));
+ CREATE TABLE IF NOT EXISTS test_visits124(visit INTEGER PRIMARY KEY REFERENCES visits(id) ON DELETE CASCADE);
+ INSERT OR IGNORE INTO analytics_options124(key,value) VALUES('excludeTestNickname',1)`);
+ function options(){return{enabled:!!db.prepare("SELECT value FROM analytics_options124 WHERE key='excludeTestNickname'").get().value}}
+ function setOptions(input){if(typeof input.enabled!=='boolean')throw new Problem(400,'설정을 확인해 주세요.');db.prepare("UPDATE analytics_options124 SET value=? WHERE key='excludeTestNickname'").run(+input.enabled);return options()}
  function remember(visitor,presence){
   if(!presence.visible||!['enter','heartbeat'].includes(presence.kind)||typeof presence.name!=='string')return;
   const name=Player.nickname(presence.name);if(Player.validate(name))return;
+  // Exclude this visit only, never every future visit from the same browser.
+  // Sticky within the existing 30-minute session, including its title/active time.
+  if(name==='테스트'&&options().enabled){
+   const r=db.prepare('SELECT r.id FROM visitors v JOIN visits r ON r.id=v.session WHERE v.id=? AND r.environment=?').get(visitor,store.environment);
+   if(r&&(presence.kind==='enter'||!db.prepare('SELECT 1 FROM visit_names123 WHERE visit=?').get(r.id))){db.exec('BEGIN IMMEDIATE');try{db.prepare('UPDATE visits SET excluded=1 WHERE id=?').run(r.id);db.prepare('INSERT OR IGNORE INTO test_visits124(visit) VALUES(?)').run(r.id);db.exec('COMMIT')}catch(e){db.exec('ROLLBACK');throw e}}
+  }
   db.prepare(`INSERT INTO visit_names123(visit,name,updated)
    SELECT r.id,?,? FROM visitors v JOIN visits r ON r.id=v.session
    WHERE v.id=? AND r.environment=?
@@ -22,13 +33,13 @@ function createVisitLog(store,now=()=>Date.now()){
   const excluded=params.get('excluded')||'0';if(!['0','1'].includes(excluded))throw new Problem(400,'제외 조건을 확인해 주세요.');
   const asOf=now(),filter='r.environment=? AND r.start>=? AND r.start<? AND (?=1 OR r.excluded=0)',args=[store.environment,start,end,Number(excluded)];
   const summary=db.prepare(`SELECT count(*) total,min(r.start) oldest FROM visits r WHERE ${filter}`).get(...args);
-  const rows=db.prepare(`SELECT r.id,n.name,r.start,r.last,r.explored,r.returning_visit AS returningVisit,r.excluded,
+  const rows=db.prepare(`SELECT r.id,n.name,r.start,r.last,r.explored,r.returning_visit AS returningVisit,r.excluded,EXISTS(SELECT 1 FROM test_visits124 x WHERE x.visit=r.id) AS testVisit,
    r.active_ms+CASE WHEN v.session=r.id THEN max(0,min(?,coalesce((SELECT max(t.last) FROM tabs t WHERE t.visitor=r.visitor AND t.playing=1 AND t.visible=1),-9007199254740991)+?)-v.accounted) ELSE 0 END AS activeMs
    FROM visits r LEFT JOIN visit_names123 n ON n.visit=r.id LEFT JOIN visitors v ON v.id=r.visitor
    WHERE ${filter} AND r.id<? ORDER BY r.id DESC LIMIT 51`).all(asOf,LEASE,...args,before);
   const more=rows.length>50,items=rows.slice(0,50);
   return{items,next:more?items.at(-1).id:null,...summary,asOf,environment:store.environment};
  }
- return{remember,list};
+ return{remember,list,options,setOptions};
 }
 module.exports={createVisitLog};

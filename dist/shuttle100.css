@@ -27,3 +27,16 @@ body.shuttleCard100 #navigationHud #mapbox #mapViewport{height:150px;aspect-rati
  .nuShuttleCard .nuShuttleStops li{padding:4px 0;line-height:1.4}
  .nuShuttleCard .nuShuttleStops li:before{top:8px}
 }
+
+/* The stop card has its own HUD slot so closing the minimap keeps transit available. */
+body > .nuShuttleCard{position:fixed;z-index:36;top:calc(76px + env(safe-area-inset-top));left:max(16px,env(safe-area-inset-left));width:min(278px,calc(100vw - 32px));max-height:calc(100dvh - 178px);overflow:auto;overscroll-behavior:contain;box-shadow:0 5px 18px #14244818}
+body:not(.playing) > .nuShuttleCard,body.panel125-open > .nuShuttleCard{display:none}
+@media(max-width:600px){body > .nuShuttleCard{top:calc(134px + env(safe-area-inset-top));width:min(245px,calc(100vw - 32px));max-height:min(32dvh,255px)}}
+@media(orientation:landscape) and (max-height:520px){body > .nuShuttleCard{top:calc(56px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);max-height:calc(100dvh - 136px);width:236px}}
+
+@media(pointer:coarse){body > .nuShuttleCard .nuShuttleAction kbd{display:none}}
+
+/* Keep route guidance until the platform is reached. The card owns the transit action. */
+body.stop-approach125 > .nuShuttleCard,body.shuttleCard100 #mobile108 [data-context]{display:none!important}
+@media(max-width:600px){body:has(.game:is(.has-route,.has-arrival)) > .nuShuttleCard{top:calc(230px + env(safe-area-inset-top));max-height:min(30dvh,245px)}}
+@media(orientation:landscape) and (max-height:520px){body > .nuShuttleCard{top:calc(18px + env(safe-area-inset-top));max-height:calc(100dvh - 106px)}body:has(.game:is(.has-route,.has-arrival)) > .nuShuttleCard{top:calc(92px + env(safe-area-inset-top));max-height:calc(100dvh - 180px)}}

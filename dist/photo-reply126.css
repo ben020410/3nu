@@ -1,0 +1,30 @@
+#photoInvite126,#photoDock126,#photoLinkBox126{font-family:"Apple SD Gothic Neo",system-ui,sans-serif;box-sizing:border-box}
+#title105 #photoInvite126{display:flex;align-items:center;gap:12px;background:#ebf2ee;color:#1c413d;border-radius:14px;padding:11px 13px;margin-bottom:12px;text-align:left}
+#photoInvite126 img,#photoDock126 img{width:72px;height:60px;border-radius:7px;object-fit:contain;background:#dbe2da;flex:none}
+#title105 #photoInvite126 strong,#photoDock126 strong{font-size:15px;line-height:1.25}
+#title105 #photoInvite126 p,#photoDock126 p{margin:4px 0 0;font-size:12px;line-height:1.4;color:#475c58;word-break:keep-all}
+#title105 #photoInvite126 button{margin:3px 8px 0 0;padding:3px 0;background:none;border:0;color:#2a5c55;text-decoration:underline;text-underline-offset:3px;font-size:12px;cursor:pointer}
+#photoDock126{position:fixed;z-index:90;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);max-width:calc(100vw - 24px);width:max-content;display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fbfaf5;color:#193d38;border:1px solid #c4d5ce;border-radius:18px;box-shadow:0 5px 30px #132a2c48}
+#photoDock126 button{border:0;border-radius:10px;background:#234c47;color:white;font:650 14px/1.3 system-ui;padding:13px;cursor:pointer;white-space:nowrap}
+#photoDock126 [data-exit]{align-self:flex-start;padding:0;width:32px;height:32px;border-radius:50%;background:#e8ece6;color:#34544b;font-size:21px}
+#photoDock126 button:disabled{opacity:.6;cursor:wait}
+#photoCrop126{pointer-events:none;position:fixed;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 120vmax #0c211eb5;outline:1px solid #f8fbf285}
+body.photo-framing126 #nu-next,body.photo-framing126 #playerName{visibility:hidden!important}
+#photo97 footer{flex-wrap:wrap}
+#photo97 #photoLink126{background:#e2eee7;border-color:#b8cdc3;color:#224c41;font-weight:650;margin-right:auto}
+#photoLinkBox126{display:flex;gap:10px;align-items:flex-end;margin-top:12px;border-radius:10px;background:#e8eee7;padding:12px;color:#26463f}
+#photoLinkBox126 label{flex:1;min-width:0;font-size:12px;font-weight:650}
+#photoLinkBox126 input{box-sizing:border-box;display:block;width:100%;margin-top:5px;border:1px solid #bdccc2;background:white;color:#28443c;border-radius:6px;padding:8px;font:13px system-ui}
+#photo97.photo-pair126 #photoEditor103{display:none}
+#photo97.photo-pair126 #photoImage97{max-height:68dvh}
+@media(max-width:550px){
+ #photoDock126{gap:8px;padding:8px}
+ #photoDock126 img{width:46px;height:50px}
+ #photoDock126 button{min-height:40px;padding:9px 11px}
+ #photoDock126 p{max-width:125px}
+ #photo97 #photoLink126{margin-right:0}
+ #photoLinkBox126{gap:6px}
+}
+
+#photoPrivacy126{font-size:12px;color:#4b5f57;margin:12px 0 0;text-align:right;word-break:keep-all}
+#photo97.photo-pair126 #photoPrivacy126{display:none}

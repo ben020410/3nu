@@ -1,6 +1,8 @@
 'use strict';
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),{WebSocketServer,WebSocket}=require('ws');
 const {selectNearby}=require('./interest110.cjs');
+const {beanbagInReach97}=require('../dist/leisure97.js');
+const Style125=require('../dist/character-style125.js');
 const Sim=require('../dist/shuttle-simulation100.js'),Player=require('../dist/player-state.js'),anchors=require('../source-data/multiplayer106-anchors.json');
 function createCampusServer(options={}){
  const root=fs.realpathSync(options.staticRoot||path.resolve(__dirname,'../dist')),originTime=performance.now(),now=options.now||(()=>performance.now()-originTime),epoch=crypto.randomUUID(),sessions=new Map(),seats=new Map(),bySeat=new Map(anchors.seats.map(s=>[s.id,s])),bus=Sim.create(anchors.bus),limit=options.capacity||20,channelIds=options.channels||['01'],metrics={connections:0,messages:0,invalid:0,sentBytes:0,receivedBytes:0,ticks:0,maxTickMs:0,maxRecipients:0,skippedSends:0};
@@ -22,7 +24,7 @@ function createCampusServer(options={}){
  function busAt(distance){const a=anchors.bus.samples,n=a.length-1,t=Sim.mod(distance,bus.length)/bus.length*n,i=Math.floor(t),f=t-i;return a[i].map((v,k)=>v+(a[i+1][k]-v)*f)}
  function riderPose(s,t){if(!s.state?.bus)return;const v=bus.vehicle(t/1000,s.state.bus.index),q=busAt(v.distance),a=s.state.bus.offset,yaw=Math.atan2(q[3],q[4]);s.state.x=q[0]+Math.cos(yaw)*a[0]+Math.sin(yaw)*a[2];s.state.y=q[1]+a[1];s.state.z=q[2]-Math.sin(yaw)*a[0]+Math.cos(yaw)*a[2];s.state.yaw=yaw;}
  const finite=(v,min,max)=>typeof v==='number'&&Number.isFinite(v)&&v>=min&&v<=max;
- function stateValid(p){const [xmin,zmin,xmax,zmax]=anchors.bounds;return p&&Object.keys(p).every(k=>['x','y','z','yaw','name','character','action','moving','bus'].includes(k))&&finite(p.x,xmin-10,xmax+10)&&finite(p.z,zmin-10,zmax+10)&&finite(p.y,-100,3000)&&finite(p.yaw,-100,100)&&typeof p.name==='string'&&!Player.validate(p.name)&&['rio','baekhak'].includes(p.character)&&['idle','walk','fly','jump','crouch','sit','wave','drink','read','sketch','water','picnic','look','mist','bell','stretch'].includes(p.action)&&typeof p.moving==='boolean'&&(p.bus===null||p.bus&&Number.isInteger(p.bus.index)&&p.bus.index>=0&&p.bus.index<6&&Array.isArray(p.bus.offset)&&p.bus.offset.length===3&&finite(p.bus.offset[0],-1.5,1.5)&&finite(p.bus.offset[1],0,4)&&finite(p.bus.offset[2],-5.5,5.5));}
+ function stateValid(p){const [xmin,zmin,xmax,zmax]=anchors.bounds;return p&&Object.keys(p).every(k=>['x','y','z','yaw','name','character','action','moving','bus','style'].includes(k))&&finite(p.x,xmin-10,xmax+10)&&finite(p.z,zmin-10,zmax+10)&&finite(p.y,-100,3000)&&finite(p.yaw,-100,100)&&typeof p.name==='string'&&!Player.validate(p.name)&&['rio','baekhak','cat'].includes(p.character)&&(p.style===undefined||Style125.valid(p.style))&&['idle','walk','fly','jump','crouch','sit','wave','drink','read','sketch','water','picnic','look','mist','bell','stretch'].includes(p.action)&&typeof p.moving==='boolean'&&(p.bus===null||p.bus&&Number.isInteger(p.bus.index)&&p.bus.index>=0&&p.bus.index<6&&Array.isArray(p.bus.offset)&&p.bus.offset.length===3&&finite(p.bus.offset[0],-1.5,1.5)&&finite(p.bus.offset[1],0,4)&&finite(p.bus.offset[2],-5.5,5.5));}
  function update(s,p,first=false){const t=now();if(!stateValid(p)){metrics.invalid++;return false}if(!first&&s.state){const previous=s.state;if(p.bus&&!previous.bus){const v=bus.vehicle(t/1000,p.bus.index),stop=anchors.bus.stops.find(q=>q.id===v.stopId);if(!v.dwell||!stop||Math.hypot(previous.x-stop.approach.x,previous.z-stop.approach.z)>16||Math.abs(previous.y-.95-stop.approach.y)>2){send(s.ws,{type:'correct',state:previous,reason:'bus'});return false}}
   if(!p.bus&&previous.bus){const v=bus.vehicle(t/1000,previous.bus.index),stop=anchors.bus.stops.find(q=>q.id===v.stopId);if(!v.dwell||!stop||Math.hypot(p.x-stop.approach.x,p.z-stop.approach.z)>16||Math.abs(p.y-.95-stop.approach.y)>2){send(s.ws,{type:'correct',state:previous,reason:'alight'});return false}}
   if(!s.seat&&!p.bus&&!previous.bus){const dt=Math.min(2,Math.max(.05,(t-s.updated)/1000)),distance=Math.hypot(p.x-previous.x,p.y-previous.y,p.z-previous.z);if(distance>75*dt+3){metrics.invalid++;send(s.ws,{type:'correct',state:previous,reason:'movement'});return false}}
@@ -41,7 +43,7 @@ function createCampusServer(options={}){
   const target=requested?list.find(c=>c.id===requested):[...list].sort((a,b)=>a.population-b.population||a.id.localeCompare(b.id))[0];
   if(!existing&&sessions.size>=limit*channelIds.length+900){send(ws,{type:'full',channel:target?.id,capacity:limit,channels:list});return ws.close(1013,'resume capacity')}if(!target||target.population>=limit){send(ws,{type:'full',channel:target?.id||requested,capacity:limit,channels:list});return ws.close(1013,'channel full')}
   owner=existing||{id:crypto.randomUUID(),state:null,seat:null,updated:t};release(owner);
-  owner.channel=target.id;owner.compact=m.protocol===110;owner.wireId||=++wireSequence;owner.sentPeers=new Map();owner.token=crypto.randomBytes(32).toString('hex');owner.ws=ws;owner.until=Infinity;sessions.set(owner.id,owner);update(owner,m.state,true);invalidate();clearTimeout(joinTimer);
+  owner.channel=target.id;owner.compact=m.protocol===110||m.protocol===125;owner.appearance125=m.protocol===125;owner.wireId||=++wireSequence;owner.sentPeers=new Map();owner.token=crypto.randomBytes(32).toString('hex');owner.ws=ws;owner.until=Infinity;sessions.set(owner.id,owner);update(owner,m.state,true);invalidate();clearTimeout(joinTimer);
   send(ws,{type:'welcome',id:owner.id,token:owner.token,epoch,time:t,capacity:limit,channel:owner.channel,channels:channelList()});return;
  }
  if(!owner||owner.ws!==ws)return ws.close(1008,'join required');
@@ -55,19 +57,20 @@ function createCampusServer(options={}){
  }
  else if(m.type==='state')update(owner,m.state);
  else if(m.type==='clock'&&finite(m.client,0,1e15))send(ws,{type:'clock',client:m.client,time:t,epoch});
- else if(m.type==='claim'&&typeof m.request==='string'&&m.request.length<40){const a=bySeat.get(m.seat),p=owner.state,valid=!!a&&!owner.seat&&!p.bus&&['idle','walk','crouch','fly'].includes(p.action)&&Math.hypot(p.x-a.x,p.z-a.z)<2.9&&Math.abs(p.y-.95-a.y)<.7&&!seats.has(seatKey(owner,a.id));if(valid){owner.seat=a.id;seats.set(seatKey(owner,a.id),owner.id);Object.assign(owner.state,{seat:a.id,x:a.px,y:a.py,z:a.pz,yaw:a.angle,action:'sit',bus:null})}send(ws,{type:'claim',request:m.request,ok:valid,seat:valid?a.id:null})}
+ else if(m.type==='claim'&&typeof m.request==='string'&&m.request.length<40){const a=bySeat.get(m.seat),p=owner.state,valid=!!a&&!owner.seat&&!p.bus&&(a.kind==='beanbag'?['idle','walk','crouch','fly','jump'].includes(p.action)&&beanbagInReach97(p,a,p.action==='fly'||p.action==='jump'):['idle','walk','crouch','fly'].includes(p.action)&&Math.hypot(p.x-a.x,p.z-a.z)<2.9&&Math.abs(p.y-.95-a.y)<.7)&&!seats.has(seatKey(owner,a.id));if(valid){owner.seat=a.id;seats.set(seatKey(owner,a.id),owner.id);Object.assign(owner.state,{seat:a.id,x:a.px,y:a.py,z:a.pz,yaw:a.angle,action:'sit',bus:null})}send(ws,{type:'claim',request:m.request,ok:valid,seat:valid?a.id:null})}
  else if(m.type==='release')release(owner);
  else if(m.type==='leave'){release(owner);sessions.delete(owner.id);invalidate();ws.close(1000,'title')}
  else if(m.type!=='clock'){metrics.invalid++;ws.close(1008,'unsupported message')}
  });ws.on('close',()=>{clearTimeout(joinTimer);if(owner?.ws===ws)remove(owner)});ws.on('error',()=>{});
  });
  function snapshot(s,t,players,population,nearby){
+  if(!s.appearance125)players=players.map(p=>({...p,character:p.character==='cat'?'rio':p.character,style:undefined}));
   if(!s.compact)return send(s.ws,{type:'snapshot',time:t,channel:s.channel,population,capacity:limit,nearby,players});
   // Entries carry identity once. Frequent packets contain quantized poses only when changed.
   if(s.ws.bufferedAmount>65536){metrics.skippedSends++;return}
   const previous=s.sentPeers,seen=new Set(),peers=[],poses=[],left=[];
-  for(const p of players){const k=sessions.get(p.id).wireId,meta=JSON.stringify([p.name,p.character,p.bus,p.seat]),pose=[k,Math.round(p.x*50),Math.round(p.y*50),Math.round(p.z*50),Math.round(p.yaw*100),p.action,p.moving?1:0],signature=JSON.stringify(pose),old=previous.get(k);seen.add(k);
-   if(!old||old.meta!==meta)peers.push({k,id:p.id,name:p.name,character:p.character,bus:p.bus,seat:p.seat});
+  for(const p of players){const k=sessions.get(p.id).wireId,meta=JSON.stringify([p.name,p.character,p.style,p.bus,p.seat]),pose=[k,Math.round(p.x*50),Math.round(p.y*50),Math.round(p.z*50),Math.round(p.yaw*100),p.action,p.moving?1:0],signature=JSON.stringify(pose),old=previous.get(k);seen.add(k);
+   if(!old||old.meta!==meta)peers.push({k,id:p.id,name:p.name,character:p.character,style:p.style,bus:p.bus,seat:p.seat});
    if(!old||old.pose!==signature)poses.push(pose);previous.set(k,{meta,pose:signature});
   }
   for(const k of previous.keys())if(!seen.has(k)){left.push(k);previous.delete(k)}

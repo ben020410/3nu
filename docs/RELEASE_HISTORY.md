@@ -24,3 +24,9 @@ Current local v1.0.1 notes cover first-load waiting, camera/flight processing, u
 ## v1.0.5 / BUILD124 — released (2026-11-18)
 
 Player-facing title: **모바일 플레이 경험 개선**. Four-page in-game guide, responsive layout, clearer title feature introduction and touch interruption/selection handling. Actual iPhone Instagram confirmation is still required; no FPS or universal device claim. Published on 2026-11-18 (KST), including consistent formatting across all historical update entries.
+
+2026-11-22 · BUILD125 / v1.1 통합 업데이트 로컬 준비. 플레이어 고양이 얼굴 R4 사용자 확정. 탐방 메뉴·장소 및 자동 이동·사진·조작법·캐릭터 꾸미기와 해당 성능 작업을 함께 포함. 공개 배포일 미정.
+
+## v1.1 / BUILD125 · 2026-11-24 공개
+
+게시판 제목은 **캠퍼스 플레이 전면 개선**이다. 바닥을 눌러 이동, 세 캐릭터의 걷기·비행·꾸미기, 셔틀 하차 후 목적지까지 보행, 같은 구도 사진 초대, 간소화한 휴대폰 화면과 세 장의 조작법을 제공한다. 운영 서버와 공식 웹 주소에 같은 빌드를 반영했다.

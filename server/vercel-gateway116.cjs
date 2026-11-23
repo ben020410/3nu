@@ -4,7 +4,7 @@ const {isIP}=require('node:net');
 function createGateway({publicOrigin,upstreamOrigin,secret,fetchImpl=fetch}={}){
  const publicURL=new URL(publicOrigin),upstream=new URL(upstreamOrigin);
  if(publicURL.protocol!=='https:'||publicURL.origin!==publicOrigin||upstream.protocol!=='https:'||upstream.origin!==upstreamOrigin||publicURL.username||upstream.username||publicOrigin===upstreamOrigin||!/^[a-f0-9]{64}$/.test(secret||''))throw Error('Invalid gateway configuration');
- const routes=/^\/api\/(?:session|visits|notices|feedback|posts(?:\/\d+(?:\/report)?)?|admin\/(?:login|logout|session|exclusion|test-nickname-exclusion|stats|visits|export|posts(?:\/\d+)?|feedback(?:\/\d+)?|notices(?:\/\d+)?))$/;
+ const routes=/^\/api\/(?:session|visits|photo-replies(?:\/[a-f0-9]{32})?|notices|feedback|posts(?:\/\d+(?:\/report)?)?|admin\/(?:login|logout|session|exclusion|test-nickname-exclusion|stats|visits|export|posts(?:\/\d+)?|feedback(?:\/\d+)?|notices(?:\/\d+)?))$/;
  return async function gateway(req,res){
   const fail=(code,message)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify({error:message}))};
   try{
@@ -22,11 +22,12 @@ function createGateway({publicOrigin,upstreamOrigin,secret,fetchImpl=fetch}={}){
    const ip=req.headers['x-vercel-forwarded-for'];if(typeof ip!=='string'||!isIP(ip))return fail(503,'연결 정보를 확인하지 못했어요. 잠시 후 다시 시도해 주세요.');
    const headers={'Origin':publicOrigin,'X-3NU-Edge-Key':secret,'X-3NU-Client-IP':ip};
    for(const name of ['cookie','content-type','x-csrf-token','user-agent','sec-fetch-site'])if(typeof req.headers[name]==='string')headers[name]=req.headers[name];
+   const limit=u.pathname==='/api/photo-replies'&&method==='POST'?224*1024:16384;
    let body;
    if(method!=='GET'){
     if(req.body!==undefined)body=Buffer.isBuffer(req.body)?req.body:Buffer.from(typeof req.body==='string'?req.body:JSON.stringify(req.body));
-    else{const chunks=[];let length=0;for await(const chunk of req){length+=Buffer.byteLength(chunk);if(length>16384)return fail(413,'요청이 너무 커요.');chunks.push(Buffer.from(chunk))}body=Buffer.concat(chunks)}
-    if(body.length>16384)return fail(413,'요청이 너무 커요.');
+    else{const chunks=[];let length=0;for await(const chunk of req){length+=Buffer.byteLength(chunk);if(length>limit)return fail(413,'요청이 너무 커요.');chunks.push(Buffer.from(chunk))}body=Buffer.concat(chunks)}
+    if(body.length>limit)return fail(413,'요청이 너무 커요.');
    }
    const response=await fetchImpl(upstream.origin+u.pathname+u.search,{method,headers,body,redirect:'manual',signal:AbortSignal.timeout(8000)});
    // Never retry writes automatically and never follow a redirect carrying credentials.

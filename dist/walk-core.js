@@ -46,7 +46,36 @@ function gatePassable(a,b){if(!nav.gate?.plaza12||segment(...nav.gate.center,a,b
 function clearLine(a,b){if(!outdoorPassable(a,b))return false;const d=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.ceil(d/.35);for(let i=0;i<=n;i++){const f=n?i/n:0;if(blocked(a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,.6))return false}return true}
 function move(state,dx,dz){const distance=Math.hypot(dx,dz),steps=Math.max(1,Math.ceil(distance/.15));let x=state.x,z=state.z,feet=state.y==null?floorAt(x,z):state.y-.95;for(let i=0;i<steps;i++){const ax=dx/steps,az=dz/steps;let moved=false;for(const [sx,sz]of [[ax,az],[ax,0],[0,az]]){if(!sx&&!sz)continue;const nx=x+sx,nz=z+sz,nextFloor=floorAt(nx,nz,feet);if(nx<xmin+1||nx>xmax-1||nz<zmin+1||nz>zmax-1||blocked(nx,nz,radius,feet)||(!state.airborne&&Math.abs(nextFloor-feet)>.26))continue;x=nx;z=nz;if(!state.airborne)feet=nextFloor;moved=true;break}if(!moved)break}return{x,z,y:feet+.95,distance:Math.hypot(x-state.x,z-state.z)}}
 function nearest(x,z,check=false){let candidates=P.map((p,i)=>[Math.hypot(p[0]-x,p[1]-z),i]).filter(q=>adj[q[1]].length>0&&!nav.navigation77.excludedNearest.includes(q[1])).sort((a,b)=>a[0]-b[0]);for(const[d,i]of candidates.slice(0,100))if(!check||(d<.1&&!blocked(x,z))||clearLine([x,z],P[i]))return i;return null}
-function path(start,end){if(start==null||end==null)return null;const dist=new Float64Array(P.length);dist.fill(Infinity);dist[start]=0;const prev=new Int32Array(P.length);prev.fill(-1);const heap=new Heap();heap.push([0,start]);while(heap.length){const [cost,a]=heap.pop();if(cost>dist[a])continue;if(a===end)break;for(const[b,len,weighted]of adj[a]){const next=cost+(weighted??len);if(next<dist[b]){dist[b]=next;prev[b]=a;heap.push([next,b]);}}}if(!Number.isFinite(dist[end]))return null;const nodes=[];for(let i=end;i!==-1;i=prev[i]){nodes.push(i);if(i===start)break}nodes.reverse();let distance=0;for(let i=1;i<nodes.length;i++)distance+=Math.hypot(P[nodes[i]][0]-P[nodes[i-1]][0],P[nodes[i]][1]-P[nodes[i-1]][1]);return {nodes,distance,cost:dist[end]}}
-return {registerLocalBlocker:(id,test)=>{localBlockers107.set(id,test);return()=>localBlockers107.delete(id)},routing74,height,floorAt,ceilingAt,terrain,roadAt,blocked,move,nearest,path,clearLine,points:P,edges:E,adj};}
+function path(start,end,excluded){if(start==null||end==null)return null;const dist=new Float64Array(P.length);dist.fill(Infinity);dist[start]=0;const prev=new Int32Array(P.length);prev.fill(-1);const heap=new Heap();heap.push([0,start]);while(heap.length){const [cost,a]=heap.pop();if(cost>dist[a])continue;if(a===end)break;for(const[b,len,weighted]of adj[a]){if(excluded?.size&&excluded.has(Math.min(a,b)+':'+Math.max(a,b)))continue;const next=cost+(weighted??len);if(next<dist[b]){dist[b]=next;prev[b]=a;heap.push([next,b]);}}}if(!Number.isFinite(dist[end]))return null;const nodes=[];for(let i=end;i!==-1;i=prev[i]){nodes.push(i);if(i===start)break}nodes.reverse();let distance=0;for(let i=1;i<nodes.length;i++)distance+=Math.hypot(P[nodes[i]][0]-P[nodes[i-1]][0],P[nodes[i]][1]-P[nodes[i-1]][1]);return {nodes,distance,cost:dist[end]}}
+// A nearby path can belong to an isolated part of the walk graph, e.g. on the lawn.
+function pathFromPosition(start,end,excluded){
+ if(end==null||!adj[end])return null;
+ const [x,z,feet]=start;
+ const nearestNode=nearest(x,z,true)??nearest(x,z);
+ const usual=path(nearestNode,end,excluded);
+ if(usual)return usual;
+
+ // Only try nearby entries that belong to the destination's connected roads.
+ const visited=new Uint8Array(P.length),queue=[end],candidates=[];
+ visited[end]=1;
+ for(let head=0;head<queue.length;head++){
+  const node=queue[head],point=P[node];
+  const distance=Math.hypot(point[0]-x,point[1]-z);
+  if(distance<=24&&!nav.navigation77.excludedNearest.includes(node))candidates.push({node,distance});
+  for(const [next] of adj[node]){
+   if(visited[next]||excluded?.size&&excluded.has(Math.min(node,next)+':'+Math.max(node,next)))continue;
+   visited[next]=1;queue.push(next);
+  }
+ }
+ candidates.sort((a,b)=>a.distance-b.distance);
+ for(const {node} of candidates){
+  const point=P[node];
+  if(!clearLine(start,point))continue;
+  const landing=move({x,z,y:feet+.95},point[0]-x,point[1]-z);
+  if(Math.hypot(landing.x-point[0],landing.z-point[1])<=.06)return path(node,end,excluded);
+ }
+ return null;
+}
+return {registerLocalBlocker:(id,test)=>{localBlockers107.set(id,test);return()=>localBlockers107.delete(id)},routing74,height,floorAt,ceilingAt,terrain,roadAt,blocked,move,nearest,path,pathFromPosition,clearLine,points:P,edges:E,adj};}
 function velocity(x,z,yaw,multiplier=1,sprint=false){const len=Math.max(1,Math.hypot(x,z)),speed=12*Math.max(.5,Math.min(5,multiplier))*(sprint?1.75:1);return {dx:(Math.cos(yaw)*x+Math.sin(yaw)*z)/len*speed,dz:(-Math.sin(yaw)*x+Math.cos(yaw)*z)/len*speed,speed}}
 return{create,segment,inside,velocity};});

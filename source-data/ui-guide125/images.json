@@ -1,0 +1,58 @@
+{
+  "source": "Local BUILD125 in-game renders",
+  "format": "WebP",
+  "colorMode": "RGB",
+  "resize": "Lanczos",
+  "quality": 93,
+  "method": 6,
+  "images": [
+    {
+      "source": "guide-plaza-ground.png",
+      "sourceSize": [
+        1440,
+        960
+      ],
+      "output": "dist/assets/explorer125/guide-plaza-ground.webp",
+      "outputSize": [
+        960,
+        640
+      ]
+    },
+    {
+      "source": "guide-plaza-air.png",
+      "sourceSize": [
+        1440,
+        960
+      ],
+      "output": "dist/assets/explorer125/guide-plaza-air.webp",
+      "outputSize": [
+        960,
+        640
+      ]
+    },
+    {
+      "source": "guide-shuttle-stop.png",
+      "sourceSize": [
+        1200,
+        1200
+      ],
+      "output": "dist/assets/explorer125/guide-shuttle-stop.webp",
+      "outputSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "source": "guide-lawn-seat.png",
+      "sourceSize": [
+        1200,
+        1200
+      ],
+      "output": "dist/assets/explorer125/guide-lawn-seat.webp",
+      "outputSize": [
+        1024,
+        1024
+      ]
+    }
+  ]
+}

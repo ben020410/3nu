@@ -42,7 +42,7 @@ body:not(.playing)>:not(#title105):not(script):not(style){visibility:hidden!impo
 #title105 .creditsHeading111{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:20px}#title105 .creditsHeading111 h2{margin:0}#title105 .creditsGithub111{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 16px;border:1px solid #cbd6df;border-radius:12px;background:#f0f5f8;color:#203951;text-decoration:none;font:inherit;font-weight:650;white-space:nowrap}#title105 .creditsGithub111:hover{background:#e2edf5}@media(max-width:390px){#title105 .creditsHeading111{gap:10px}#title105 .creditsGithub111{min-height:38px;padding:0 12px;font-size:13px}}
 
 /* Public release notes; keep all four board tabs reachable on small screens. */
-#title105 .tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(86px,1.4fr);gap:8px}#title105 .tabs button{white-space:nowrap;font-size:14px;min-height:44px}#title105 .releaseHeading120{display:flex;align-items:center;gap:12px;flex-wrap:wrap}#title105 .releaseHeading120 h3{margin:0;font-size:21px}#title105 .releaseBadge120{font-size:12px;background:#edf2f5;color:#526875;padding:3px 9px;border-radius:20px}#title105 .updateHistory120 ul{padding-left:21px;color:var(--muted);line-height:1.8}#title105 .updateHistory120 li+li{margin-top:7px}@media(max-width:380px){#title105 .tabs{gap:4px}#title105 .tabs button{font-size:13px}}
+#title105 .tabs{display:flex;flex-wrap:wrap;width:fit-content;max-width:100%;gap:clamp(4px,1.2vw,16px)}#title105 .tabs button{flex:0 0 auto;width:auto;padding-inline:clamp(4px,.6vw,9px)}#title105 .tabs button{white-space:nowrap;font-size:14px;min-height:44px}#title105 .releaseHeading120{display:flex;align-items:center;gap:12px;flex-wrap:wrap}#title105 .releaseHeading120 h3{margin:0;font-size:21px}#title105 .releaseBadge120{font-size:12px;background:#edf2f5;color:#526875;padding:3px 9px;border-radius:20px}#title105 .updateHistory120 ul{padding-left:21px;color:var(--muted);line-height:1.8}#title105 .updateHistory120 li+li{margin-top:7px}@media(max-width:380px){#title105 .tabs{gap:4px}#title105 .tabs button{font-size:13px}}
 
 /* BUILD122: keep the mobile title artwork; avoid continuous scaled compositing. */
 @media(pointer:coarse){#title105 .backdrop img{transition:none}#title105 .backdrop img.active:nth-child(n){animation:none;transform:none}}
@@ -51,3 +51,203 @@ body:not(.playing)>:not(#title105):not(script):not(style){visibility:hidden!impo
 #title105 .updateHistory120 .entry{margin:0;padding:22px 0;border-bottom:1px solid #e1e5e9}#title105 .updateHistory120 .entry:first-child{padding-top:0}#title105 .updateHistory120 .entry:last-child{border-bottom:0}#title105 .updateHistory120 .releaseHeading120{gap:10px 14px;align-items:center}#title105 .updateHistory120 h3{margin:0;color:#142449;font-size:20px;font-weight:800;line-height:1.5}#title105 .updateHistory120 .releaseBadge120{flex:none;font-size:12px;line-height:1.5;font-weight:500;padding:4px 10px}#title105 .updateHistory120 :is(ul,p){margin:12px 0 0;color:#687583;font-size:14px;line-height:1.8}#title105 .updateHistory120 ul{padding-left:21px}#title105 .updateHistory120 li{margin:0;padding:0}#title105 .updateHistory120 li+li{margin-top:7px}@media(max-width:600px){#title105 .updateHistory120 h3{font-size:18px}#title105 .updateHistory120 .entry{padding:20px 0}}
 
 #title105 .updateHistory120 :is(h3,li,p){word-break:keep-all;overflow-wrap:anywhere}
+
+/* v1.1 landing. Place the gate between the headline and the entry form. */
+#title105 .app > header {align-items:center;padding:12px clamp(16px,5vw,80px);background:#fbfaf7;border-bottom:1px solid #deded6}
+#title105 header .logo {width:94px;height:34px}
+#title105 header nav {display:flex;align-items:center;justify-content:flex-end;gap:clamp(5px,1.5vw,22px)}
+#title105 header .nav {border-radius:8px;min-height:42px;padding:6px 9px}
+#title105 header .nav:hover,#title105 header .nav:focus-visible {background:#e9eef0}
+#title105 .backdrop img:nth-child(n) {inset:0;width:100%;height:100%}
+#title105 .backdrop:after {background:linear-gradient(0deg,#0b273bd6,transparent 54%),linear-gradient(90deg,#16344b30,transparent 60%)}
+#title105 #titleHome105 {position:relative;flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,380px);align-items:center;gap:30px;min-height:calc(100svh - 67px);padding:clamp(30px,6vw,86px)}
+#title105 #titleHome105[hidden] {display:none}
+#title105 #titleHome105 .welcome {position:static;align-self:end;text-align:left;width:100%;max-width:none;padding:0;color:white}
+#title105 .campusIdentity {display:flex;align-items:center;gap:12px;font-size:14px;font-weight:650}
+#title105 .campusIdentity .version {position:static;border:1px solid #ffffff80;border-radius:99px;padding:1px 8px;font-size:11px;color:white}
+#title105 #campusTitle {margin:12px 0 8px;font-size:clamp(38px,5.4vw,82px);line-height:1.13;letter-spacing:-.065em;color:white;font-weight:800}
+#title105 #titleHome105 .welcome p {font-weight:500;color:#fff;line-height:1.55}
+#title105 #startForm {width:100%;max-width:none;padding:26px;border-radius:22px;background:#fbfaf7;box-shadow:0 12px 40px #10283d2a}
+#title105 #startForm h2 {margin:0;font-size:25px;letter-spacing:-.045em}
+#title105 #startForm .sub {margin:3px 0 17px;font-size:14px}
+#title105 #startForm .avatar {border:1px solid #dddcd4;background:#f3f1eb;padding:10px 3px;border-radius:12px;cursor:pointer}
+#title105 #startForm .avatar:has(:checked) {border-color:#204265;box-shadow:inset 0 0 0 1px #204265;background:#e6edf2}
+#title105 #startForm .avatar:focus-within {outline:2px solid #246e98;outline-offset:2px}
+#title105 #startForm .portrait,#title105 #startForm .portrait img {height:92px}
+#title105 #startForm .portrait img {margin:0}
+#title105 #startForm .avatar strong {margin-top:6px}
+#title105 #startForm #nickname {background:white;border:1px solid #c7cdd1}
+#title105 #startForm #start {background:#142448;color:white;font-weight:750}
+#title105 #startForm #start:enabled:hover {background:#254567}
+#title105 #startForm #nicknameError:empty {min-height:0;margin:0}
+@media(max-width:680px) {
+ #title105 .app > header {gap:6px;padding:6px 12px}
+ #title105 header .logo {width:68px;height:28px}
+ #title105 header nav {gap:1px}
+ #title105 header .nav {padding:6px;font-size:12px}
+ #title105 #titleHome105 {display:flex;flex-direction:column;align-items:stretch;justify-content:flex-end;gap:18px;padding:90px 14px max(16px,env(safe-area-inset-bottom));min-height:calc(100svh - 56px)}
+ #title105 #titleHome105 .welcome,#title105 #startForm {max-width:440px;align-self:center}
+ #title105 #titleHome105 .welcome {padding:0 8px}
+ #title105 #campusTitle {font-size:38px;margin:8px 0 6px}
+ #title105 .campusIdentity {font-size:12px}
+ #title105 #startForm {padding:18px}
+ #title105 #startForm h2 {font-size:22px}
+ #title105 #startForm .sub {margin-bottom:10px}
+ #title105 #startForm .portrait,#title105 #startForm .portrait img {height:64px}
+ #title105 .backdrop:after {background:linear-gradient(0deg,#15354a 4%,#133046c9 48%,#132d4560 76%,transparent)}
+}
+@media(orientation:landscape) and (max-height:500px) and (min-width:681px) {
+ #title105 #titleHome105 {grid-template-columns:1fr 315px;padding:10px 20px;min-height:calc(100svh - 50px)}
+ #title105 #startForm {padding:12px 16px}
+ #title105 #startForm .portrait,#title105 #startForm .portrait img {height:44px}
+ #title105 #startForm .sub {margin:0 0 5px}
+ #title105 #startForm h2 {font-size:18px}
+}
+#title105 #startForm .portrait.cat img {transform:scale(1.28)}
+@media(max-width:680px) and (max-height:680px) {
+ #title105 #titleHome105 {gap:10px;padding:22px 10px max(10px,env(safe-area-inset-bottom))}
+ #title105 #campusTitle {font-size:31px;margin:4px 0}
+ #title105 #titleHome105 .welcome p {font-size:12px}
+ #title105 #startForm {padding:14px}
+ #title105 #startForm .portrait,#title105 #startForm .portrait img {height:50px}
+ #title105 #startForm .avatar {padding:6px 2px}
+ #title105 #startForm #start {margin-top:10px}
+}
+@media(orientation:landscape) and (max-height:500px) and (min-width:681px) {
+ #title105 .app > header {padding-block:2px}
+ #title105 #startForm label[for=nickname] {margin-top:6px}
+ #title105 #startForm .avatar {padding:3px 2px}
+ #title105 #startForm #start {margin-top:6px;padding-block:8px}
+ #title105 #startForm #nickname {padding-block:6px}
+}
+
+/* The catalog supplies the selected species to both the title and settings. */
+#title105 #startForm fieldset[hidden] {display:none}
+#title105 #titleHome105 .welcome .version {position:static;display:inline-block;margin-top:8px;color:white;border:1px solid #ffffff85;border-radius:20px;padding:1px 9px}
+#title105 #campusTitle {font-size:clamp(35px,4.2vw,65px);line-height:1.16;word-break:keep-all}
+#title105 .characterPicker {display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;justify-items:center;background:#f0f1eb;border-radius:15px;margin:12px 0 15px;padding:6px;outline-offset:3px}
+#title105 .characterPicker button {width:40px;height:44px;border:1px solid #d3d8d4;border-radius:50%;background:#fff;color:#142448;font:26px/1 system-ui}
+#title105 .modelStage {width:100%;height:clamp(155px,23vh,220px);touch-action:pan-y;user-select:none;display:grid;place-items:center}
+#title105 .modelStage :is(img,canvas) {grid-area:1/1;width:100%;height:100%;min-height:0;min-width:0;object-fit:contain;pointer-events:none}
+#title105 .modelStage:has(canvas:not([hidden])) img {visibility:hidden}
+#title105 .characterPicker output {grid-column:1/-1;font-weight:700;padding-bottom:5px}
+@media(max-width:680px){#title105 #campusTitle {font-size:31px} #title105 .modelStage {height:148px}}
+@media(max-height:680px) and (max-width:680px){#title105 .modelStage{height:116px} #title105 #campusTitle {font-size:25px}}
+@media(orientation:landscape) and (max-height:500px){#title105 .modelStage {height:88px} #title105 .characterPicker {margin:4px 0;padding:3px}}
+
+#title105 #campusTitle br {display:block}
+
+#title105 #chooseTitle small{font-size:11px;font-weight:500;color:#536565;white-space:nowrap;margin-inline-start:.3em}
+
+#title105 #startForm { color: #162541; background: #fbfaf7; }
+#title105 #startForm input { color: #162541; }
+#title105 #startForm .characterPicker {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: radial-gradient(ellipse at 50% 90%, #dde6dc, transparent 57%), linear-gradient(170deg,#eff4ee,#e7ede7);
+  padding: 6px 8px 9px; margin: 12px 0;
+}
+#title105 .characterPicker button { color: #23344b; }
+#title105 .modelStage { position: relative; }
+#title105 .modelStage::before {
+  content: ''; position: absolute; bottom: 8%; left: 22%; right: 22%; height: 8%;
+  border-radius: 50%; background: radial-gradient(ellipse,#76937f44,transparent 68%); z-index: -1;
+}
+#title105 .pickerAnnouncement { color:#172e39; font-size:15px; line-height:1.35; }
+#title105 .modelStage :is(img,canvas) { max-width:100%; width:auto; }
+@media(max-width:680px) {
+  #title105 #titleHome105 { gap: 15px; }
+}
+@media(max-height:680px) and (max-width:680px) {
+  #title105 #titleHome105 { gap:8px; padding-top:10px; }
+  #title105 .modelStage { height:94px; }
+  #title105 #startForm .characterPicker { margin:6px 0; }
+}
+@media(orientation:landscape) and (max-height:500px) {
+  #title105 #startForm .characterPicker { padding:2px 5px; margin:2px 0; }
+  #title105 .modelStage { height:76px; }
+}
+
+/* A single wordmark and compact navigation sit over the campus photograph. */
+#title105 .app > header {
+  align-self:stretch; align-items:center; justify-content:space-between; gap:12px; flex:none;
+  margin:0; padding:clamp(12px,2vh,24px) clamp(22px,6vw,86px) 0;
+  background:transparent; border:0; border-radius:0; box-shadow:none;
+}
+#title105 .backdrop::before {
+  content:""; position:absolute; z-index:1; inset:0 0 auto; height:148px; pointer-events:none;
+  background:linear-gradient(to bottom, #e0ecf2cf 0%, #e0ecf2ae 38%, #e0ecf200 100%);
+}
+#title105 header .logo {width:58px;height:auto;flex-shrink:0}
+#title105 header nav {
+  flex:0 1 auto; flex-wrap:nowrap; align-items:center; justify-content:start;
+  gap:4px; padding:0; border:0;
+}
+#title105 header .nav {
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  min-height:44px; padding:0 12px; border:0; border-radius:9px;
+  background:transparent; color:#152e43; font-size:14px; font-weight:650; white-space:nowrap;
+}
+#title105 header .nav svg {width:16px;height:16px;flex:none;color:currentColor}
+#title105 header .nav:is(:hover,:focus-visible) {color:#0d293c;background:#163a4810}
+#title105 header .nav[aria-current=page] {background:#e0e9e3;color:#173f42}
+#title105 .nav:focus-visible,#title105 .characterPicker button:focus-visible {
+  outline:2px solid #246e98;outline-offset:-2px;
+}
+#title105 #titleHome105 {min-height:0}
+#title105 #campusTitle {
+  margin:0; font:700 clamp(31px,3.4vw,49px)/1.16 "Apple SD Gothic Neo",system-ui,sans-serif;
+  color:white; letter-spacing:-.042em; word-break:keep-all;
+}
+#title105 #campusTitle span {display:block}
+#title105 #titleHome105 .welcome .version {
+  border:0; padding:0; font-size:12px; font-weight:600; margin-top:10px;
+  letter-spacing:.035em; color:#edf2ef;
+}
+#title105 #startForm .characterPicker {padding:8px 8px 10px}
+#title105 .characterPicker :is([data-prev],[data-next]) {
+  display:grid; place-items:center; position:relative; isolation:isolate; width:44px; height:44px;
+  padding:0; border:0; border-radius:10px; color:#284d51; background:transparent;
+  touch-action:manipulation;
+}
+#title105 .characterPicker :is([data-prev],[data-next])::before {
+  content:''; position:absolute; inset:5px; z-index:-1; border-radius:9px;
+  background:#fafcf8; border:1px solid #647e712e;
+}
+#title105 .characterPicker :is([data-prev],[data-next]):is(:hover,:focus-visible)::before {background:#fff;border-color:#81988b}
+#title105 .characterPicker :is([data-prev],[data-next]):active::before {background:#dde8df}
+#title105 .characterPicker :is([data-prev],[data-next]) svg {width:19px;height:19px;stroke-width:1.8}
+@media(max-width:680px){
+  #title105 .app > header {gap:8px;padding:max(8px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left))}
+  #title105 header .logo {width:45px}
+  #title105 header nav {gap:0;padding:0}
+  #title105 header .nav {padding:0 7px;gap:4px;font-size:12px}
+  #title105 header .nav svg {width:14px;height:14px}
+  #title105 #campusTitle {font-size:clamp(23px,6vw,32px);line-height:1.22}
+  #title105 #campusTitle span {display:inline-block}
+  #title105 #titleHome105 .welcome .version {margin-top:4px}
+}
+@media(max-width:350px){
+  #title105 .app > header {gap:4px;padding-inline:10px}
+  #title105 header .nav {padding-inline:5px;gap:3px}
+  #title105 header .logo {width:38px}
+}
+@media(orientation:landscape) and (max-height:500px){
+  #title105 .app > header {padding:4px max(18px,env(safe-area-inset-right)) 0 max(20px,env(safe-area-inset-left));gap:9px}
+  #title105 header .logo {width:45px}
+  #title105 header .nav {padding:0 9px;font-size:12px}
+  #title105 #titleHome105 {padding-block:6px}
+  #title105 #campusTitle {font-size:clamp(24px,3.4vw,32px)}
+  #title105 #startForm .characterPicker {padding-block:2px}
+}
+
+#title105 #titleHome105 .campus-intro{display:block;margin:8px 0 0;word-break:keep-all;text-wrap:pretty}
+@media(max-height:500px){#title105 #titleHome105 .campus-intro{margin-top:4px;font-size:12px}}
+
+#title105 .optional-name{font-size:11px;font-weight:500;color:#576966;margin-inline-start:3px}
+
+@media (max-width:680px), (orientation:landscape) and (max-height:500px) {
+  #title105 #chooseTitle { display:flex;align-items:baseline;gap:4px 9px;flex-wrap:wrap; }
+  #title105 #chooseTitle small { font-size:13px;font-weight:550;line-height:1.35;letter-spacing:0;color:#4a5c61; }
+  #title105 #startForm #nickname { font-size:16px; }
+  #title105 #startForm #start { min-height:44px;font-size:15px; }
+}

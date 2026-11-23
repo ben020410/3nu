@@ -1,0 +1,28 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+const path=require('node:path'),os=require('node:os'),fs=require('node:fs');
+const {openPhotoReplies}=require('../server/photo-replies126.cjs');
+const jpeg='/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDIBCQkJDAsMGA0NGDIhHCEyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIAAIAAgMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APf6AP8A/9k=';
+const shot={eye:[0,4,2],at:[0,1,0],player:[0,1,0],facing:0,flying:false,fov:.9,span:0,aspect:1};
+test('photo invite stores only the shot, strips metadata, survives restart and expires after a week',t=>{
+  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'3nu-photo-'));
+  const file=path.join(dir,'photo.sqlite');
+  let now=23000,photos=openPhotoReplies(file,()=>now);
+  t.after(()=>{photos.close();fs.rmSync(dir,{recursive:true,force:true});});
+  const id='a'.repeat(32),token=()=>id,source=Buffer.from(jpeg,'base64');
+  const comment=Buffer.from('private camera metadata'),segment=Buffer.from([255,254,0,comment.length+2]);
+  const photo=Buffer.concat([source.subarray(0,2),segment,comment,source.subarray(2)]).toString('base64');
+  const body={photo,shot:{...shot,nickname:'private'}};
+  const first=photos.create(body,token);
+  now+=5000;
+  assert.deepEqual(photos.create(body,token),first);
+  photos.close();photos=openPhotoReplies(file,()=>now);
+  const result=photos.get(id);
+  assert.deepEqual(result.shot,shot);
+  assert.equal(Buffer.from(result.photo,'base64').includes(comment),false);
+  now=first.expires;
+  assert.throws(()=>photos.get(id),{status:404});
+  assert.throws(()=>photos.create({...body,shot:{...shot,eye:[Infinity,0,0]}},token),{status:400});
+  assert.throws(()=>photos.create({...body,photo:'bad'},token),{status:400});
+  assert.throws(()=>photos.create({...body,photo:Buffer.concat([source,comment]).toString('base64')},token),{status:400});
+});

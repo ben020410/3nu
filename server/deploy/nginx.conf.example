@@ -43,6 +43,11 @@ server {
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header X-Forwarded-For $remote_addr;
     }
+    location = /api/photo-replies {
+        client_max_body_size 224k;
+        proxy_pass http://campus_node;
+        proxy_buffering off;
+    }
     location /api/ {
         proxy_pass http://campus_node;
         proxy_buffering off;

@@ -1,7 +1,7 @@
 /* Game-only selection protection. Text fields/editor content keep native editing.
  * A cancellation clears every held input; ordinary pointerup releases only its control. */
 function createInputSafety124(hooks){
- const game='#world,#mobile108,#gameTools124,#navigationHud,#joystick,#playerName,#buildingLabels,#interact97,#interaction103,#shuttleHint100,#guestPrompt107,#guide124',editable='input,textarea,select,[contenteditable]:not([contenteditable="false"]),[data-native-selection]';
+ const game='#nu-next,#world,#mobile108,#gameTools124,#navigationHud,#joystick,#playerName,#buildingLabels,#interact97,#interaction103,#shuttleHint100,#guestPrompt107,#guide124',editable='input,textarea,select,[contenteditable]:not([contenteditable="false"]),[data-native-selection]';
  const pointers=new Map(),off=[];let clearing=false,clears=0,lastReason='';
  const element=t=>t?.nodeType===1?t:t?.parentElement,isGame=t=>{const el=element(t);return !!(hooks.active()&&el?.closest(game)&&!el.closest(editable))};
  function clear(reason){if(clearing)return;clearing=true;lastReason=reason;clears++;const old=[...pointers];pointers.clear();hooks.clear();for(const [id,el]of old)try{if(el.hasPointerCapture(id))el.releasePointerCapture(id)}catch{}clearing=false;}

@@ -1,5 +1,31 @@
 # 현재 작업 트리
 
+## 2026-11-24 · v1.1 공개
+
+BUILD125를 운영 서버와 3nu.vercel.app에 반영했다. 게시판에서 **v1.1 · 캠퍼스 플레이 전면 개선**으로 확인할 수 있다. 현재 조작법은 이동·비행·시설 이용 세 장이다. 첫 수업길은 다음 개강을 위해 보관 중이다.
+
+## 2026-11-23 · 탐방 조작과 길안내 (로컬 작업본)
+
+바닥·빈백·정류장 선택, 수동 조작 복귀, 장애물 우회와 비행 중 높이 유지를 적용했다. 닉네임 없이 잔디광장에서 시작할 수 있고, 설정이나 방명록에서 이름을 정할 수 있다. 창밖 건물 선택 후 하차·도보 연결과 7일짜리 같은 구도 사진 초대가 추가됐다. 301동에서 302동까지의 첫 수업길은 다음 개강 때 다시 열 수 있도록 보관했다. 사진 기능은 같은 버전의 서버가 필요하다.
+
+실제 조작 화면과 항목별 검증 기록은 [로컬 검토본](../../../03-history/build-reports/BUILD125/easy-exploration/qa.html)에서 열 수 있다. 모바일 구역 로딩·탭 복귀는 데스크톱 모바일 브라우저 환경에서 검증했다. 실물 아이폰 발열과 현재 학교 현장의 통행 상태는 별도 확인이 필요하다.
+
+## 로컬 작업: BUILD125 (2026-11-22, 미배포)
+
+승인된 campus-update-preview의 장소·꾸미기·사진·4페이지 조작법을 실시간 탐방과 연결했다. 기존 전체 검색/지도/길안내·셔틀·방명록·관리자는 유지한다. 기존 삼색고양이 NPC 자산으로 별도 플레이어를 구성하고 소품·색 보관과 접속자 전달을 추가했다. 원래 NPC는 변경하지 않았다. 공개 버전과 업데이트 내역은 v1.0.5 그대로다.
+
+프레임 시간은 기존 약60FPS 범위와 비슷하며, 큰 성능 향상을 주장하지 않는다. 정적/동적 충돌 검사 후보와 UI 위치 계산을 줄이고, 미리보기는 기존 엔진의 작은 렌더 대상 하나를 열 때만 사용한다. 고화질 기본·기존 구역 로딩/해제를 보존했다. 상세 검증·비교 화면·실기기 미확인 사항: `../../03-history/build-reports/BUILD125/REPORT.html`.
+
+프로토콜125는 소품·고양이를 지원한다. 이전 접속자에는 고양이를 오리로 전달해 이전 코드가 중단되지 않게 한다. 향후 별도 배포 승인 시 클라이언트와 서버를 함께 반영해야 한다. 이번 작업에서는 공개 배포·GitHub 반영·공지 게시를 하지 않았다.
+
+### 소품 외형 R2 (2026-11-22)
+
+캐릭터별 곡면 모자·챙·귀 구멍과 얇은 목도리·매듭·곡선 끝을 적용했다. 머리/몸 리그 부착, 로컬·미리보기·원격 6개 조합과 재접속·미리보기 정리를 검증했다. 캐릭터 원형과 NPC는 유지한다. 정면/옆면 전후 및 실제 MP4: `../../03-history/build-reports/BUILD125/costume-r2/REPORT.html`. 고화질 동일 경로 평균 프레임은 16.56ms로 비슷했다. 실제 iPhone·장시간 검증과 사용자 외형 승인은 남아 있다. 공개 배포하지 않는다.
+
+### v1.1 캐릭터 선택과 공통 비행
+
+타이틀에서 한 마리씩 실제 모델을 확인한다. 백학·오리·플레이어 고양이는 모두 지상에서 시작하며 G 또는 날기/착륙 버튼으로 전환한다. 착륙은 현재 위치에서 아래의 보행면과 장애물을 확인한 뒤 진행한다. 이동 방식 변경은 자동 이동을 멈추고 목적지를 유지한다. 비행 중 종류를 변경해도 이동 방식과 위치를 유지한다. 오리와 고양이의 비행 소품 날개는 이륙할 때 나타나고 착륙 후 사라진다. 지상·옷장·타이틀에서는 기본 팔과 등을 표시한다. 최신 비교 화면과 영상은 `../../03-history/build-reports/BUILD125/flight-wings-r2/REPORT.html`에 있다. 로컬 검증 자료는 `../../03-history/build-reports/BUILD125/shared-flight/REPORT.html`에 있다.
+
 ## 현재 공개 버전: BUILD124 / v1.0.5 (2026-11-18)
 
 승인된 R5 기준의 공통 4페이지 조작 안내, 실제 버튼 강조, PC 기존 카드 제거, 첫 완료 저장, 게임 입력 정지/복원, 터치 취소·포커스 전환·선택 방지를 적용했다. 사진은 기존 실제 버스/빈백 화면의 작은 WebP 자산 두 개이며 장면 생성 코드와 BUILD123 구역 로딩은 유지한다. 타이틀 탐방 가이드는 기능 소개만 남겼다.
@@ -189,3 +215,12 @@ Security hardening, admin-only notice editing, private feedback, explicitly disa
 ### BUILD112 operations preparation addendum
 
 Prepared systemd bounded restart/boot templates, daily KST consistent SQLite+secret backup job and optional encrypted remote export, failure/freshness readiness gate, Nginx ingress and monitoring/restore runbook. OPERATIONS111 is updated to current shared-campus/schema2/DigitalOcean baseline. Local isolated tests passed; systemd/nginx/restic are unavailable on this Mac, so Linux activation, real remote backup restore and email delivery remain unverified. No account changes, external service creation, actual runtime reads/restarts, purchases or public deployment. See OPERATIONS112_RUNBOOK.md and external BUILD112/OPERATIONS.html.
+
+## 소품·플레이어 고양이 R3 (2026-11-22, 최신 로컬 / 미배포)
+R2의 볼캡과 기존 NPC를 복제한 플레이어 고양이를 대체한다. 비니, NPC 6종과 구분된 흰색/회청색 플레이어 외형을 적용했다. 마지막 피드백은 R3 본체를 유지하고 눈만 1.7배 확대하는 것으로 반영했다. NPC 6종 형상/텍스처/자세 보존 확인. 웅크리기 관절과 스킨 중복 회전을 수정해 기립 후 발 부유를 해결했다. 저장/미리보기/원격은 공통 팩토리, cap 내부 ID는 호환 유지하고 화면에는 비니로 표시한다. 최신 정면/옆면/3·4 렌더와 실제 MP4: `../../03-history/build-reports/BUILD125/beanie-player-cat-r3/REPORT.html`. 실제 iPhone/장시간 안정성은 미확인. 사용자 외형 검토·별도 배포 승인 대기.
+
+2026-11-22 로컬 R4가 R3 얼굴을 대체. 귀 접합, 눈 테두리·위치, 코·입 접촉을 보완. BUILD125/player-face-r4/REPORT.html 참조. 공개 배포 보류.
+
+2026-11-22 · BUILD125 / v1.1 통합 업데이트 로컬 준비. 플레이어 고양이 얼굴 R4 사용자 확정. 탐방 메뉴·장소 및 자동 이동·사진·조작법·캐릭터 꾸미기와 해당 성능 작업을 함께 포함. 공개 배포일 미정.
+
+BUILD125 v1.1 최신 타이틀은 단일 모델 선택기. 이전 카드형 홈 시안을 대체한다. 세 종 실제 입장, 버튼/방향키/터치, 타이틀 경량 로딩 확인. 비교 화면은 BUILD125/title-picker/REPORT.html. 로컬 작업본.

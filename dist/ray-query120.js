@@ -1,13 +1,14 @@
 /* Broad phase for the three campus camera/flight/name-occlusion queries only.
  * Native mesh triangle intersection, predicates, world transforms and tie order
  * remain unchanged. Rendering distance never owns collision candidates.
- * New/removed meshes are tracked. Moving actors/thin instances stay native.
+ * New/removed meshes are tracked. Ordinary moving meshes use current transforms;
+ * thin instances/skinned geometry retain native scene picking.
  * Call invalidate() when editing a frozen building/terrain geometry at runtime. */
 function createCampusRayQuery120(B,scene){
  const size=64,grid=new Map(),records=new Map(),wide=new Set(),dynamic=new Set(),pending=new Set();let ranks=new Map(),rankDirty=true,disposed=false,knownCount=scene.meshes.length;
  const native=(ray,predicate)=>scene.pickWithRay(ray,predicate),inverse=B.Matrix.Identity(),local=B.Ray.Zero();
  const physical=m=>m.name.startsWith('building-')||m.name.startsWith('roof-')||m.name.startsWith('terrain-')||m.name.startsWith('gate-')||m.metadata?.solid15||m.metadata?.facilityId==='snubear';
- const stats={queries:0,candidates:0,triangleMeshes:0,fallbacks:0,staticMeshes:0,dynamicMeshes:0};
+ const stats={queries:0,candidates:0,triangleMeshes:0,fallbacks:0,staticMeshes:0,dynamicMeshes:0,dynamicDirect125:0,dynamicNative125:0};
  function remove(m){const r=records.get(m);if(r){for(const key of r.cells){const bucket=grid.get(key);bucket?.delete(r);if(!bucket?.size)grid.delete(key);}wide.delete(r);records.delete(m);}dynamic.delete(m);}
  function register(m){remove(m);if(m.isDisposed()||!physical(m))return;
   if(!m.isWorldMatrixFrozen||m.hasThinInstances||m.skeleton||m.morphTargetManager||m.getClassName()!=='Mesh'||m.getVerticesDataKinds().some(k=>m.getVertexBuffer(k)?.isUpdatable())){dynamic.add(m);return;}
@@ -26,8 +27,10 @@ function createCampusRayQuery120(B,scene){
   flush();stats.queries++;const end=ray.origin.add(ray.direction.scale(ray.length)),found=new Set(wide);
   for(let x=Math.floor((Math.min(ray.origin.x,end.x)-.02)/size);x<=Math.floor((Math.max(ray.origin.x,end.x)+.02)/size);x++)for(let z=Math.floor((Math.min(ray.origin.z,end.z)-.02)/size);z<=Math.floor((Math.max(ray.origin.z,end.z)+.02)/size);z++)for(const r of grid.get(x+','+z)||[])found.add(r);
   const list=[];for(const r of found)if(!r.mesh.isDisposed()&&predicate(r.mesh,-1)&&overlaps(ray,r))list.push(r.mesh);
-  // Unsupported/moving geometry uses the unchanged engine path, including thin-instance picking.
-  let best=null;if(dynamic.size){stats.fallbacks++;const hit=native(ray,(m,i)=>dynamic.has(m)&&predicate(m,i));if(hit?.hit)best=hit;}
+  // Ordinary dynamic meshes use the same triangle test and current matrix. Unsupported geometry stays native.
+  let best=null;const nativeDynamic=[];
+  for(const m of dynamic){if(m.isDisposed()||!predicate(m,ranks.get(m)))continue;if(m.getClassName()==='Mesh'&&!m.hasThinInstances&&!m.skeleton&&!m.morphTargetManager){list.push(m);stats.dynamicDirect125++;}else nativeDynamic.push(m);}
+  if(nativeDynamic.length){stats.fallbacks++;stats.dynamicNative125++;const selected=new Set(nativeDynamic),hit=native(ray,(m,i)=>selected.has(m)&&predicate(m,i));if(hit?.hit)best=hit;}
   list.sort((a,b)=>ranks.get(a)-ranks.get(b));stats.candidates+=found.size;
   for(const mesh of list){const matrix=mesh.computeWorldMatrix(false,scene.cameraToUseForPointers||scene.activeCamera);matrix.invertToRef(inverse);B.Ray.TransformToRef(ray,inverse,local);stats.triangleMeshes++;const hit=mesh.intersects(local,false,undefined,false,matrix);if(hit?.hit&&(!best||hit.distance<best.distance||hit.distance===best.distance&&ranks.get(mesh)<ranks.get(best.pickedMesh)))best=hit;}
   best=best||new B.PickingInfo();best.ray=ray;return best;

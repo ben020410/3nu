@@ -2,13 +2,14 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {createRequestPolicy}=require('./request-policy111.cjs');
 const {openCommunity,Problem,hash}=require('./community107.cjs');
+const {openPhotoReplies,BODY_LIMIT}=require('./photo-replies126.cjs');
 const {createVisitLog}=require('./visit-log123.cjs');
 const defaultDirectory=path.resolve(__dirname,'../../../05-management/local-runtime/development');
 function privateConfig(directory=defaultDirectory){const file=path.join(directory,'private.json');if(!fs.existsSync(file))throw Error('Run npm run setup:local first. Private credentials stay outside main.');const config=JSON.parse(fs.readFileSync(file,'utf8'));if(!/^[a-f0-9]{64}$/.test(config.salt)||!/^[a-f0-9]{128}$/.test(config.passwordHash)||!/^[a-f0-9]{64}$/.test(config.secret))throw Error('Invalid private config');return config}
 function createCommunityHTTP({directory=defaultDirectory,now=()=>Date.now(),environment='development',publicOrigin,trustProxy=[],requestPolicy}={}){
  directory=path.resolve(directory);const main=path.resolve(__dirname,'..');if(directory===main||directory.startsWith(main+path.sep))throw Error('Private runtime must be outside main');
  const policy=requestPolicy||createRequestPolicy({environment,publicOrigin,trustProxy});
- const config=privateConfig(directory),store=openCommunity(path.join(directory,'community.sqlite'),{now,environment}),admins=new Map(),visitLog=createVisitLog(store,now);let loginJobs=0;
+ const config=privateConfig(directory),store=openCommunity(path.join(directory,'community.sqlite'),{now,environment}),admins=new Map(),visitLog=createVisitLog(store,now);const photos=openPhotoReplies(path.join(directory,'photo-replies.sqlite'),now);let loginJobs=0;
  const hmac=s=>crypto.createHmac('sha256',config.secret).update(s).digest('hex');
  const equal=(a,b)=>typeof a==='string'&&typeof b==='string'&&Buffer.byteLength(a)===Buffer.byteLength(b)&&crypto.timingSafeEqual(Buffer.from(a),Buffer.from(b));
  const cookies=req=>Object.fromEntries((req.headers.cookie||'').split(';').map(p=>p.trim().split('=')));const valid=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
@@ -26,6 +27,8 @@ function createCommunityHTTP({directory=defaultDirectory,now=()=>Date.now(),envi
   if(!['GET','POST','PUT','DELETE'].includes(req.method))throw new Problem(405,'지원하지 않는 요청');
   if(req.method!=='GET'&&(req.headers.origin!==origin||!/^application\/json(?:;|$)/i.test(req.headers['content-type']||'')))throw new Problem(403,'같은 사이트에서 다시 시도해 주세요.');
   store.cleanup();store.rate(network,'request-network',6000,60000);for(const [k,a]of admins)if(a.until<=now())admins.delete(k);
+  const photoLink=u.pathname.match(/^\/api\/photo-replies\/([a-f0-9]{32})$/);
+  if(photoLink&&req.method==='GET')return json(res,200,photos.get(photoLink[1]));
   if(u.pathname==='/api/session'&&req.method==='GET'){
    if(!o){store.rate(network,'credential',600,3600000);const token=crypto.randomBytes(32).toString('hex');cookie(res,'nuOwner107',token,31536000,secure);c.nuOwner107=token;o=hash(token);store.owner(o)}
    if(!valid(c.nuVisitor107)){const id=crypto.randomBytes(32).toString('hex');cookie(res,'nuVisitor107',id,31536000,secure);c.nuVisitor107=id}
@@ -54,6 +57,11 @@ function createCommunityHTTP({directory=defaultDirectory,now=()=>Date.now(),envi
    throw new Problem(404,'관리자 경로를 찾을 수 없습니다.');
   }
   if(!o)throw new Problem(401,'연결을 다시 확인해 주세요.');if(req.method!=='GET'&&!equal(req.headers['x-csrf-token'],hmac('owner:'+c.nuOwner107)))throw new Problem(403,'연결을 다시 열어 주세요.');
+  if(u.pathname==='/api/photo-replies'&&req.method==='POST'){
+   store.rate(o,'photo-create',20,3600000);store.rate(network,'photo-network',100,3600000);
+   const b=await body(req,BODY_LIMIT);
+   return json(res,201,photos.create(b,(shot,pixels)=>crypto.createHmac('sha256',config.secret).update(o).update(shot).update(pixels).digest('hex').slice(0,32)));
+  }
   if(u.pathname==='/api/visits'&&req.method==='POST'){if(!valid(c.nuVisitor107))throw new Problem(401,'방문 연결을 다시 열어 주세요.');const b=await body(req);store.rate(o,'heartbeat',20,60000);const excluded=equal(c.nuExclude107,hmac('exclude'))||/HeadlessChrome|Playwright|puppeteer|\bbot\b|crawler/i.test(req.headers['user-agent']||'');const visitor=hash(c.nuVisitor107),result=store.track(visitor,b,excluded);visitLog.remember(visitor,b);return json(res,200,result)}
   if(u.pathname==='/api/feedback'&&req.method==='POST')return json(res,201,store.bulletin.submitFeedback(o,await body(req),network));
   if(u.pathname==='/api/posts'&&req.method==='GET')return json(res,200,store.list(o,{mine:u.searchParams.get('mine')==='1',before:before(u)}));
@@ -63,6 +71,6 @@ function createCommunityHTTP({directory=defaultDirectory,now=()=>Date.now(),envi
  }catch(e){let status=e.status||500,retry=e.retry||0;try{store.rate(network,'failures',100,60000)}catch(limit){status=429;retry=limit.retry}if(retry)res.setHeader('Retry-After',retry);if(!res.headersSent)json(res,status,{error:status===500?'저장하지 못했어요. 내용을 유지한 채 다시 시도해 주세요.':e.message,retryAfter:retry,retryAt:retry?now()+retry*1000:null});else res.end();}
  }
  function before(u){const value=u.searchParams.get('before');if(value===null)return Number.MAX_SAFE_INTEGER;const n=Number(value);if(!Number.isSafeInteger(n)||n<1)throw new Problem(400,'잘못된 페이지');return n}
- return{handle:(req,res)=>{if(!req.url.startsWith('/api/'))return false;handle(req,res).catch(()=>{if(!res.headersSent)json(res,500,{error:'요청을 처리하지 못했어요.'});else res.end()});return true},store,close:()=>{admins.clear();store.close()}};
+ return{handle:(req,res)=>{if(!req.url.startsWith('/api/'))return false;handle(req,res).catch(()=>{if(!res.headersSent)json(res,500,{error:'요청을 처리하지 못했어요.'});else res.end()});return true},store,close:()=>{admins.clear();photos.close();store.close()}};
 }
 module.exports={createCommunityHTTP,defaultDirectory};

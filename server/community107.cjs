@@ -1,6 +1,7 @@
 'use strict';
 const {DatabaseSync}=require('node:sqlite'),crypto=require('node:crypto'),fs=require('node:fs'),path=require('node:path');
 const {install112,createBulletin112}=require('./bulletin112.cjs'),{retention112}=require('./retention112.cjs');
+const {visitStatistics}=require('./visit-statistics.cjs');
 const DAY=86400000,GAP=1800000,LEASE=25000,hash=s=>crypto.createHash('sha256').update(s).digest('hex');
 class Problem extends Error{constructor(status,message,retry=0){super(message);Object.assign(this,{status,retry})}}
 const fail=(status,message,retry)=>{throw new Problem(status,message,retry)};
@@ -39,8 +40,31 @@ function openCommunity(file,{now=()=>Date.now(),environment='development'}={}){
  const activity=visible&&kind!=='leave';if(activity){if(!v.session||n-v.last>=GAP){const previous=one('SELECT count(*) n FROM visits WHERE visitor=? AND excluded=0',id).n;v.session=Number(run('INSERT INTO visits(visitor,start,last,returning_visit,excluded,environment) VALUES(?,?,?,?,?,?)',id,n,n,+(previous>0),v.excluded,environment).lastInsertRowid);run('DELETE FROM tabs WHERE visitor=?',id)}run('UPDATE visitors SET last=?,session=?,accounted=? WHERE id=?',n,v.session,n,id);run('UPDATE visits SET last=?,explored=max(explored,?) WHERE id=?',n,+(kind==='enter'||kind==='heartbeat'),v.session)}
  const existingTab=one('SELECT tab FROM tabs WHERE visitor=? AND tab=?',id,tab);if(!existingTab){run('DELETE FROM tabs WHERE visitor=? AND last<?',id,n-LEASE);if(one('SELECT count(*) n FROM tabs WHERE visitor=?',id).n>=12)fail(429,'동시에 열린 창이 많아요.',25)}
  const playing=+(visible&&(kind==='enter'||kind==='heartbeat'));run('INSERT INTO tabs VALUES(?,?,?,?,?) ON CONFLICT(visitor,tab) DO UPDATE SET playing=excluded.playing,visible=excluded.visible,last=excluded.last',id,tab,playing,+visible,n);return{ok:true}})}
- function stats(days=7){if(![1,7].includes(days))fail(400,'기간을 확인해 주세요.');return tx(()=>{const n=now();for(const v of q('SELECT * FROM visitors WHERE session IS NOT NULL'))settle(v,n);const today=Math.floor((n+9*3600000)/DAY)*DAY-9*3600000,start=today-(days-1)*DAY;const total=one('SELECT count(*) n FROM visits WHERE excluded=0 AND environment=?',environment).n+one('SELECT coalesce(sum(visits),0) n FROM analytics_daily112 WHERE environment=?',environment).n;const measure=(a,b)=>one('SELECT count(*) visits,count(DISTINCT visitor) uniqueVisitors,count(DISTINCT CASE WHEN returning_visit=1 THEN visitor END) returningVisitors,sum(explored) explorations,coalesce(sum(CASE WHEN explored=1 THEN active_ms END)/nullif(sum(explored),0),0) averageActiveMs FROM visits WHERE excluded=0 AND environment=? AND start>=? AND start<?',environment,a,b);const daily=[];for(let t=start;t<=today;t+=DAY)daily.push({date:new Date(t+9*3600000).toISOString().slice(0,10),...measure(t,t+DAY)});const active=one('SELECT count(DISTINCT t.visitor) n FROM tabs t JOIN visitors v ON v.id=t.visitor JOIN visits r ON r.id=v.session WHERE v.excluded=0 AND r.excluded=0 AND t.playing=1 AND t.visible=1 AND t.last>?',n-LEASE).n;return{environment,days,asOf:n,totalVisits:total,active,...measure(start,today+DAY),daily,definitions:{visitor:'브라우저 식별값 기준 추정치 · 사람 수 아님',session:'30분 비활동 후 새 방문 · 방문 시작일(KST) 기준',returning:'해당 방문 이전 방문 이력이 있는 브라우저',average:'탐험을 시작한 방문별 활성 시간의 평균 · 보이는 탭만 합집합 집계',expiry:'비정상 종료 시 마지막 heartbeat 이후 최대 25초 오차',excluded:'관리자 제외·자동화 추정·설정에 따라 테스트 이름으로 시작한 방문 제외'}}})}
- function csv(days){const s=stats(days),rows=[['날짜(KST)','방문','고유 브라우저','재방문 브라우저','탐험 시작','평균 활성 초'],...s.daily.map(r=>[r.date,r.visits,r.uniqueVisitors,r.returningVisitors,r.explorations||0,(r.averageActiveMs/1000).toFixed(1)]),['기간 전체',s.visits,s.uniqueVisitors,s.returningVisitors,s.explorations||0,(s.averageActiveMs/1000).toFixed(1)]];return '\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/^[=+@-]/,"'$&").replace(/"/g,'""')+'"').join(',')).join('\r\n')}
+ function stats(period = 7) {
+  const days = period === 'all' ? 'all' : Number(period);
+  if (days !== 'all' && days !== 1 && days !== 7) fail(400, '기간을 확인해 주세요.');
+  return tx(() => {
+   const n = now();
+   for (const visitor of q('SELECT * FROM visitors WHERE session IS NOT NULL')) settle(visitor, n);
+   const summary = visitStatistics(db, environment, days, n);
+   const active = one(`SELECT count(DISTINCT t.visitor) n FROM tabs t
+    JOIN visitors v ON v.id=t.visitor JOIN visits r ON r.id=v.session
+    WHERE v.excluded=0 AND r.excluded=0 AND r.environment=? AND t.playing=1 AND t.visible=1 AND t.last>?`,
+    environment, n-LEASE).n;
+   const definitions = {
+    visitor: '브라우저 식별값 기준 추정치 · 사람 수 아님',
+    session: '30분 비활동 후 새 방문 · 방문 시작일(KST) 기준',
+    returning: '해당 방문 이전 방문 이력이 있는 브라우저',
+    average: '탐험을 시작한 방문별 활성 시간의 평균 · 보이는 탭만 합집합 집계',
+    expiry: '비정상 종료 시 마지막 heartbeat 이후 최대 25초 오차',
+    excluded: '관리자 제외·자동화 추정·설정에 따라 테스트 이름으로 시작한 방문 제외'
+   };
+   if (summary.uniqueVisitors === null || summary.returningVisitors === null)
+    definitions.archived = '— 표시는 일부 날짜가 일별 합계로만 보관되어 기간 내 브라우저 중복을 확인할 수 없는 항목입니다. CSV에서는 빈칸으로 표시합니다.';
+   return { environment, days, asOf: n, active, ...summary, definitions };
+  });
+ }
+ function csv(days){const s=stats(days),rows=[['날짜(KST)','방문','고유 브라우저','재방문 브라우저','탐험 시작','평균 활성 초'],...s.daily.map(r=>[r.date,r.visits,r.uniqueVisitors,r.returningVisitors,r.explorations||0,(r.averageActiveMs/1000).toFixed(1)]),['기간 전체',s.visits,s.uniqueVisitors,s.returningVisitors,s.explorations||0,(s.averageActiveMs/1000).toFixed(1)]];return '\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/^[=+@-]/,"'$&").replace(/"/g,'""')+'"').join(',')).join('\r\n')}
  const bulletin=createBulletin112(db,{now,tx,rate,Problem,hash}),retention=retention112(db,now);
  return{db,file,environment,bulletin,retention,owner,rate,post,list,edit,remove,report,moderate,track,stats,csv,cleanup,close:()=>db.close()};
 }

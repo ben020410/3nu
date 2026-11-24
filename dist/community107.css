@@ -5,7 +5,7 @@
 /* BUILD112 public notices and private feedback share the existing community style. */
 .bulletin112 p{white-space:pre-wrap;overflow-wrap:anywhere}.bulletin112 small{display:block;color:#64748b;margin:8px 0}.feedback112{display:grid;gap:12px;margin:20px 0 28px}.feedback112 textarea,.feedback112 input{box-sizing:border-box;width:100%;min-width:0;font:inherit;padding:12px;border:1px solid #c6cdd4;border-radius:10px;background:#fff;color:#203347}.feedback112 textarea{resize:vertical}.feedback112>small{color:#637382;text-align:right}.feedback112>p{line-height:1.6}.feedback112 button{min-height:44px}.communityTabs{flex-wrap:wrap}.adminPost{overflow-wrap:anywhere}
 
-.visit-name-form{padding:10px 0 16px;border-bottom:1px solid #d9e0de}
+.visit-name-form{padding:0 0 4px}
 .visit-name-form label,#guestDialog107 .identity label{display:block;font-weight:650;font-size:14px}
 .visit-name-form>div{display:flex;gap:8px;margin:7px 0}
 .visit-name-form input,#guestDialog107 .identity input{box-sizing:border-box;width:100%;min-width:0;padding:9px 12px;background:#fff;border:1px solid #aab8b7;border-radius:9px;color:#182e38;font:inherit;font-size:16px}

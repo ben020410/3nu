@@ -1,0 +1,188 @@
+{
+  "coordinateOrder": [
+    "x",
+    "y",
+    "z"
+  ],
+  "cameraMode": "perspective",
+  "desktopRenderPixels": [
+    3072,
+    1920
+  ],
+  "portraitRenderPixels": [
+    1152,
+    1920
+  ],
+  "qualityLevel": 5,
+  "curatedTitleFiles": "dist/assets/title105",
+  "encoder": {
+    "desktopHD": {
+      "format": "WebP",
+      "quality": 91,
+      "centerCrop": true
+    },
+    "standard": {
+      "format": "JPEG",
+      "width": 1920,
+      "quality": 88,
+      "subsampling": 0
+    },
+    "portrait": {
+      "format": "WebP",
+      "quality": 89
+    }
+  },
+  "views": [
+    {
+      "asset": "gate",
+      "desktop": {
+        "eye": [
+          -310,
+          105,
+          855
+        ],
+        "target": [
+          -318,
+          96,
+          818
+        ],
+        "fov": 0.79,
+        "imageSize": [
+          2880,
+          1920
+        ]
+      },
+      "portrait": {
+        "eye": [
+          -301.6,
+          114.45,
+          893.85
+        ],
+        "target": [
+          -321.518691,
+          82.80753722,
+          818.76079805
+        ],
+        "fov": 0.98
+      }
+    },
+    {
+      "asset": "lawn",
+      "desktop": {
+        "eye": [
+          -94.98626958,
+          109.95926,
+          168.5738825
+        ],
+        "target": [
+          -125.31318632,
+          96.95926,
+          222.76131759
+        ],
+        "fov": 0.84,
+        "imageSize": [
+          2880,
+          1516
+        ]
+      },
+      "portrait": {
+        "eye": [
+          -81.94569538,
+          115.54926,
+          145.27328542
+        ],
+        "target": [
+          -122.69529667,
+          81.86355253,
+          224.22646392
+        ],
+        "fov": 0.98
+      },
+      "character": {
+        "id": "baekhak",
+        "wear": "none",
+        "position": [
+          -120.45662608,
+          96.60926,
+          216.32596036
+        ],
+        "rotationY": 2.3707555127405517,
+        "rigAnimateArgs": [
+          0.38,
+          false,
+          false,
+          true,
+          12,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "asset": "library",
+      "desktop": {
+        "eye": [
+          -97,
+          157,
+          107
+        ],
+        "target": [
+          10,
+          112,
+          12
+        ],
+        "fov": 0.82,
+        "imageSize": [
+          2880,
+          1920
+        ]
+      },
+      "portrait": {
+        "eye": [
+          -187.95,
+          195.25,
+          187.75
+        ],
+        "target": [
+          8.00821017,
+          66.99901714,
+          9.75661567
+        ],
+        "fov": 0.98
+      }
+    },
+    {
+      "asset": "engineering",
+      "desktop": {
+        "eye": [
+          -94,
+          151,
+          -913
+        ],
+        "target": [
+          37,
+          126,
+          -1012
+        ],
+        "fov": 0.84,
+        "imageSize": [
+          2880,
+          1516
+        ]
+      },
+      "portrait": {
+        "eye": [
+          -172.6,
+          166.0,
+          -853.6
+        ],
+        "target": [
+          30.97080761,
+          81.33730183,
+          -1019.97802226
+        ],
+        "fov": 0.98
+      }
+    }
+  ]
+}

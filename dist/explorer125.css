@@ -324,3 +324,121 @@ body.explorer125.photo125-open #buildingLabels,body.explorer125.photo125-open #p
 #settings #explorePreferences125 > :is(section,fieldset) { margin:0 0 16px; padding:0; border:0; }
 #settings #explorePreferences125 summary:focus-visible,
 #settings .wardrobe-shortcut:focus-visible { outline:2px solid #4385a5; outline-offset:1px; }
+
+#nu-next .preview-avatar{touch-action:pan-y}
+#nu-next [data-kind-option]{position:relative;border-radius:14px}
+#nu-next [data-kind-option] span{font-size:14px;letter-spacing:-.025em}
+#nu-next [data-kind-option][aria-pressed=true]::after{right:7px;top:5px;font-weight:750}
+
+
+#nu-next .wardrobe .avatar-stage{background:transparent}
+#nu-next .avatar-ground{display:none}
+#nu-next .wardrobe .cast-nav127{align-self:start;position:absolute;top:0;left:0;right:0;z-index:2}
+#nu-next .wardrobe .cast-nav127 button{display:grid;place-items:center;width:42px;height:38px;color:inherit;background:transparent;border:none;cursor:pointer}
+#nu-next .wardrobe .cast-nav127 svg{width:17px;height:17px}
+#nu-next .wardrobe .preview-avatar{cursor:grab;touch-action:pan-y;max-height:75%;transform:translateY(1px)}
+#nu-next .game[data-device=landscape] .wardrobe .preview-avatar{height:110px;transform:translateY(-1px)}
+#settings .music-row127{margin:0 0 16px}
+#settings #travelControls .music-row127 label{margin:0 0 2px;font-size:14px}
+#musicLevel127{font-size:12px;font-weight:650;font-variant-numeric:tabular-nums;color:#355569}
+#settings #travelControls #music127{width:100%;height:30px;margin:0;padding:0;accent-color:#276780;cursor:pointer;touch-action:pan-y}
+.music-scale127{display:flex;justify-content:space-between;padding:0 5px;color:#566a75;font-size:10px;font-variant-numeric:tabular-nums}
+#nu-next #musicToggle127{position:absolute;top:max(12px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));z-index:4;box-sizing:border-box;width:44px;height:44px;border:1px solid #29415536;border-radius:50%;background:#fbfaf7ed;color:#233d50;box-shadow:0 2px 6px #1029351a;cursor:pointer;display:grid;grid-template:1fr/1fr;place-items:center;padding:0}
+#nu-next #musicToggle127:focus-visible{outline:3px solid #267b9c;outline-offset:2px}
+#nu-next #musicToggle127 svg{display:block;width:21px;height:21px;pointer-events:none}
+#musicToggle127[aria-pressed=true] .sound-off,#musicToggle127[aria-pressed=false] .sound-on{display:none}
+#nu-next .game:not([data-panel=none]) #musicToggle127,#nu-next #musicToggle127[hidden]{display:none}
+body.capturing97 #musicToggle127,body.photo-framing126 #musicToggle127{visibility:hidden}
+
+#nu-next .gamehead .chat-open127{pointer-events:auto;flex:0 0 auto;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#fbfaf7ed;color:#23374e;border:1px solid #24384926;cursor:pointer}
+#nu-next .chat-open127 svg{width:21px;height:21px}
+
+#nu-next .gamehead .chat-open127[hidden],#settings .music-row127[hidden]{display:none}
+/* Name strip, model and pose controls get distinct rows on the shortest screens. */
+#nu-next .game[data-device] .wardrobe .avatar-stage{display:grid;grid-template-rows:minmax(0,1fr) 38px 36px;place-items:center;min-height:0;align-self:stretch}
+#nu-next .game[data-device] .wardrobe .cast-nav127{grid-row:2;position:static;align-self:center}
+#nu-next .game[data-device] .wardrobe .preview-avatar{grid-row:1;position:relative;width:100%;height:100%;min-height:0;max-height:100%;overflow:hidden;transform:none}
+#nu-next .game[data-device] .preview-avatar canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#nu-next .game[data-device] .wardrobe .pose-picker{position:static;grid-row:3;transform:none;padding-block:0;z-index:2}
+#nu-next .wardrobe .avatar-state{display:none}
+#nu-next .game[data-device=portrait] .wardrobe .avatar-stage{min-height:195px}
+#nu-next .game[data-device=landscape] .wardrobe .wardrobe-main{min-height:150px}
+
+#nu-next .game[data-device=landscape] .wardrobe{inset-block-end:max(12px,env(safe-area-inset-bottom))}
+#nu-next .game[data-device=landscape][data-panel=wardrobe] .dock{visibility:hidden}
+
+@media(orientation:landscape) and (max-width:650px){
+ #nu-next .game[data-device=landscape] .wardrobe{inset-inline:max(12px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-right));padding:10px 16px}
+ #nu-next .game[data-device=landscape] .wardrobe .wardrobe-main{display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.1fr);gap:14px;min-height:0}
+ #nu-next .game[data-device=landscape] .wardrobe-editor{align-self:center;margin:0}
+ #nu-next .game[data-device=landscape] .wardrobe-foot{margin-top:4px;padding-top:6px}
+}
+
+body.playing{--bar-height:54px;--bar-bottom:max(6px,env(safe-area-inset-bottom));--bar-space:calc(var(--bar-height) + var(--bar-bottom) + 8px)}
+#nu-next .game[data-device][data-panel] nav.dock{
+ display:grid;visibility:visible;position:absolute;z-index:17;top:auto;
+ left:max(5px,env(safe-area-inset-left));right:max(5px,env(safe-area-inset-right));bottom:var(--bar-bottom);margin:0 auto;transform:none;
+ width:auto;max-width:420px;height:var(--bar-height);grid-template-columns:repeat(5,minmax(0,1fr));gap:0;
+ padding:3px;border:1px solid #203c521c;border-radius:17px;background:#fbfaf7;box-shadow:0 3px 16px #132c4135
+}
+#nu-next .game[data-device] nav.dock button{
+ position:static;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+ min-width:0;min-height:44px;padding:0;border:0;border-radius:12px;
+ background:transparent;color:#274258;font-size:11px;font-weight:650;line-height:1.1;white-space:nowrap
+}
+#nu-next .game nav.dock button svg{display:block;flex:none;width:19px;height:19px;margin:0}
+#nu-next .game nav.dock button:is([aria-expanded=true],[aria-pressed=true]){background:#1c3950;color:white}
+#nu-next .game nav.dock button:disabled{opacity:.5}
+#nu-next .game nav.dock button:focus-visible{outline-offset:-2px}
+@media(hover:hover){#nu-next .game nav.dock button:enabled:hover{background:#e2eae8;color:#172e41}}
+#nu-next .game[data-device] :is(.wardrobe,.place-sheet,.help-sheet,.photo-mode){margin-bottom:0}
+#nu-next .game[data-device]:not([data-device=pc]) :is(.wardrobe,.place-sheet){bottom:var(--bar-space)}
+#nu-next .game[data-device] :is(.help-sheet,.photo-mode){bottom:var(--bar-space)}
+#nu-next .game[data-device=landscape] #mobile108 :is(.m108StickArea,.m108Actions){bottom:var(--bar-space)}
+#nu-next .game[data-device=landscape] #mobile108 [data-vertical]{flex-direction:row}
+#nu-next .game[data-device=landscape] .place-sheet{top:max(8px,env(safe-area-inset-top));height:auto}
+#nu-next .game[data-panel]:not([data-panel=none]) #mobile108{visibility:hidden}
+#settings #multiplayer106[data-state=connected]{position:static;display:block;inset:auto;width:auto;max-width:none;transform:none;margin:8px 0 0;padding:0;background:transparent;color:#52666b;font-size:12px}
+@media(max-width:370px){#nu-next .game[data-device] nav.dock button{font-size:10px}}
+@media(orientation:landscape) and (max-height:350px){
+ #nu-next .game[data-device=landscape] .wardrobe{inset-block-start:max(5px,env(safe-area-inset-top));padding-block:5px}
+ #nu-next .game[data-device=landscape] .wardrobe .wardrobe-main{min-height:0}
+ #nu-next .game[data-device=landscape] .wardrobe .avatar-stage{grid-template-rows:minmax(0,1fr) 32px 31px}
+ #nu-next .game[data-device=landscape] .wardrobe .pose-picker button{min-height:30px}
+}
+
+@media(max-width:345px){#nu-next .game[data-device] nav.dock [data-tool=camera] span{font-size:9px;letter-spacing:-.035em}}
+
+body.playing:has(#nu-next .game[data-device="pc"]) :is(#interact97,#interaction103,#guestPrompt107,#shuttleHint100){
+ bottom:var(--bar-space);
+}
+
+#settings .settings-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 4px}
+#settings .settings-shortcuts button{display:flex;align-items:center;justify-content:flex-start;gap:7px;min-height:43px;padding:8px 10px;border:1px solid #cdd9d8;border-radius:11px;background:#ecf1ef;color:#1e394c;font-size:14px;white-space:nowrap}
+#settings .settings-shortcuts svg{width:16px;height:16px;flex:none}
+#settings .settings-shortcuts svg:last-child{width:13px;margin-left:auto}
+#nu-next button.shutter{padding:0;display:grid;grid-template:1fr / 1fr;place-items:center;line-height:0}
+#nu-next button.shutter svg{display:block;position:static;grid-area:1/1;margin:0;transform:none}
+#nu-next .game[data-device] .wardrobe .avatar-stage{grid-template-columns:minmax(0,1fr)}
+#nu-next .game[data-device] .wardrobe .preview-avatar{container-type:size;display:grid;place-items:end center}
+#nu-next .game[data-device] .wardrobe .preview-avatar canvas{position:static;inset:auto;width:auto;height:min(100cqh,121.4286cqw);max-width:100%;object-fit:contain}
+#nu-next .options-grid .option[data-kind-option]>img{width:auto;max-width:100%;height:54px;justify-self:center}
+
+/* Legacy feature sheets supply their own button dimensions and load styles at different times.
+   Normalise only icon layout, leaving each button's position, colour and interaction intact. */
+body button[data-centered-icon]{
+ box-sizing:border-box;display:inline-grid!important;grid-template:1fr/1fr;place-items:center;
+ padding:0!important;line-height:1;min-width:32px;min-height:32px;flex-shrink:0
+}
+body button[data-centered-icon]>svg{display:block;grid-area:1/1;width:18px;height:18px;margin:0;pointer-events:none}
+body button[data-centered-icon][hidden]{display:none!important}
+#nu-next :is(.close-sheet,.guide-prev,.arrival-close),.cast-nav127 button{padding:0;display:grid;grid-template:1fr/1fr;place-items:center;box-sizing:border-box}
+#nu-next .arrival-close{min-width:32px;min-height:32px}
+#nu-next :is(.close-sheet,.guide-prev,.arrival-close)>svg,.cast-nav127 button>svg{display:block;grid-area:1/1;margin:0;pointer-events:none}
+@media(pointer:coarse){
+ body button[data-centered-icon]{min-width:44px;min-height:44px}
+}
+
+/* The introductory guide owns the full play area; the dock returns on dismissal. */
+#nu-next .game[data-device][data-panel=help] nav.dock{display:none}
+#nu-next .game[data-device][data-panel=help] .help-sheet{bottom:0}

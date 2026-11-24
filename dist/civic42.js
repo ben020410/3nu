@@ -6,6 +6,11 @@ function prepare(data,nav,spec){if(nav.civic42)return nav.civic42;const ids=new 
  const l=nav.outdoor.lawn,b=l.bear15,old=[-119.57456508215773,228.3352054835368],uv=[24/98*(l.innerU*2),-12/98*(l.innerU*2)];b.center=l.center.map((x,i)=>x+l.u[i]*uv[0]+l.v[i]*uv[1]);b.height=9.845*2;b.originalHeight42=9.845;b.scale42=2;b.normalizedUV42=[24/98,-12/98];b.placementStatus='BUILD42 approved inward relocation; exact 2x baseline, original recipe/rotation/materials';
  b.bounds42=[[-2.65702938195632*2,-4.2130776346911*2],[4.2045569449414*2,3.1140870645176*2]].map(p=>p.map((x,i)=>x+b.center[i]));
  b.approach42=l.center.map((x,i)=>x+l.u[i]*24+l.v[i]*-24);
+ // The registered C0 apron meets the upper lawn and the foot of ST0.
+ const apron=spec.models.find(m=>m.number==='73').surfaces.find(s=>s.id==='civic42-73-floor8');
+ const local=(p,axis)=>(p[0]-l.center[0])*axis[0]+(p[1]-l.center[1])*axis[1];
+ const us=apron.p.map(p=>local(p,l.u)),vs=apron.p.map(p=>local(p,l.v));
+ l.cultureLanding={endU:Math.max(...us),minV:Math.min(...vs),maxV:Math.max(...vs),y:apron.lo};
  // A dedicated upper-lawn destination node, joined to clear upper-surface nodes only.
  let candidates=nav.points.map((p,i)=>({p,i,d:Math.hypot(p[0]-b.approach42[0],p[1]-b.approach42[1])})).filter(q=>{const dx=q.p[0]-l.center[0],dz=q.p[1]-l.center[1],u=dx*l.u[0]+dz*l.u[1],v=dx*l.v[0]+dz*l.v[1];return Math.abs(u)<45&&v<24&&v>-33&&Math.hypot(q.p[0]-b.center[0],q.p[1]-b.center[1])>10;}).sort((a,b)=>a.d-b.d);
  b.anchor42=nav.points.length;nav.points.push([...b.approach42,l.base+l.rise]);for(const c of candidates.slice(0,3))nav.edges.push([b.anchor42,c.i,c.d]);nav.anchors.snubear=b.anchor42;

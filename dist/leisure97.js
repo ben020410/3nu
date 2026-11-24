@@ -58,9 +58,9 @@ async function createLeisure97(B,scene,engine,rig,world,nav,hooks){
  function interact(){if(seat){if(available(hooks.state()))stand();return;}return sitAt(near);}
  $('world').addEventListener('campus-interact',interact);prompt.onclick=()=>{document.activeElement.blur();interact();$('world').focus()};
  $('returnTitle').onclick=()=>{if(!stand())return;closePhoto();hooks.title();};
- const photo=document.createElement('dialog');photo.id='photo97';photo.setAttribute('aria-label','찍은 사진');photo.innerHTML='<header><div><small>3NU · PHOTO</small><h2>캠퍼스의 한 장면</h2></div><button id="closePhoto97" aria-label="사진 닫기">✕</button></header><img id="photoImage97" alt="실시간 캠퍼스 촬영 사진"><footer><button id="share97">공유하기</button><button id="save97">이미지 저장</button></footer><p id="photoStatus97" role="status"></p>';document.body.append(photo);
+ const photo=document.createElement('dialog');photo.id='photo97';photo.setAttribute('aria-label','찍은 사진');photo.innerHTML='<header><div><small>3NU · PHOTO</small><h2>캠퍼스의 한 장면</h2></div><button id="closePhoto97" aria-label="사진 닫기" data-centered-icon><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header><img id="photoImage97" alt="실시간 캠퍼스 촬영 사진"><footer><button id="share97">사진만 공유</button><button id="save97">이미지 저장</button></footer><p id="photoStatus97" role="status"></p>';document.body.append(photo);
  const flash=document.createElement('div');flash.id='flash97';document.body.append(flash);
- const reply=PhotoReply126.install(photo,{place:hooks.placePhotoReply,clear:hooks.clearInput,paused:()=>!!hooks.state().paused,capture:()=>capture()});
+ const reply=PhotoReply126.install(photo,{place:hooks.placePhotoReply,onExplore:hooks.afterPhotoReply,clear:hooks.clearInput,paused:()=>!!hooks.state().paused,capture:()=>capture()});
  const editor=createPhotoEditor103(photo,newBlob=>{if(url)URL.revokeObjectURL(url);blob=newBlob;reply.setBlob(blob);url=URL.createObjectURL(blob);$('photoImage97').src=url;});
  function release(){editor.clear();if(url)URL.revokeObjectURL(url);url=null;blob=null;$('photoImage97').removeAttribute('src');}
  function closePhoto(){photo.close();release();hooks.clearInput();$('world').focus();}

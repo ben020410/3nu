@@ -20,7 +20,17 @@ function buildOutdoor(B,scene,nav,height){
  for(const [a,b,w,d]of[[-49,-34,98,7],[-49,27,98,7],[-49,-27,4,54],[45,-27,4,54]])slab(a,b,w,d,l.base+l.rise,stone,'lawn-perimeter-paving');slab(-45,-27,90,54,l.base+l.rise,green,'central-lawn');
  for(const s of [-1,1]){const b=s<0?-44:34;slab(-49,b,37,10,l.base+l.rise,stone,'terrace');slab(12,b,37,10,l.base+l.rise,stone,'terrace');if(s<0)slab(-12,b,24,10,l.base+l.rise,stone,'terrace');}
  
- for(let i=0;i<24;i++){const t=i/24,d=10/24,y=l.base+l.rise*(i+1)/24;slab(59-(i+1)*d,-44,d,78,y,stone,'east-stair');slab(-59+i*d,-44,d,78,y,stone,'west-stair');const sy=l.base+l.rise+(24-i)*1.8/24;slab(-12,44-(i+1)*d,5,d,sy,stone,'south-stair');slab(7,44-(i+1)*d,5,d,sy,stone,'south-stair');}
+ for(let i=0;i<24;i++){const d=10/24,y=l.base+l.rise*(i+1)/24;const u=59-(i+1)*d,landing=l.cultureLanding;
+  if(!landing||u>=landing.endU){slab(u,-44,d,78,y,stone,'east-stair');}
+  else{
+   slab(u,-44,d,landing.minV+44,y,stone,'east-stair');
+   slab(u,landing.maxV,d,34-landing.maxV,y,stone,'east-stair');
+   if(u+d>landing.endU)slab(landing.endU,landing.minV,u+d-landing.endU,landing.maxV-landing.minV,y,stone,'east-stair');
+  }
+  slab(-59+i*d,-44,d,78,y,stone,'west-stair');const sy=l.base+l.rise+(24-i)*1.8/24;slab(-12,44-(i+1)*d,5,d,sy,stone,'south-stair');slab(7,44-(i+1)*d,5,d,sy,stone,'south-stair');}
+ // Replace the middle treads at the culture entrance with the registered landing.
+ const landing=l.cultureLanding;
+ if(landing)slab(49,landing.minV,landing.endU-49,landing.maxV-landing.minV,landing.y,stone,'east-stair-landing');
  // BUILD16: LAK December 2023, central reflecting basin and stepped water axis.
  const pool=mat('reflecting-water','#678b8a');pool.specularColor=new B.Color3(.3,.35,.35);
  // Replace central stair strip with water; side strips remain pedestrian routes.

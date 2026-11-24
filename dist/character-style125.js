@@ -52,5 +52,5 @@ function createStylePreview125(B,engine,canvas){
  function set(style){ensure();rig.setCharacter(style.kind);rig.setStyle(style);target.renderList=rig.player.getChildMeshes();last=0}
  async function tick(now){if(!active||pending||now-last<100)return;last=now;pending=true;try{time+=.1;rig.animate(.1,pose==='walk',false,false,9,false,false);if(pose==='wave')rig.actionPose('wave',time);target.render();const read=target.readPixels();engine.restoreDefaultFramebuffer();const pixels=await read;if(closed||!pixels)return;const ctx=canvas.getContext('2d'),im=new ImageData(new Uint8ClampedArray(pixels.buffer,pixels.byteOffset,pixels.byteLength),280,340);ctx.putImageData(im,0,0);canvas.style.transform='scaleY(-1)';}finally{engine.restoreDefaultFramebuffer();pending=false;if(closed)destroy()}}
  function destroy(){if(pending)return;rig?.dispose125?.();scene?.dispose();scene=rig=target=camera=null;}
- return{open,set,pose:v=>{pose=v;last=0},tick,close(){active=false;closed=true;destroy()},audit:()=>({active,pending,context:'shared',size:[280,340]})};
+ return{open,set,rotate:dx=>{if(rig){rig.player.rotation.y+=dx*.014;last=0}},pose:v=>{pose=v;last=0},tick,close(){active=false;closed=true;destroy()},audit:()=>({active,pending,context:'shared',size:[280,340]})};
 }

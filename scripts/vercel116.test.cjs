@@ -39,6 +39,7 @@ test('116 Vercel gateway preserves sessions, CSRF, spam limits, private feedback
   const text=await response.text();if(!text)throw Error('Empty test response: '+method+' '+route+' status '+response.status);return {status:response.status,headers:response.headers,cookies,data:JSON.parse(text)};
  }
  try{
+  const publicCount=await call({},'/api/gateway?__3nu_path=public/visitor-count');assert.equal(publicCount.status,200);assert.deepEqual(Object.keys(publicCount.data).sort(),['count','since']);assert.equal(forwarded.at(-1).url,upstream+'/api/public/visitor-count');assert.equal((await call({},'/api/admin/chat')).status,401);assert.equal((await call({},'/api/public/visitor-count/extra')).status,404);
   const owner={},other={ip:'203.0.113.8'},admin={};const s=await call(owner,'/api/session');owner.csrf=s.data.csrf;assert.equal(s.status,200);assert.equal(s.cookies.length,2);assert(s.cookies.every(c=>c.includes('Secure')&&c.includes('HttpOnly')&&c.includes('SameSite=Strict')&&!c.includes('Domain=')));assert.equal(s.headers.get('cache-control'),'no-store');
   other.csrf=(await call(other,'/api/gateway?__3nu_path=session')).data.csrf;assert.equal(forwarded.at(-1).url,upstream+'/api/session');assert.equal(forwarded.at(-1).ip,other.ip);
   assert.equal((await call(owner,'/api/admin/stats')).status,401);assert.equal((await call(owner,'/api/admin/visits')).status,401);
@@ -72,8 +73,12 @@ test('116 Vercel gateway preserves sessions, CSRF, spam limits, private feedback
   const direct=await rawFetch('http://127.0.0.1:'+address.port+'/api/session',{headers:{...ingress,origin:browser}});assert.equal(direct.status,403);
   const ws=new WebSocket('ws://127.0.0.1:'+address.port+'/multiplayer',{headers:{...ingress,origin:browser,'sec-fetch-site':'cross-site'}});
   await new Promise((resolve,reject)=>{ws.once('open',resolve);ws.once('error',reject)});
-  ws.send(JSON.stringify({type:'hello',state:{x:0,y:100,z:200,yaw:0,name:'연결검증',character:'rio',action:'idle',moving:false,bus:null}}));
-  const welcome=await new Promise(r=>ws.once('message',x=>r(JSON.parse(x))));assert.equal(welcome.type,'welcome');ws.close();
+  ws.send(JSON.stringify({type:'hello',socialToken:s.data.social.token,state:{x:0,y:100,z:200,yaw:0,name:'연결검증',character:'rio',action:'idle',moving:false,bus:null}}));
+  const welcome=await new Promise(r=>ws.once('message',x=>r(JSON.parse(x))));assert.equal(welcome.type,'welcome');
+  const chatAck=new Promise(resolve=>{ws.on('message',raw=>{const m=JSON.parse(raw);if(m.type==='chat-result')resolve(m)})});ws.send(JSON.stringify({type:'chat',request:'gateway-chat',body:'게이트웨이 익명 연결 검증'}));assert.equal((await chatAck).ok,true);
+  const logs=await call(admin,'/api/gateway?__3nu_path=admin/chat');assert.equal(logs.status,200);assert.equal(logs.data.items[0].body,'게이트웨이 익명 연결 검증');assert.equal((await call(owner,'/api/admin/chat')).status,401);
+  assert.equal(backend.api.verifySocialToken(s.data.social.token+'x'),null);assert(backend.api.verifySocialToken(s.data.social.token));
+  assert.equal((await call({},'/api/public/visitor-count')).data.count,1);ws.close();
  }finally{await new Promise(r=>front.close(r));await backend.close();fs.rmSync(directory,{recursive:true,force:true})}
 });
 test('116 gateway timeouts/redirects expose no secrets and do not retry writes',async()=>{

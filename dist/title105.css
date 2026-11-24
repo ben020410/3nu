@@ -8,8 +8,8 @@
 #title105 .welcome{position:absolute;top:96px;right:30px;width:calc(100% - 404px);max-width:580px;padding:15px 20px;background:var(--paper);border-radius:16px}
 #title105 .welcome h2{font-size:21px;margin:0 0 9px}
 #title105 .welcome p{font-size:13px;line-height:1.7;color:var(--muted);margin:0;word-break:keep-all}
-#title105 .backdrop img:nth-child(1),#title105 .backdrop img:nth-child(3){top:84px;height:calc(100% - 84px)}
-#title105 .backdrop img:nth-child(1).active,#title105 .backdrop img:nth-child(3).active{animation-name:titlePanGentle;transform-origin:72% 57%}
+#title105 .backdrop picture:nth-child(1) img,#title105 .backdrop picture:nth-child(3) img{top:84px;height:calc(100% - 84px)}
+#title105 .backdrop picture:nth-child(1) img.active,#title105 .backdrop picture:nth-child(3) img.active{animation-name:titlePanGentle;transform-origin:72% 57%}
 @keyframes titlePanGentle{from{transform:scale(1.01) translate(-.3%,0)}to{transform:scale(1.06) translate(.3%,-.3%)}}
 @media(max-width:850px){#title105 .welcome{width:calc(100% - 366px);right:18px;padding:15px}#title105 .welcome h2{font-size:19px}#title105 .welcome p{font-size:13px}#title105 .welcome br{display:none}}
 @media(max-width:650px){#title105 .landing{flex-direction:column;gap:22px;padding-bottom:64px}#title105 .welcome{position:static;order:-1;width:100%;max-width:350px}#title105 .welcome h2{font-size:19px}#title105 .select{width:298px;max-width:100%}}
@@ -45,7 +45,7 @@ body:not(.playing)>:not(#title105):not(script):not(style){visibility:hidden!impo
 #title105 .tabs{display:flex;flex-wrap:wrap;width:fit-content;max-width:100%;gap:clamp(4px,1.2vw,16px)}#title105 .tabs button{flex:0 0 auto;width:auto;padding-inline:clamp(4px,.6vw,9px)}#title105 .tabs button{white-space:nowrap;font-size:14px;min-height:44px}#title105 .releaseHeading120{display:flex;align-items:center;gap:12px;flex-wrap:wrap}#title105 .releaseHeading120 h3{margin:0;font-size:21px}#title105 .releaseBadge120{font-size:12px;background:#edf2f5;color:#526875;padding:3px 9px;border-radius:20px}#title105 .updateHistory120 ul{padding-left:21px;color:var(--muted);line-height:1.8}#title105 .updateHistory120 li+li{margin-top:7px}@media(max-width:380px){#title105 .tabs{gap:4px}#title105 .tabs button{font-size:13px}}
 
 /* BUILD122: keep the mobile title artwork; avoid continuous scaled compositing. */
-@media(pointer:coarse){#title105 .backdrop img{transition:none}#title105 .backdrop img.active:nth-child(n){animation:none;transform:none}}
+@media(pointer:coarse){#title105 .backdrop img{transition:none}#title105 .backdrop picture:nth-child(n) img.active{animation:none;transform:none}}
 
 /* Every release uses the same container, including newly prepended entries. */
 #title105 .updateHistory120 .entry{margin:0;padding:22px 0;border-bottom:1px solid #e1e5e9}#title105 .updateHistory120 .entry:first-child{padding-top:0}#title105 .updateHistory120 .entry:last-child{border-bottom:0}#title105 .updateHistory120 .releaseHeading120{gap:10px 14px;align-items:center}#title105 .updateHistory120 h3{margin:0;color:#142449;font-size:20px;font-weight:800;line-height:1.5}#title105 .updateHistory120 .releaseBadge120{flex:none;font-size:12px;line-height:1.5;font-weight:500;padding:4px 10px}#title105 .updateHistory120 :is(ul,p){margin:12px 0 0;color:#687583;font-size:14px;line-height:1.8}#title105 .updateHistory120 ul{padding-left:21px}#title105 .updateHistory120 li{margin:0;padding:0}#title105 .updateHistory120 li+li{margin-top:7px}@media(max-width:600px){#title105 .updateHistory120 h3{font-size:18px}#title105 .updateHistory120 .entry{padding:20px 0}}
@@ -58,7 +58,8 @@ body:not(.playing)>:not(#title105):not(script):not(style){visibility:hidden!impo
 #title105 header nav {display:flex;align-items:center;justify-content:flex-end;gap:clamp(5px,1.5vw,22px)}
 #title105 header .nav {border-radius:8px;min-height:42px;padding:6px 9px}
 #title105 header .nav:hover,#title105 header .nav:focus-visible {background:#e9eef0}
-#title105 .backdrop img:nth-child(n) {inset:0;width:100%;height:100%}
+#title105 .backdrop picture:nth-child(n)>img {inset:0;width:100%;height:100%}
+#title105 .backdrop picture,#title105 .load picture{display:contents}
 #title105 .backdrop:after {background:linear-gradient(0deg,#0b273bd6,transparent 54%),linear-gradient(90deg,#16344b30,transparent 60%)}
 #title105 #titleHome105 {position:relative;flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,380px);align-items:center;gap:30px;min-height:calc(100svh - 67px);padding:clamp(30px,6vw,86px)}
 #title105 #titleHome105[hidden] {display:none}
@@ -254,3 +255,142 @@ body:not(.playing)>:not(#title105):not(script):not(style){visibility:hidden!impo
 
 #title105 #titleProgress105{margin-inline-start:auto;font-variant-numeric:tabular-nums;font-size:16px;font-weight:750;line-height:1.3}
 #title105 .track[hidden],#title105 #titleProgress105:empty{display:none}
+
+#title105 .characterPicker .pickerAnnouncement{font-size:clamp(17px,2vw,22px);font-weight:750;letter-spacing:-.035em;line-height:1.22;padding:2px 0 4px}
+#title105 #titleStage105{min-width:0;text-align:start;word-break:keep-all}
+@media(orientation:landscape) and (max-height:500px){#title105 .characterPicker .pickerAnnouncement{font-size:16px;padding-block:0}}
+
+
+#title105 #startForm .characterPicker{display:flex;flex-direction:column;gap:0;background:transparent;border:0;padding:0;margin:4px 0 12px;overflow:visible}
+#title105 .modelStage{touch-action:pan-y;cursor:grab}
+#title105 .modelStage:active,#nu-next .preview-avatar:active{cursor:grabbing}
+#title105 .modelStage::before{content:none}
+#title105 .modelStage :is(img,canvas){width:auto;max-width:100%}
+#title105 .cast-nav127,#nu-next .cast-nav127{display:flex;align-items:center;justify-content:center;gap:8px;color:#213950}
+#title105 .cast-nav127 output,#nu-next .cast-nav127 .avatar-type{position:static;text-align:center;min-width:3.2em;color:inherit;font-size:18px;font-weight:750;line-height:1.25;padding:0}
+#title105 .rotate-hint127{font-size:10px;color:#5d6c71;line-height:1.3}
+#title105 #visitorCount127{display:block;margin-top:5px;font-size:11px;line-height:1.35;color:white;font-variant-numeric:tabular-nums}
+#title105 #visitorCount127[hidden],#title105 .rotate-hint127[hidden]{display:none}
+@media(orientation:landscape) and (max-height:500px){
+ #title105 #titleHome105{display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.35fr);align-items:center;gap:12px;min-height:0;padding:4px max(15px,env(safe-area-inset-right)) max(7px,env(safe-area-inset-bottom)) max(15px,env(safe-area-inset-left));flex:1}
+ #title105 #titleHome105 .welcome{align-self:end;margin-bottom:8px}
+ #title105 #campusTitle{font-size:clamp(19px,3.4vw,34px)}
+ #title105 #startForm{align-self:center;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);column-gap:10px;align-content:center;padding:12px;max-width:530px}
+ #title105 #chooseTitle{grid-column:1;grid-row:1;font-size:16px}
+ #title105 #startForm .characterPicker{grid-column:1;grid-row:2/6;margin:0}
+ #title105 .modelStage{height:clamp(82px,27svh,120px)}
+ #title105 #startForm label[for=nickname]{grid-column:2;grid-row:2;align-self:end;margin-top:0}
+ #title105 #nickname{grid-column:2;grid-row:3;align-self:center}
+ #title105 #nicknameError{grid-column:2;grid-row:4}
+ #title105 #start{grid-column:2;grid-row:5;align-self:start}
+ #title105 #startForm #photoInvite126{grid-column:1/-1;grid-row:1}
+ #title105 #startForm:has(#photoInvite126) #chooseTitle{grid-row:2}
+ #title105 #startForm:has(#photoInvite126) .characterPicker{grid-row:3}
+ #title105 #startForm:has(#photoInvite126) .entry-fields127{grid-row:2/4}
+ #title105 .cast-nav127{gap:0}
+}
+
+#title105.typing127{max-height:var(--keyboard-space127);overflow:auto}
+#title105.typing127 .app{min-height:var(--keyboard-space127)}
+#title105.typing127 .app>header,#title105.typing127 .welcome{display:none}
+#title105.typing127 #titleHome105{min-height:0;display:flex;justify-content:center;padding:6px max(12px,env(safe-area-inset-right)) 6px max(12px,env(safe-area-inset-left))}
+#title105.typing127 #startForm .modelStage{height:74px}
+
+.cast-nav127{touch-action:pan-y}
+
+/* Only the entry fields need a paper surface above the campus photograph. */
+#title105 #startForm{background:transparent;border:0;box-shadow:none;padding:0}
+#title105 #startForm #chooseTitle{justify-content:center;text-align:center;color:#fff;text-shadow:none;width:fit-content;justify-self:center;margin-inline:auto;padding:3px 17px;background:radial-gradient(ellipse at 50% 52%,#142a3dc9 15%,#142a3d9c 52%,transparent 75%)}
+#title105 #startForm .cast-nav127{border-radius:24px;padding-inline:2px;background:#142448eb;color:#fff}
+#title105 #startForm .cast-nav127 button{color:inherit}
+#title105 #startForm .cast-nav127 button::before{background:none;border:0}
+#title105 #startForm .cast-nav127 button:hover::before{background:#ffffff23}
+#title105 #startForm .cast-nav127 button:focus-visible{outline-color:#fff}
+#title105 #startForm .rotate-hint127{color:white;text-shadow:0 1px 4px #122640,0 0 3px #122640}
+#title105 .entry-fields127{padding:13px 17px 15px;border-radius:16px;background:#fbfaf7;box-shadow:0 4px 15px #12264025}
+#title105 #startForm .entry-fields127 label{margin:0 0 5px}
+#title105 #startForm .entry-fields127 #start{margin-top:9px}
+@media(orientation:landscape) and (max-height:500px){
+ #title105 #startForm{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:8px}
+ #title105 #startForm .entry-fields127{grid-column:2;grid-row:1/6;align-self:center;padding:10px}
+ #title105 #startForm .characterPicker{align-self:center}
+ #title105 #startForm #chooseTitle{align-self:end}
+ #title105 .modelStage{height:clamp(90px,34svh,145px)}
+}
+
+/* Character selection and entry share one panel; the model has no surface of its own. */
+#title105 #startForm{
+ padding:clamp(14px,2vw,24px);border:1px solid #ffffffbf;border-radius:22px;
+ background:rgba(250,249,245,.97);box-shadow:0 12px 40px #12283c30
+}
+#title105 #startForm #chooseTitle{background:none;text-shadow:none;color:#172a43;padding:0;font-size:clamp(17px,2vw,22px)}
+#title105 #startForm .entry-fields127{padding:0;background:none;box-shadow:none;border-radius:0}
+#title105 #startForm .rotate-hint127{color:#52666d;text-shadow:none}
+#title105 #startForm .cast-nav127{color:#19344d;background:#e9eeeb}
+#title105 #startForm .cast-nav127 button:hover::before{background:#d4dfdb}
+#title105 #startForm .cast-nav127 button:focus-visible{outline-color:#286c87}
+#title105 #titleHome105 .release-meta127{display:inline-flex;align-items:center;gap:0;margin-top:9px;white-space:nowrap;
+ padding:4px 9px;border-radius:20px;background:#162c40d9;color:white;font:600 11px/1.35 system-ui}
+#title105 #titleHome105 .release-meta127 :is(.version,#visitorCount127){position:static;padding:0;margin:0;letter-spacing:.015em;font:inherit;color:inherit}
+#title105 #titleHome105 .release-meta127 #visitorCount127{padding-left:8px;margin-left:8px;border-left:1px solid #ffffff54}
+@media(max-width:680px),(orientation:landscape) and (max-height:500px){
+ #title105 #titleHome105 #campusTitle{font-size:clamp(18px,5.65vw,28px);letter-spacing:-.048em;white-space:nowrap}
+ #title105 #campusTitle span{display:inline}
+ #title105 #startForm{padding:14px 18px}
+}
+@media(orientation:portrait) and (max-width:680px){
+ #title105 #titleHome105{padding:14px max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));gap:14px}
+ #title105 #titleHome105 .welcome{width:min(100%,390px);padding:0}
+ #title105 #startForm{max-width:390px}
+}
+@media(orientation:landscape) and (max-height:500px){
+ #title105 #titleHome105{grid-template-columns:1fr;align-content:center;justify-items:center;gap:8px}
+ #title105 #titleHome105 .welcome{width:min(100%,670px);align-self:center;margin:0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+ #title105 #titleHome105 .campus-intro{display:none}
+ #title105 #titleHome105 .release-meta127{margin:0;flex:none}
+ #title105 #titleHome105 #campusTitle{font-size:clamp(18px,3.6vw,26px)}
+ #title105 #startForm{width:min(100%,560px);grid-template-columns:1fr 1fr;gap:0 22px;padding:10px 18px}
+ #title105 .modelStage{height:clamp(78px,26svh,110px)}
+}
+
+#title105.typing127 #titleHome105 .welcome{display:none}
+
+@media(orientation:landscape) and (max-height:500px){
+ #title105 .backdrop::after{z-index:2;background:linear-gradient(90deg,rgba(19,43,60,.68),rgba(19,43,60,.42) 35%,transparent 70%),linear-gradient(0deg,#0b273b91,transparent 65%)}
+}
+
+
+#title105 #titleHome105 .release-meta127{margin:0 0 clamp(13px,1.1vw,16px);vertical-align:top}
+#title105 #startForm .modelStage{container-type:size}
+#title105 #startForm .modelStage :is(img,canvas){width:auto;height:min(100cqh,96.15cqw);max-width:100%;object-fit:contain}
+#title105 #startForm .modelStage img{height:min(100cqh,107.73cqw)}
+@media(orientation:landscape) and (max-height:500px){
+ #title105:not(.typing127) #titleHome105{display:grid;grid-template-columns:minmax(0,1fr) clamp(215px,34vw,310px);align-content:center;justify-items:stretch;gap:clamp(12px,4vw,45px);padding-inline:max(20px,env(safe-area-inset-left)) max(20px,env(safe-area-inset-right))}
+ #title105 #titleHome105 .welcome{display:block;align-self:center;width:auto;margin:0;text-align:left}
+ #title105 #titleHome105 #campusTitle{font-size:clamp(18px,3.15vw,29px);letter-spacing:-.055em}
+ #title105 #titleHome105 .campus-intro{display:block;color:white;margin:6px 0 0;line-height:1.45;font-size:clamp(11px,1.6vw,14px)}
+ #title105 #startForm{display:flex;flex-direction:column;align-items:stretch;justify-content:center;align-self:center;gap:0;width:100%;max-width:310px;padding:9px clamp(12px,2vw,21px);border-radius:17px}
+ #title105 #startForm #chooseTitle{align-self:center;font-size:15px;line-height:1.2}
+ #title105 #startForm .characterPicker{width:100%;margin:1px 0 4px;padding:0}
+ #title105 #startForm .modelStage{height:clamp(54px,calc(45svh - 84px),108px)}
+ #title105 #startForm .cast-nav127 button{height:32px;min-height:32px}
+ #title105 #startForm .cast-nav127 output{font-size:15px}
+ #title105 #startForm .entry-fields127{width:100%;align-self:stretch;padding:0}
+ #title105 #startForm .entry-fields127 label{font-size:12px;line-height:14px;margin:0 0 2px}
+ #title105 #startForm .entry-fields127 #nickname{min-height:32px;height:32px;padding:4px 9px;font-size:16px}
+ #title105 #startForm .entry-fields127 #start{min-height:34px;height:auto;margin-top:4px;padding:4px 8px;line-height:24px}
+ #title105.typing127 #titleHome105 .welcome,#title105.typing127 #startForm :is(#chooseTitle,.characterPicker){display:none}
+ #title105.typing127 #titleHome105{align-items:start}
+ #title105.typing127 #startForm{width:min(100%,350px);max-width:none}
+}
+
+#title105 .updateHistory120{max-width:900px}
+#title105 .releaseTopics127{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(24px,4vw,60px);margin-top:17px}
+#title105 .releaseTopics127>section{padding:15px 0;border-top:1px solid #dce3e4}
+#title105 .releaseTopics127 h4{margin:0;color:#172d46;font-size:16px;line-height:1.45;letter-spacing:-.022em}
+#title105 .updateHistory120 .releaseTopics127 p{margin:4px 0 0;color:#465b68;font-size:14px;line-height:1.65}
+#title105 .updateHistory120 .releaseOther127{margin:0;padding-top:11px;border-top:1px solid #dce3e4;color:#526675;font-size:13px;line-height:1.65}
+@media(max-width:650px){
+ #title105 .releaseTopics127{grid-template-columns:1fr;margin-top:13px}
+ #title105 .releaseTopics127>section{padding:12px 0}
+}

@@ -12,7 +12,7 @@ function createCampusServer(options={}){
  function channelList(){return channelIds.map(id=>({id,population:[...sessions.values()].filter(s=>s.ws&&s.channel===id).length,capacity:limit}))}
  function invalidate(){interestAt=-Infinity}
 
- const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css','.json':'application/json','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.svg':'image/svg+xml','.woff2':'font/woff2','.bin':'application/octet-stream','.md':'text/plain; charset=utf-8','.osm':'application/xml'};
+ const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css','.json':'application/json','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.svg':'image/svg+xml','.m4a':'audio/mp4','.woff2':'font/woff2','.bin':'application/octet-stream','.md':'text/plain; charset=utf-8','.osm':'application/xml'};
  let draining=false;
  const server=http.createServer((req,res)=>{res.setHeader('Referrer-Policy','same-origin');if(req.url?.split('?')[0]==='/admin107.html'){res.setHeader('X-Frame-Options','DENY');res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'self'")}if(draining){res.writeHead(503,{'Retry-After':'5'});return res.end('restarting')}if(options.requestPolicy){try{options.requestPolicy.inspect(req)}catch{res.writeHead(403);return res.end('Forbidden')}}if(req.url==='/ready'){let ok=true;try{ok=options.ready?options.ready():true}catch{ok=false}res.writeHead(ok?200:503,{'Content-Type':'application/json','Cache-Control':'no-store'});return res.end(JSON.stringify({ok,build:options.build||106}))}if(options.requestHandler?.(req,res))return;if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);return res.end()}let name;try{name=decodeURIComponent(new URL(req.url,'http://localhost').pathname)}catch{res.writeHead(400);return res.end()}if(name==='/admin107.html'){res.setHeader('X-Frame-Options','DENY');res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'self'")}if(name==='/health'){res.setHeader('Content-Type','application/json');return res.end(JSON.stringify({ok:true,build:options.build||106,players:[...sessions.values()].filter(s=>s.ws).length,capacity:limit,channels:channelList()}))}const file=path.resolve(root,'.'+(name==='/'?'/index.html':name));if(!file.startsWith(root+path.sep)||name.split('/').some(part=>part.startsWith('.'))||(!types[path.extname(file)]&&!name.endsWith('/EARCUT-LICENSE'))){res.writeHead(403);return res.end()}fs.realpath(file,(realError,real)=>{if(realError||!real.startsWith(root+path.sep)){res.writeHead(404);return res.end()}fs.stat(real,(err,stat)=>{if(err||!stat.isFile()){res.writeHead(404);return res.end()}res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream','Cache-Control':'no-cache','X-Content-Type-Options':'nosniff'});if(req.method==='HEAD')return res.end();const stream=fs.createReadStream(real);stream.on('error',()=>res.destroy());stream.pipe(res)})})});
  server.requestTimeout=10000;server.headersTimeout=10000;server.keepAliveTimeout=5000;server.maxHeadersCount=64;server.maxRequestsPerSocket=1000;
@@ -30,10 +30,11 @@ function createCampusServer(options={}){
   if(!s.seat&&!p.bus&&!previous.bus){const dt=Math.min(2,Math.max(.05,(t-s.updated)/1000)),distance=Math.hypot(p.x-previous.x,p.y-previous.y,p.z-previous.z);if(distance>75*dt+3){metrics.invalid++;send(s.ws,{type:'correct',state:previous,reason:'movement'});return false}}
  }
  if(first&&p.bus)p={...p,bus:null,action:'idle'};s.state={...p,name:Player.nickname(p.name),seat:s.seat};if(s.seat){const a=bySeat.get(s.seat);Object.assign(s.state,{x:a.px,y:a.py,z:a.pz,yaw:a.angle,action:'sit',bus:null})}riderPose(s,t);s.updated=t;return true;}
- wss.on('connection',ws=>{metrics.connections++;let owner=null,windowAt=now(),count=0;ws.alive=true;ws.on('pong',()=>ws.alive=true);const joinTimer=setTimeout(()=>{if(!owner)ws.close(1008,'join timeout')},5000);joinTimer.unref();
+ wss.on('connection',(ws,req)=>{metrics.connections++;let socialOwner=options.socialIdentity?.(req)||null;let owner=null,windowAt=now(),count=0;ws.alive=true;ws.on('pong',()=>ws.alive=true);const joinTimer=setTimeout(()=>{if(!owner)ws.close(1008,'join timeout')},5000);joinTimer.unref();
  ws.on('message',(raw,binary)=>{metrics.receivedBytes+=raw.length;metrics.messages++;const t=now();if(t-windowAt>=1000){windowAt=t;count=0}if(++count>40||binary){metrics.invalid++;return ws.close(1008,'message rate/type')}let m;try{m=JSON.parse(raw.toString())}catch{metrics.invalid++;return ws.close(1008,'invalid json')}
  if(!m||typeof m.type!=='string')return ws.close(1008,'invalid message');
  if(m.type==='hello'&&!owner){
+  socialOwner=options.verifySocialToken?.(m.socialToken)||socialOwner;
   if(!stateValid(m.state))return ws.close(1008,'invalid profile');
   const existing=typeof m.token==='string'&&m.token.length<100?[...sessions.values()].find(s=>s.token===m.token&&s.until>t):null;
   if(existing?.ws)return ws.close(1008,'session already connected');
@@ -54,6 +55,17 @@ function createCampusServer(options={}){
   // Validation and commit run synchronously: no reservation race or intermediate membership.
   if(!reason){release(owner);owner.channel=target.id;owner.sentPeers=new Map();invalidate()}
   send(ws,{type:'switch',request:m.request,ok:!reason,reason,channel:owner.channel,channels:channelList()});
+ }
+ else if(m.type==='chat'&&typeof m.request==='string'&&/^[a-zA-Z0-9-]{1,48}$/.test(m.request)){
+  try{
+   if(!options.social)throw Object.assign(Error('지금은 채팅에 연결할 수 없어요.'),{status:503});
+   const message=options.social.accept(socialOwner,owner.state.name,owner.channel,m.body);
+   const active=[...sessions.values()].filter(s=>s.ws&&s.state);
+   if(t-interestAt>=200){interest=selectNearby(active,new Map([...interest].map(([id,v])=>[id,v.ids])));interestAt=t}const nearby=interest;
+   // Recipients must already share the server interest scope AND be within speech range.
+   for(const s of active)if(s.id===owner.id||s.channel===owner.channel&&nearby.get(s.id)?.ids.includes(owner.id)&&Math.hypot(s.state.x-owner.state.x,s.state.z-owner.state.z)<=36&&Math.abs(s.state.y-owner.state.y)<=12)send(s.ws,{type:'chat',actor:owner.id,...message});
+   send(ws,{type:'chat-result',request:m.request,ok:true});
+  }catch(e){send(ws,{type:'chat-result',request:m.request,ok:false,error:e.status?e.message:'채팅을 보내지 못했어요.',retryAfter:e.retry||0})}
  }
  else if(m.type==='state')update(owner,m.state);
  else if(m.type==='clock'&&finite(m.client,0,1e15))send(ws,{type:'clock',client:m.client,time:t,epoch});

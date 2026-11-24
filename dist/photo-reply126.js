@@ -32,8 +32,8 @@ window.PhotoReply126 = (() => {
       invitation = {original,shot:data.shot};
       thumb.src = original.src;
       thumb.hidden = false;
-      label.textContent = '같은 자리에서 사진 답장';
-      info.textContent = '캐릭터를 고르고 시작하면 친구가 찍은 자리에 서요.';
+      label.textContent = '친구가 보낸 장면';
+      info.textContent = '시작하면 친구가 찍은 위치와 각도에서 내 캐릭터로 촬영해요.';
     } catch (e) {
       if (!banner.isConnected) return;
       label.textContent = e.missing ? '이 사진 링크를 열 수 없어요' : '사진을 불러오지 못했어요';
@@ -128,30 +128,30 @@ window.PhotoReply126 = (() => {
   function install(photo, hooks) {
     let shot=null, sourceBlob=null, link=null, generation=0, copying=false, processing=false;
     const status=$('photoStatus97'), invite=document.createElement('button');
-    invite.type='button'; invite.id='photoLink126'; invite.textContent='같은 구도 초대 링크';
+    invite.type='button'; invite.id='photoLink126'; invite.textContent='친구에게 이 장면 보내기';
     photo.querySelector('footer').prepend(invite);
     const linkBox=document.createElement('section');
     linkBox.id='photoLinkBox126'; linkBox.hidden=true;
-    linkBox.innerHTML='<label>사진 초대 링크 · 7일간 열람 가능<input readonly aria-label="사진 초대 링크"></label><button type="button">링크 복사</button>';
+    linkBox.innerHTML='<label>장면 링크 · 7일간 유효<input readonly aria-label="사진 초대 링크"></label><button type="button">링크 복사</button>';
     photo.querySelector('footer').after(linkBox);
     const field=linkBox.querySelector('input');
     async function copyLink(){
       if (!link || copying) return;
       copying=true;
-      try {await navigator.clipboard.writeText(link);status.textContent='초대 링크를 복사했어요. 친구에게 보내 보세요.';}
-      catch {field.focus();field.select();status.textContent='링크를 길게 누르거나 복사해서 친구에게 보내세요.';}
+      try {await navigator.clipboard.writeText(link);status.textContent='장면 링크를 복사했어요. 친구에게 붙여넣어 보내세요.';}
+      catch {field.focus();field.select();status.textContent='장면 링크가 준비됐어요. 직접 복사해 친구에게 보내세요.';}
       finally {copying=false;}
     }
     linkBox.querySelector('button').onclick=copyLink;
     const disclosure=document.createElement('p');
-    disclosure.id='photoPrivacy126';disclosure.textContent='초대 링크를 만들면 링크를 받은 사람이 7일 동안 이 사진을 볼 수 있어요.';
+    disclosure.id='photoPrivacy126';disclosure.textContent='친구도 이 자리에서 찍을 수 있어요. 링크는 7일간 유효해요.';
     photo.querySelector('footer').before(disclosure);
     const retry=document.createElement('button');
     retry.type='button';retry.textContent='답장 다시 찍기';retry.hidden=true;
     photo.querySelector('footer').prepend(retry);
     const dock=document.createElement('section');
     dock.id='photoDock126';dock.hidden=true;dock.setAttribute('aria-label','친구에게 사진 답장');
-    dock.innerHTML='<img alt="친구가 보낸 원본 사진"><div><strong>같은 구도로 답장</strong><p>내 캐릭터로 한 장 남겨 보세요.</p></div><button type="button" data-take disabled>장면 준비 중…</button><button type="button" data-exit aria-label="사진 답장 닫기">×</button>';
+    dock.innerHTML='<img alt="친구가 보낸 원본 사진"><div><strong>친구가 보낸 장면</strong><p>친구 사진과 나란히 저장돼요.</p></div><button type="button" data-take disabled>장면 준비 중…</button><button type="button" data-exit aria-label="사진 답장 닫기" data-centered-icon><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg></button>';
     document.body.append(dock);
     const shutter=dock.querySelector('[data-take]');
     const guide=document.createElement('div');guide.id='photoCrop126';guide.hidden=true;document.body.append(guide);
@@ -163,14 +163,16 @@ window.PhotoReply126 = (() => {
     function resetLink() {
       ++generation;
       link=null;field.value='';linkBox.hidden=true;sourceBlob=null;processing=false;
-      invite.disabled=false;invite.textContent='같은 구도 초대 링크';
+      invite.disabled=false;invite.textContent='친구에게 이 장면 보내기';
     }
     function end() {
+      const finishedInvite=accepted;
       accepted=false; dockState(false);dock.querySelector('img').removeAttribute('src');
       if(invitation)forget();
       photo.classList.remove('photo-pair126');
       retry.hidden=true;invite.hidden=false;
       hooks.clear();
+      if(finishedInvite)queueMicrotask(()=>hooks.onExplore?.());
     }
     function enter() {
       if (!invitation) return false;
@@ -187,7 +189,7 @@ window.PhotoReply126 = (() => {
       guide.style.width=w+'px';guide.style.height=h+'px';
       const blocked=hooks.paused();
       if (shutter.disabled!==blocked) shutter.disabled=blocked;
-      shutter.textContent=blocked?'장면 준비 중…':'답장 찍기';
+      shutter.textContent=blocked?'장면 준비 중…':'여기서 나도 찍기';
     }
     shutter.onclick=()=>{if (!shutter.disabled)hooks.capture();};
     dock.querySelector('[data-exit]').onclick=end;
@@ -203,7 +205,12 @@ window.PhotoReply126 = (() => {
     });
     invite.onclick=async()=>{
       if (!sourceBlob || !shot || processing) return;
-      if(link){await copyLink();return;}
+      if(link){
+        if(typeof navigator.share!=='function'){await copyLink();return;}
+        try{await navigator.share({title:'3NU에서 찍은 장면',url:link});status.textContent='공유 창을 닫았어요.'}
+        catch(error){if(error.name!=='AbortError')await copyLink()}
+        return;
+      }
       const rev=generation,current=sourceBlob,here=shot;
       processing=true;invite.disabled=true;invite.textContent='링크 만드는 중…';
       status.textContent=''; 
@@ -215,9 +222,11 @@ window.PhotoReply126 = (() => {
         const url=new URL(location.pathname,location.origin);
         url.hash='photo='+result.id;
         link=url.toString();field.value=link;linkBox.hidden=false;linkBox.scrollIntoView({block:'nearest'});
-        invite.textContent='초대 링크 복사';await copyLink();
-      } catch {if (generation===rev)status.textContent='초대 링크를 만들지 못했어요. 연결을 확인하고 다시 눌러 주세요.';}
-      finally {if(generation===rev){processing=false;invite.disabled=false;if(!link)invite.textContent='같은 구도 초대 링크';}}
+        if(typeof navigator.share==='function'){
+          invite.textContent='장면 링크 공유';status.textContent='장면 링크가 준비됐어요. 공유할 앱을 선택하세요.';
+        }else{invite.textContent='장면 링크 복사';await copyLink();}
+      } catch {if (generation===rev)status.textContent='장면 링크를 만들지 못했어요. 연결을 확인하고 다시 눌러 주세요.';}
+      finally {if(generation===rev){processing=false;invite.disabled=false;if(!link)invite.textContent='친구에게 이 장면 보내기';}}
     };
     controller={enter};
     return {enter,ready,applyCamera,

@@ -4,7 +4,7 @@ const {isIP}=require('node:net');
 function createGateway({publicOrigin,upstreamOrigin,secret,fetchImpl=fetch}={}){
  const publicURL=new URL(publicOrigin),upstream=new URL(upstreamOrigin);
  if(publicURL.protocol!=='https:'||publicURL.origin!==publicOrigin||upstream.protocol!=='https:'||upstream.origin!==upstreamOrigin||publicURL.username||upstream.username||publicOrigin===upstreamOrigin||!/^[a-f0-9]{64}$/.test(secret||''))throw Error('Invalid gateway configuration');
- const routes=/^\/api\/(?:session|visits|photo-replies(?:\/[a-f0-9]{32})?|notices|feedback|posts(?:\/\d+(?:\/report)?)?|admin\/(?:login|logout|session|exclusion|test-nickname-exclusion|stats|visits|export|posts(?:\/\d+)?|feedback(?:\/\d+)?|notices(?:\/\d+)?))$/;
+ const routes=/^\/api\/(?:public\/visitor-count|session|visits|photo-replies(?:\/[a-f0-9]{32})?|notices|feedback|posts(?:\/\d+(?:\/report)?)?|admin\/(?:chat|login|logout|session|exclusion|test-nickname-exclusion|stats|visits|export|posts(?:\/\d+)?|feedback(?:\/\d+)?|notices(?:\/\d+)?))$/;
  return async function gateway(req,res){
   const fail=(code,message)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify({error:message}))};
   try{

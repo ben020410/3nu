@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "checkedAt": "2026-11-25",
+  "coordinateMeaning": "Runtime model anchors and sampled walking surfaces, not surveyed meters. Facts require both NPC feet and player feet inside the same small area and height band.",
+  "sources": {
+    "libraryArchive": {"url":"https://www.snu.ac.kr/about/president/news?bbsidx=165668&md=v","date":"2026-02-09","observation":"본관 헤리티지 라이브러리에 박완서 아카이브, 보이는 수장고, 빛의 길 조성. 본관 건립 1975년."},
+    "libraryFloor": {"url":"https://www.snu.ac.kr/snunow/events?bbsidx=164857&md=v","date":"2026-02-09","observation":"헤리티지 라이브러리 위치는 중앙도서관 본관 4층. 종료된 기념전 일정은 대사로 사용하지 않음."},
+    "gate": {"url":"https://www.snu.ac.kr/about/history/history_record?bbsidx=134457&md=v","observation":"국립 서울대학교의 머리글자 ㄱ·ㅅ·ㄷ을 조합한 정문과 샤라는 별칭."},
+    "jaha": {"url":"https://map.snu.ac.kr/api/upload/guide/SNU_Walk.pdf","observation":"자하연은 자줏빛 노을이 내리는 연못이라는 뜻. 공식 캠퍼스 둘레길 명소 안내."},
+    "pungsan": {"url":"https://culture.snu.ac.kr/spaces/","observation":"풍산마당은 버들골 야외극장. 반원형 공간과 자연 속 공연장이라는 안내."}
+  },
+  "places": [
+    {
+      "id":"library-main-front","name":"중앙도서관 본관 앞","anchor":{"kind":"libraryLocal","a":65,"d":78,"floorOffset":2.2},
+      "radius":18,"heightTolerance":1.8,
+      "geometryEvidence":"library17.js main-entry-canopy a58..73,d69..76; main front forecourt sampled with world.floorAt. Existing nav building anchor is a different forecourt, so do not substitute it.",
+      "resident":{"id":"cat-080","offsetLocal":[7,2],"headingLocal":[0,1]},
+      "lines":[
+        {"id":"library-archive","text":"중도 4층엔 박완서 작가의 자료를 모은 공간도 있어.","variants":{"reader":"중도 4층엔 박완서 작가의 자료를 모은 공간도 있어. 책 좋아하면 눈이 갈걸?"},"sources":["libraryArchive","libraryFloor"]},
+        {"id":"library-age","text":"중도 본관은 1975년생이래. 꽤 오래된 선배네.","sources":["libraryArchive"]},
+        {"id":"library-collection","text":"중도엔 책장만 있는 게 아니야. ‘보이는 수장고’도 있대.","sources":["libraryArchive"]}
+      ]
+    },
+    {
+      "id":"gate-plaza","name":"정문광장","anchor":{"kind":"navigation","id":"gate","offset":[-5,-6]},
+      "radius":20,"heightTolerance":1.5,
+      "geometryEvidence":"nav.anchors.gate -> world.points, plaza side offset; existing road and ground retained.",
+      "resident":{"id":"cat-002","offset":[0,0],"heading":0.8},
+      "lines":[
+        {"id":"gate-letters","text":"저 ‘샤’, 원래는 ㄱ·ㅅ·ㄷ을 합친 모양이래.","variants":{"reader":"저 ‘샤’에 ㄱ·ㅅ·ㄷ이 숨어 있어. 글자 찾기 같지?"},"sources":["gate"]},
+        {"id":"gate-initials","text":"정문의 세 글자는 ‘국립 서울대학교’에서 따왔대.","sources":["gate"]}
+      ]
+    },
+    {
+      "id":"jaha-deck","name":"자하연 남측 산책 공간","anchor":{"kind":"jahaShore","offset":[6,24]},
+      "radius":17,"heightTolerance":1.4,
+      "geometryEvidence":"landmark44.pond.coordinates.originWorldXZ plus south-shore offset, sampled current walking surface. Do not use the higher northern navigation anchor.",
+      "resident":{"id":"cat-093","offset":[3,0],"heading":3.1},
+      "lines":[
+        {"id":"jaha-name","text":"자하연은 ‘자줏빛 노을이 내리는 연못’이란 뜻이래.","variants":{"artist":"자하연은 ‘자줏빛 노을이 내리는 연못’이래. 이름부터 색이 있네."},"sources":["jaha"]},
+        {"id":"jaha-walk","text":"자하연은 학교 공식 산책길에도 나와. 잠깐 쉬기 좋은 곳이지.","sources":["jaha"]}
+      ]
+    },
+    {
+      "id":"pungsan-lawn","name":"풍산마당 객석 바깥 지상 보행 공간","anchor":{"kind":"pungsanFront","distance":42,"lateral":6},
+      "radius":17,"heightTolerance":1.6,
+      "geometryEvidence":"nav.pungsan48 center/front basis, outside stepped seating at front42 lateral6; current ground sampled, no paving/road edit.",
+      "resident":{"id":"cat-160","offset":[0,0],"heading":-0.7},
+      "lines":[
+        {"id":"pungsan-theatre","text":"풍산마당은 버들골의 야외극장이야. 하늘이 천장인 셈이지.","variants":{"musician":"풍산마당은 야외극장이야. 여기선 하늘 보며 공연을 듣는 거네."},"sources":["pungsan"]},
+        {"id":"pungsan-seating","text":"풍산마당 객석은 반원 모양이래. 무대를 감싸고 앉는 거지.","sources":["pungsan"]}
+      ]
+    }
+  ]
+}

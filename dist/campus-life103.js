@@ -1,8 +1,25 @@
 /* BUILD103: baked safe paths, stable logical residents, bounded pooled rendering. */
 async function createCampusLife103(B,scene,world,nav,plan,player,shuttle,leisure,hooks){
- const raw=await fetch('data/campus-life103.json').then(r=>r.json()),spots=raw.spots,coats=['cheese','tuxedo','calico','tabby','black','cream'],roles=['commuter','reader','artist','musician','athlete','relax'],dist=(a,b)=>Math.hypot(a.x-b.x,a.z-b.z);
+ const [raw,socialSpec127]=await Promise.all([fetch('data/campus-life103.json').then(r=>r.json()),fetch('data/social-places127.json').then(r=>{if(!r.ok)throw Error();return r.json()}).catch(()=>({places:[]}))]);const spots=raw.spots,coats=['cheese','tuxedo','calico','tabby','black','cream'],roles=['commuter','reader','artist','musician','athlete','relax'],dist=(a,b)=>Math.hypot(a.x-b.x,a.z-b.z);
  const residents=raw.residents.map((n,i)=>({...n,coat:coats[i%6],role:roles[i%6],phase:(i*.6180339)%1,speed:.65+(i%7)*.07,rest:6+i%8,position:{...n.path.pts[0]},heading:0,action:'idle',seated:false,model:null,lastAnim:0}));
  for(const n of residents){n.path.cumulative=[0];for(let i=1;i<n.path.pts.length;i++){const a=n.path.pts[i-1],b=n.path.pts[i];n.path.cumulative.push(n.path.cumulative.at(-1)+Math.hypot(b.x-a.x,b.z-a.z));}n.path.len=n.path.cumulative.at(-1);}
+ // Four existing residents become stable landmark neighbours; no population/model increase.
+ const socialPlaces127=[],socialPlacement127=[];
+ for(const spec of socialSpec127.places||[]){
+  const a=spec.anchor,l=nav.library17;let x,z,hint,u=[1,0],v=[0,1];
+  if(a.kind==='libraryLocal'&&l){u=l.u;v=l.v;x=l.origin[0]+u[0]*a.a+v[0]*a.d;z=l.origin[1]+u[1]*a.a+v[1]*a.d;hint=l.base+a.floorOffset}
+  else if(a.kind==='navigation'){const p=world.points[nav.anchors[a.id]];if(!p)continue;x=p[0]+a.offset[0];z=p[1]+a.offset[1];hint=p[2]}
+  else if(a.kind==='jahaShore'){const p=nav.landmark44?.pond?.coordinates.originWorldXZ;if(!p)continue;x=p[0]+a.offset[0];z=p[1]+a.offset[1];hint=nav.landmark44.pond.baseline.recordedWaterY}
+  else if(a.kind==='pungsanFront'&&nav.pungsan48){const p=nav.pungsan48;x=p.center[0]+p.front[0]*a.distance-p.front[1]*a.lateral;z=p.center[1]+p.front[1]*a.distance+p.front[0]*a.lateral;hint=p.base}
+  else continue;
+  const y=world.floorAt(x,z,hint);if(!Number.isFinite(y))continue;
+  const place={...spec,x,y,z};socialPlaces127.push(place);
+  const r=spec.resident,n=residents.find(n=>n.id===r.id),q=r.offsetLocal,offset=q?[u[0]*q[0]+v[0]*q[1],u[1]*q[0]+v[1]*q[1]]:r.offset||[0,0],nx=x+offset[0],nz=z+offset[1],ny=world.floorAt(nx,nz,y);
+  const safe=n&&!n.social&&!n.waitPoint&&Number.isFinite(ny)&&Math.abs(ny-y)<=spec.heightTolerance&&!world.blocked(nx,nz,.5,ny)&&world.ceilingAt(nx,nz,ny)-ny>1.85&&[[.6,0],[-.6,0],[0,.6],[0,-.6]].every(([dx,dz])=>Math.abs(world.floorAt(nx+dx,nz+dz,ny)-ny)<.16);
+  socialPlacement127.push({id:r.id,place:place.id,applied:!!safe,position:{x:nx,y:ny,z:nz}});
+  if(!safe)continue;
+  const h=r.headingLocal;n.waitPoint={x:nx,y:ny,z:nz,heading:h?Math.atan2(u[0]*h[0]+v[0]*h[1],u[1]*h[0]+v[1]*h[1]):r.heading||0};n.position={x:nx,y:ny,z:nz};n.localPlace127=place.id;
+ }
  const groups=[...new Set(residents.map(n=>n.zone))].map(name=>[name]);
  // Allocate only the visible budget, not 180 models. The asset owns shared geometry/materials.
  await CampusCast126.prepare(Object.values(CampusCast126.coats));const pool=[],active=new Map(),budget=24,detailed=10;
@@ -18,5 +35,5 @@ async function createCampusLife103(B,scene,world,nav,plan,player,shuttle,leisure
   const near=[...active.values()].sort((a,b)=>dist(a.position,player.position)-dist(b.position,player.position));for(let i=0;i<near.length;i++){const n=near[i],prior=n.position;logical(n,time-(n.delay||0));if(n.action==='walk'&&near.some(q=>q!==n&&dist(q.position,n.position)<.8)){n.position=prior;n.delay=(n.delay||0)+dt;n.action='idle';}const m=n.model;m.root.position.copyFromFloats(n.position.x,n.position.y,n.position.z);m.root.rotation.y=n.heading;const inView=!frustum.length||frustum.every(p=>p.dotCoordinate(new B.Vector3(n.position.x,n.position.y+.8,n.position.z))> -1),rate=!inView?800:i<detailed?0:150;if(now-n.lastAnim>=rate||n.modelAction!==n.action){n.lastAnim=now;if(n.modelAction!==n.action||n.modelSeated!==n.seated){m.setAction(n.action,{seated:n.seated});n.modelAction=n.action;n.modelSeated=n.seated}m.update(dt,time);}if(n.restSeat){m.root.computeWorldMatrix(true);m.anchors.seat.computeWorldMatrix(true);const at=m.anchors.seat.getAbsolutePosition();m.root.position.addInPlace(new B.Vector3(n.restSeat.x-at.x,n.restSeat.y-at.y,n.restSeat.z-at.z));}else if(n.action==='idle'){const other=near.find(q=>q!==n&&q.action!=='walk'&&dist(q.position,n.position)>1&&dist(q.position,n.position)<3.5);if(other)m.root.rotation.y=Math.atan2(other.position.x-n.position.x,other.position.z-n.position.z);}}
 
  }
- return{spots,residents,pool,update,setEnabled(v){enabled=v;if(!v)for(const n of [...active.values()])release(n)},audit:()=>({total:residents.length,active:active.size,budget,detailed,logicalTicks:tick,groups:groups.map(g=>({name:g[0],count:residents.filter(n=>n.zone===g[0]).length})),shown:[...active.values()].map(n=>({id:n.id,coat:n.coat,role:n.role,action:n.action,position:n.position}))})};
+ return{socialPlaces127,socialPlacement127,socialCandidates:()=>[...active.values()].filter(n=>n.model?.root.isEnabled()).map(n=>({id:n.id,role:n.role,zone:n.zone,position:n.model.root.position})),spots,residents,pool,update,setEnabled(v){enabled=v;if(!v)for(const n of [...active.values()])release(n)},audit:()=>({total:residents.length,active:active.size,budget,detailed,logicalTicks:tick,groups:groups.map(g=>({name:g[0],count:residents.filter(n=>n.zone===g[0]).length})),shown:[...active.values()].map(n=>({id:n.id,coat:n.coat,role:n.role,action:n.action,position:n.position}))})};
 }

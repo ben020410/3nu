@@ -37,7 +37,7 @@
 
 **초기 · BUILD003** → **현재 · 타이틀 배경**
 
-<sub>왼쪽은 11월 11일 BUILD003 캡처, 오른쪽은 BUILD104에서 촬영한 현재 타이틀 이미지입니다. 같은 장소이며 구도와 UI 표시 여부는 다릅니다.</sub>
+<sub>왼쪽은 11월 11일 BUILD003 캡처, 오른쪽은 v1.1.1에서 다시 촬영한 정문입니다. 같은 장소이며 구도와 UI 표시 여부는 다릅니다.</sub>
 
 <br>
 
@@ -70,7 +70,7 @@
 UI를 제외한 화면을 촬영하고 프레임과 문구를 더합니다. 이미지 저장과 지원 환경에서의 공유 기능을 제공합니다.
 
 **로그인 없는 멀티플레이어**<br>
-닉네임과 캐릭터를 선택해 다른 사용자와 이동·동작을 공유합니다. 지도·카메라·설정은 각자 조작합니다.
+캐릭터를 골라 입장하면 가까운 사용자와 이동·동작을 공유합니다. 닉네임은 선택 사항입니다. 지도·카메라·설정은 각자 조작합니다.
 
 <br>
 
@@ -79,34 +79,32 @@ UI를 제외한 화면을 촬영하고 프레임과 문구를 더합니다. 이�
 ### 플레이어
 
 <p align="center">
-<img src="dist/assets/title105/baekhak.webp" width="22%" alt="백학 · 비행 캐릭터">
-&nbsp; &nbsp; &nbsp;
-<img src="dist/assets/title105/rio.webp" width="22%" alt="오리 · 지상 캐릭터">
+<img src="dist/assets/title125/baekhak.webp" width="23%" alt="자하 · 백학">
+<img src="dist/assets/title125/rio.webp" width="23%" alt="동동 · 오리">
+<img src="dist/assets/title125/cat.webp" width="23%" alt="설기 · 고양이">
 </p>
 
-<p align="center"><strong>백학</strong> · 비행, 상승과 하강 &nbsp; / &nbsp; <strong>오리</strong> · 걷기, 점프와 웅크리기</p>
+<p align="center"><strong>자하</strong> · 백학 &nbsp; / &nbsp; <strong>동동</strong> · 오리 &nbsp; / &nbsp; <strong>설기</strong> · 고양이</p>
 
-캐릭터는 설정에서 전환할 수 있습니다. 이동속도, 카메라 거리, 표시 거리와 화질도 조절할 수 있습니다.
+세 캐릭터 모두 두 발로 걷고 날 수 있습니다. 탐방 중 메뉴에서 캐릭터를 바꾸고, 비니와 스카프의 색을 고를 수 있습니다.
 
-### NPC
-
-의상과 소품이 다른 여섯 종류의 고양이가 캠퍼스에 등장합니다.
+### 캠퍼스 고양이
 
 <p align="center">
-<img src="dist/assets/cats107/cheese.png" width="28%" alt="치즈 · 가방을 멘 통학 고양이">
-<img src="dist/assets/cats107/tuxedo.png" width="28%" alt="턱시도 · 책을 든 독서 고양이">
-<img src="dist/assets/cats107/calico.png" width="28%" alt="삼색이 · 스케치북과 연필을 든 미술 고양이">
+<img src="dist/assets/cats107/cheese.png" width="23%" alt="보리 · 청록색 가방을 멘 치즈 고양이">
+<img src="dist/assets/cats107/tuxedo.png" width="23%" alt="갈피 · 책을 읽는 턱시도 고양이">
+<img src="dist/assets/cats107/calico.png" width="23%" alt="다홍 · 스케치북과 연필을 든 삼색 고양이">
 </p>
 
-<p align="center"><strong>치즈</strong> · 통학 &nbsp; / &nbsp; <strong>턱시도</strong> · 독서 &nbsp; / &nbsp; <strong>삼색이</strong> · 미술</p>
+<p align="center"><strong>보리</strong> · 통학 &nbsp; / &nbsp; <strong>갈피</strong> · 독서 &nbsp; / &nbsp; <strong>다홍</strong> · 미술</p>
 
 <p align="center">
-<img src="dist/assets/cats107/tabby.png" width="28%" alt="고등어 · 악기 케이스를 멘 음악 고양이">
-<img src="dist/assets/cats107/black.png" width="28%" alt="검은 고양이 · 머리띠와 물병을 갖춘 운동 고양이">
-<img src="dist/assets/cats107/cream.png" width="28%" alt="크림 · 컵과 작은 가방을 든 휴식 고양이">
+<img src="dist/assets/cats107/tabby.png" width="23%" alt="딩가 · 악기 케이스를 멘 고등어 고양이">
+<img src="dist/assets/cats107/black.png" width="23%" alt="탄이 · 머리띠를 두르고 물병을 든 고양이">
+<img src="dist/assets/cats107/cream.png" width="23%" alt="오후 · 두 앞발로 찻잔을 쥔 크림 고양이">
 </p>
 
-<p align="center"><strong>고등어</strong> · 음악 &nbsp; / &nbsp; <strong>검은 고양이</strong> · 운동 &nbsp; / &nbsp; <strong>크림</strong> · 휴식</p>
+<p align="center"><strong>딩가</strong> · 음악 &nbsp; / &nbsp; <strong>탄이</strong> · 운동 &nbsp; / &nbsp; <strong>오후</strong> · 휴식</p>
 
 <br>
 
@@ -190,7 +188,7 @@ UI를 제외한 화면을 촬영하고 프레임과 문구를 더합니다. 이�
 미니맵의 시설 선택은 막되, 전체 지도에서는 점 표시를 없애도 시설 영역 선택과 길안내를 유지하도록 구분했습니다. 같은 데이터라도 화면별 표시와 입력 동작이 달라야 한다는 조건을 명시했습니다.
 
 **캐릭터 상태에 따른 조작 안내**<br>
-백학에게는 상승·하강, 오리에게는 점프·웅크리기만 표시하도록 요청했습니다. 길어진 안내 문구를 줄이면서 실제 입력과 화면 안내가 일치하도록 수정했습니다.
+세 캐릭터에 공통 조작을 적용하고 지상·비행·시설 이용에 맞게 안내를 나눴습니다. 길어진 안내 문구를 줄이면서 실제 입력과 화면 안내가 일치하도록 수정했습니다.
 
 **셔틀 탑승 흐름과 검수 기준**<br>
 정류장에서 대기를 선택하면 자동 탑승하고, 탑승 중에는 다음 정류장 하차를 예약하도록 흐름을 정했습니다. 대기 상태처럼 내용이 가장 긴 경우에도 데스크톱 안내창에 스크롤이 없어야 한다는 확인 기준을 제시했습니다.

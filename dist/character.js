@@ -1,25 +1,62 @@
-/* Two original reference-based bird rigs. Standing envelope 1.79m, existing collision unchanged. */
+/* Collision and persisted/wire species identifiers remain independent of the visual rig. */
 function createWalker15(B,scene,shared=null){
- const V=(x,y,z)=>new B.Vector3(x,y,z),root=new B.Mesh('walker',scene);root.ellipsoid=V(.42,.9,.42);
- const mat=(n,c)=>{if(shared?.materials.has(n))return shared.materials.get(n);const m=new B.StandardMaterial('walker-'+n,scene);m.diffuseColor=B.Color3.FromHexString(c);m.specularColor=B.Color3.Black();shared?.materials.set(n,m);return m},white=mat('white','#fff9ed'),cream=mat('cream','#ffe9a9'),ink=mat('ink','#13213b'),orange=mat('orange','#efa52d'),blush=mat('blush','#f4b393');
- function egg(n,pos,size,m,parent){let q;if(shared){if(!shared.geometry){const source=B.MeshBuilder.CreateSphere('remote106-shared-sphere',{diameter:1,segments:20},scene);source.setEnabled(false);source.isPickable=false;source.metadata={renderRole99:'actor'};shared.geometry=source.geometry;}q=new B.Mesh('walker-'+n,scene);shared.geometry.applyToMesh(q);}else q=B.MeshBuilder.CreateSphere('walker-'+n,{diameter:1,segments:20},scene);q.parent=parent;q.position=V(...pos);q.scaling=V(...size);q.material=m;q.isPickable=false;return q}
- const rigs={};for(const type of ['rio','baekhak']){const bird=new B.TransformNode(type,scene);bird.parent=root;const crane=type==='baekhak',coat=crane?white:cream;
- egg(type+'-body',[0,crane?-.22:-.14,0],crane?[.57,.72,.54]:[.86,1.08,.67],coat,bird);
- if(crane)egg('neck',[0,.17,.01],[.24,.68,.29],coat,bird);
- const head=egg('head',[0,crane?.53:.43,.04],crane?[.78,.62,.66]:[.86,.82,.73],coat,bird);
- for(const side of[-1,1]){egg('eye',[side*.14,crane?.58:.49,.355],[.065,.083,.035],ink,bird);egg('glint',[side*.14-.01,crane?.6:.51,.373],[.018,.022,.01],white,bird);if(crane)egg('cheek',[side*.27,.48,.31],[.14,.065,.026],blush,bird);else{egg('brow',[side*.15,.63,.34],[.12,.024,.025],ink,bird);}}
- egg('beak-top',[0,crane?.43:.32,.42],crane?[.37,.12,.31]:[.35,.15,.26],orange,bird);egg('beak-bottom',[0,crane?.395:.225,.42],crane?[.34,.06,.27]:[.32,.12,.24],orange,bird);
- const legs=[],wings=[];for(const side of[-1,1]){const leg=new B.TransformNode(type+'leg',scene);leg.parent=bird;leg.position=V(side*.17,-.61,0);egg('leg',[0,-.13,0],[.075,.29,.08],crane?ink:orange,leg);egg('foot',[0,-.28,.07],crane?[.17,.12,.25]:[.28,.12,.29],crane?ink:orange,leg);legs.push({node:leg,side});
- const wing=new B.TransformNode(type+'wing',scene);wing.parent=bird;wing.position=V(side*(crane?.23:.37),-.02,0);egg('wing',[side*.16,-.12,0],crane?[.54,.26,.19]:[.32,.44,.22],coat,wing);if(crane)for(let i=0;i<3;i++)egg('feather',[side*(.23+i*.09),-.18-i*.025,-.02],[.23,.14,.19],coat,wing);wings.push({node:wing,side});}
- for(let i=0;i<3;i++)egg('tail',[.07*(i-1),-.37,-.32],[.17,.20,.30],coat,bird);
- rigs[type]={bird,head,legs,wings};}
- let kind='rio',phase=0;function setCharacter(type){kind=type;for(const r of Object.values(rigs)){r.bird.position.y=0;for(const l of r.legs){l.node.position.y=-.61;l.node.rotation.x=0;}}for(const [k,r]of Object.entries(rigs))r.bird.setEnabled(k===type)}setCharacter(kind);
- const api={handAnchor:(side=1)=>rigs[kind].wings.find(w=>w.side===side).node,actionPose(action,t){const r=rigs[kind],wave=action==='wave',stretch=action==='stretch',read=['read','sketch','drink','water','picnic','look','mist','bell'].includes(action);for(const {node,side}of r.wings){node.position.z=action==='sketch'?.3:read?.12:0;if(wave)node.rotation.z=side===1?-1.15+Math.sin(t*5)*.25:.1*side;else if(stretch)node.rotation.z=-side*(.75+Math.sin(t*2)*.2);else if(read){node.rotation.x=-.8+(action==='sketch'?Math.sin(t*4)*.15:action==='bell'?Math.sin(t*5)*.25:0);node.rotation.z=-side*.35;}}if(action==='look'||action==='water')r.bird.rotation.x=.12;if(action==='drink')r.wings[1].node.rotation.x=-1.05-Math.sin(t*1.2)*.2;},player:root,head:rigs.rio.head,bag:root,setCharacter,animate(dt,moving,airborne,flying,speed=12,crouching=false,seated=false){if(seated)flying=false;phase+=dt*(flying?7:moving?Math.min(20,6+speed*.34):2);const r=rigs[kind],crouch=crouching&&!flying&&!airborne;r.bird.position.y=crouch?-.32:0;r.bird.rotation.x=seated?-.12:0;for(const {node,side}of r.legs){node.rotation.x=seated?-1.4:crouch?1.05:flying?.65:airborne?.35:Math.sin(phase)*side*(moving?.5:0);node.position.y=-.61+(crouch?.32-.28*(1-Math.cos(1.05))+.07*Math.sin(1.05):0);}for(const {node,side}of r.wings){node.position.z=0;if(kind==='baekhak'){
-  node.rotation.z=side*(flying?.40+.57*Math.sin(phase):-.77+(moving?.10*Math.sin(phase):0));
-  node.rotation.y=side*(flying?.15:.62);
- }else{
-  node.rotation.z=side*(moving&&!flying?.12+Math.sin(phase)*.15:.06);
-  node.rotation.y=0;
- }node.rotation.x=airborne&&!flying?-.4:0;}},visibility(v){for(const q of root.getChildMeshes())q.visibility=v}};
- return enhanceWalker125(B,scene,api,rigs,shared);
+  const player=new B.Mesh('walker',scene);player.ellipsoid=new B.Vector3(.42,.9,.42);
+  player.isPickable=false;player.metadata={renderRole99:'actor'};
+  const visual=new B.TransformNode('player appearance',scene);visual.parent=player;visual.position.y=-.95;
+  const clothes=createCastClothes126(B,scene);
+  let kind,body,look=CharacterStyle125.normalize({}),clock=0,visible=1,lastPost='',worn=null;
+  const hands={};
+  function syncWear(){
+    if(!body)return;
+    if(worn&&(worn.metadata.wear!==look.wear||worn.metadata.kind!==kind)){worn.dispose(false,false);worn=null;}
+    if(look.wear==='none')return;
+    if(!worn){
+      worn=clothes.garment(kind,look.wear);worn.metadata={...worn.metadata,wear:look.wear,kind};
+      if(look.wear==='cap'){
+        worn.parent=body.get('Head');
+        if(kind==='cat'){worn.scaling.set(.81,.94,.90);worn.position.set(0,.295,-.008);}
+        else if(kind==='rio'){worn.scaling.set(.98,.98,.98);worn.position.y=.115;}
+        else{worn.scaling.set(.95,.97,.92);worn.position.y=.110;}
+      }else{
+        worn.parent=body.get('Chest sway')||body.get('Body motion');
+        if(kind==='cat'){worn.scaling.set(1.05,1.03,1.17);worn.position.set(0,.14,0);}
+        else if(kind==='rio'){worn.scaling.set(.78,.93,.84);worn.position.set(0,.70,.095);}
+        else{worn.scaling.set(.89,.99,.92);worn.position.set(0,.93,.105);}
+      }
+      worn.isVisible=!!visible;
+    }
+    worn.material=clothes.material(look.color,look.wear);
+  }
+  function setCharacter(type){
+    type=Object.hasOwn(CampusCast126.species,type)?type:'rio';if(type===kind)return;
+    worn?.dispose(false,false);worn=null;
+    // Facilities can own a held prop while the wardrobe is open. Keep its anchor alive.
+    for(const anchor of Object.values(hands))anchor.parent=visual;
+    body?.dispose();kind=type;
+    body=CampusCast126.model(B,scene,CampusCast126.species[kind],visual);body.mesh.isVisible=!!visible;
+    const scale=kind==='cat'?1.14:kind==='rio'?1.16:1;visual.scaling.setAll(scale);
+    for(const side of [-1,1]){
+      const anchor=hands[side]||new B.TransformNode('held item '+side,scene);anchor.parent=body.arm(side);
+      if(kind==='cat')anchor.position.set(side*.014,-.148,.045);
+      else anchor.position.set(side*.13,-.095,.055);
+      hands[side]=anchor;
+    }
+    api.head=body.get('Head');clock=0;syncWear();
+  }
+  const api={player,head:null,bag:player,setCharacter,
+    setStyle(s){look=CharacterStyle125.normalize({...s,kind});syncWear();},
+    handAnchor(side=1){return hands[side];},
+    visibility(value){if(visible===value)return;visible=value;body.mesh.isVisible=!!value;if(worn)worn.isVisible=!!value;},
+    animate(dt,moving,airborne,flying,speed=12,crouching=false,seated=false){
+      visual.position.y=seated?-.54:-.95;
+      clock+=dt*(moving?Math.min(1.65,Math.max(.65,speed/12)):1);
+      lastPost=seated?'seat':crouching&&!flying&&!airborne?'crouch':airborne&&!flying?'jump':'';
+      const clip=flying&&!seated?'Flight':moving&&!seated?'Walk':'';
+      body.pose(clip,clock,lastPost);
+    },
+    actionPose(action,time){body.pose(action==='wave'?'Signature':'',time,lastPost,action);},
+    styleAudit(){return {kind,wear:look.wear,color:look.color,meshes:worn?1:0,model:CampusCast126.species[kind]};},
+    dispose125(){worn?.dispose(false,false);worn=null;body?.dispose();body=null;}
+  };
+  setCharacter('rio');return api;
 }

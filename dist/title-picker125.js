@@ -5,6 +5,7 @@ function createTitlePicker125(form) {
   const stage = picker.querySelector('.modelStage');
   const poster = stage.querySelector('img');
   const caption = picker.querySelector('output');
+  const castIds={baekhak:'jaha',rio:'dongdong',cat:'seolgi'};
   let canvas, gl, program, current, startPoint;
 
   const models = new Map();
@@ -45,17 +46,17 @@ function createTitlePicker125(form) {
       throw Error('WebGL unavailable');
     }
     const vertex = `
-      attribute vec3 position, normal, color;
-      varying vec3 tint;
+      attribute vec3 position, normal; attribute vec2 atlasUV;
+      varying vec2 uv; varying float light;
       void main() {
         vec3 p = position / 8192.0;
         float x = .9848*p.x - .1736*p.z, z = .1736*p.x + .9848*p.z;
         gl_Position = vec4(-x*.87, (p.y*.998-z*.06+.03)*.91, -z*.4, 1.);
-        float light = .78 + .23*dot(normalize(normal),normalize(vec3(-.4,.8,.9)));
-        tint = color*light;
+        light = .83 + .19*dot(normalize(normal),normalize(vec3(-.4,.8,.9)));
+        uv=atlasUV;
       }`;
     program = gl.createProgram();
-    for (const [type, src] of [[gl.VERTEX_SHADER,vertex],[gl.FRAGMENT_SHADER,'precision mediump float; varying vec3 tint; void main(){gl_FragColor=vec4(tint,1.);}']]) {
+    for (const [type, src] of [[gl.VERTEX_SHADER,vertex],[gl.FRAGMENT_SHADER,'precision mediump float; varying vec2 uv; varying float light; uniform sampler2D paint; void main(){gl_FragColor=vec4(texture2D(paint,uv).rgb*light,1.);}']]) {
       const shader = gl.createShader(type);
       gl.shaderSource(shader,src);
       gl.compileShader(shader);
@@ -72,7 +73,10 @@ function createTitlePicker125(form) {
     if (models.has(kind)) return models.get(kind);
     const signal = lifetime.signal;
     const pending = (async () => {
-      const response = await fetch('assets/title125/' + encodeURIComponent(kind) + '.mesh.bin', {signal});
+      const [response,atlas] = await Promise.all([
+        fetch('assets/cast126/'+castIds[kind]+'.title.bin',{signal}),
+        (async()=>{const image=new Image();image.src='assets/cast126/'+castIds[kind]+'.webp';await image.decode();return image;})()
+      ]);
       if (!response.ok) throw Error('Preview unavailable');
       let bytes = await response.arrayBuffer();
       if (new Uint8Array(bytes)[0] === 31) {
@@ -80,14 +84,21 @@ function createTitlePicker125(form) {
       }
       if (signal.aborted) throw new DOMException('Released','AbortError');
       prepare();
-      const header = new DataView(bytes), end = 8 + header.getUint32(0,true)*12;
+      const header = new DataView(bytes), end = 8 + header.getUint32(0,true)*16;
       function upload(target, data) {
         const buffer = gl.createBuffer();
         gl.bindBuffer(target,buffer);
         gl.bufferData(target,data,gl.STATIC_DRAW);
         return buffer;
       }
-      return {
+      const paint=gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D,paint);
+      gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,atlas);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+      return {paint,
         vertices: upload(gl.ARRAY_BUFFER,new Uint8Array(bytes,8,end-8)),
         indices: upload(gl.ELEMENT_ARRAY_BUFFER,new Uint8Array(bytes,end)),
         count: header.getUint32(4,true)
@@ -112,18 +123,19 @@ function createTitlePicker125(form) {
     const name = choice.closest('label').querySelector('strong').textContent;
     caption.textContent = name;
     poster.alt = name;
-    poster.src = 'assets/title125/' + encodeURIComponent(kind) + '.webp';
+    poster.src = 'assets/title125/' + encodeURIComponent(kind) + '.webp?v=126';
     if (canvas && !readyModels.has(kind)) canvas.hidden = true;
     if (!window.DecompressionStream) return;
     try {
       const model = await modelFor(kind);
       if (signal.aborted || current !== kind) return;
       gl.bindBuffer(gl.ARRAY_BUFFER,model.vertices);
-      for (const [name,type,normalized,offset] of [['position',gl.SHORT,false,0],['normal',gl.BYTE,true,6],['color',gl.UNSIGNED_BYTE,true,9]]) {
+      for (const [name,type,normalized,offset] of [['position',gl.SHORT,false,0],['normal',gl.BYTE,true,6],['atlasUV',gl.UNSIGNED_SHORT,true,10]]) {
         const loc = gl.getAttribLocation(program,name);
         gl.enableVertexAttribArray(loc);
-        gl.vertexAttribPointer(loc,3,type,normalized,12,offset);
+        gl.vertexAttribPointer(loc,name==='atlasUV'?2:3,type,normalized,16,offset);
       }
+      gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,model.paint);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,model.indices);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.drawElements(gl.TRIANGLES,model.count,gl.UNSIGNED_SHORT,0);

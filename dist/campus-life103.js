@@ -5,8 +5,8 @@ async function createCampusLife103(B,scene,world,nav,plan,player,shuttle,leisure
  for(const n of residents){n.path.cumulative=[0];for(let i=1;i<n.path.pts.length;i++){const a=n.path.pts[i-1],b=n.path.pts[i];n.path.cumulative.push(n.path.cumulative.at(-1)+Math.hypot(b.x-a.x,b.z-a.z));}n.path.len=n.path.cumulative.at(-1);}
  const groups=[...new Set(residents.map(n=>n.zone))].map(name=>[name]);
  // Allocate only the visible budget, not 180 models. The asset owns shared geometry/materials.
- const {createCatNPC}=await import('./assets/cat-npc103.js');const pool=[],active=new Map(),budget=24,detailed=10;
- for(let i=0;i<budget;i++){const model=createCatNPC(B,scene,{id:'cat-pool-'+i,coat:coats[i%6],role:roles[i%6]});model.renderMeshes.forEach(m=>{m.isPickable=false;m.checkCollisions=false;m.metadata={...m.metadata,renderRole99:'actor',npcVisual103:true}});model.setEnabled(false);pool.push(model);if(i%4===3)await new Promise(r=>setTimeout(r,0));}
+ await CampusCast126.prepare(Object.values(CampusCast126.coats));const pool=[],active=new Map(),budget=24,detailed=10;
+ for(let i=0;i<budget;i++){const model=CampusCast126.resident(B,scene,{id:'cat-pool-'+i,coat:coats[i%6],role:roles[i%6]});model.renderMeshes.forEach(m=>{m.isPickable=false;m.checkCollisions=false;m.metadata={...m.metadata,renderRole99:'actor',npcVisual103:true}});model.setEnabled(false);pool.push(model);if(i%4===3)await new Promise(r=>setTimeout(r,0));}
  // Existing Abang bench has two independent free seat anchors. Player interaction spots are elsewhere.
  const bench=nav.plazas72?.benches?.[0];if(bench){let seats=residents.filter(n=>n.zone==='인문대·자하연').slice(0,2);seats.forEach((n,i)=>{n.restSeat={x:bench.x+(i? .7:-.7),y:world.floorAt(bench.x,bench.z)+.52,z:bench.z};n.role=i?'relax':'reader';n.coat=i?'cream':'tuxedo';})}
  let lastLogic=-1,lastSelect=-1,enabled=true,tick=0,frustum=[];const started=performance.now();

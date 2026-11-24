@@ -1,6 +1,6 @@
 {
   "name": "3nu-local-campus",
-  "version": "0.0.125",
+  "version": "0.0.126",
   "private": true,
   "engines": {
     "node": ">=24.0.0"
@@ -18,5 +18,5 @@
   "dependencies": {
     "ws": "8.23.0"
   },
-  "releaseVersion": "1.1"
+  "releaseVersion": "1.1.1"
 }
